@@ -61,5 +61,7 @@ Routes:
 
 Features:
   - Dark / Light mode
-  - Enlgish / Hungarian language
+  - English / Hungarian language
   - Mobile first
+  - Booking system with admin site
+  - Admin page where rooms and equipment can be added
