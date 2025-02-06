@@ -1,0 +1,65 @@
+Routes: 
+  - Home
+    - Logo title
+    - Short description of the place
+    - CTA 
+        - Booking 
+        - Phone number
+    - Rehearsal Rooms
+        - Cards, with the important info(title, type, size, price), and link to that room detailed site
+    - Prices
+        - Short description
+        - Link to Pricing route
+        - Some picture
+        - Sales, oppurtinites to convince the user
+    - Services
+      - Renting
+      - Wifi
+      - Opening hours
+
+  - Booking
+    - Day select
+    - Book sheet
+      -Rooms, time periods, prices
+    - Some conditions, sales, title and short description
+    
+  - Rehearsal Rooms
+    - Mostly same as the one in the home page
+    - Additional text and cards for each room with link
+  - Room detailed page
+    - Picture
+    - Title
+    - Price
+    - Type
+    - Size
+    - Equipment with icons
+    - Renting
+    - Detailed prices with sales
+    - CTA to book
+    - Suggesting similar rooms
+    
+  - Pricing
+    - Prices
+    - Sales
+    - Renting <- rent option could land the user here
+  - Renting
+  - Contact Us
+    - Google maps, BKK futár
+    - Some detailed location info
+    - email, phone number
+    
+  - Footer
+    - Social media links with logos
+    - Contact info
+       - address, phone number, email
+    - Equipments
+    - Partners
+    - Popular customers
+  - Navbar
+    - Logo, title
+    - Links to all pages
+
+Features:
+  - Dark / Light mode
+  - Enlgish / Hungarian language
+  - Mobile first
