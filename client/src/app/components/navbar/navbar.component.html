@@ -1,8 +1,8 @@
 <nav class="font-montserrat font-bold text-4xl">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
+      <!-- Mobile menu button -->
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Mobile menu button -->
         <button
           type="button"
           (click)="toggleMobileMenu()"
@@ -23,7 +23,9 @@
           </svg>
         </button>
       </div>
+
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <!-- Logo -->
         <a routerLink="/" class="flex shrink-0 items-center">
           <img
             priority
@@ -33,6 +35,8 @@
             height="210"
             width="422">
         </a>
+
+        <!-- Routes -->
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <div *ngFor="let route of navigation">
@@ -48,10 +52,9 @@
           </div>
         </div>
       </div>
-      <app-theme-toggle></app-theme-toggle>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <!-- Profile Dropdown -->
-        <div class="relative ml-3 menu-container">
+      <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
+        <app-theme-toggle></app-theme-toggle> <!-- Dark Mode Toggle -->
+        <div class="relative ml-3 menu-container"> <!-- Profile Dropdown -->
           <div>
             <button type="button" (click)="toggleUserMenu()"
                     class="relative flex rounded-full bg-light-border dark:bg-dark-border text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
@@ -61,8 +64,6 @@
               <mat-icon>account_circle</mat-icon>
             </button>
           </div>
-
-          <!-- Dropdown Menu -->
           <div [ngClass]="{
             'opacity-0 scale-95': !isUserMenuOpen,
             'opacity-100 scale-100': isUserMenuOpen

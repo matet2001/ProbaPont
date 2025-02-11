@@ -4,6 +4,7 @@ import {RouterLink} from "@angular/router";
 import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
 import {ThemeService} from "../../services/theme.service";
 import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,7 @@ import {MatIcon} from "@angular/material/icon";
     NgForOf,
     ThemeToggleComponent,
     MatIcon,
+    MatIconButton,
   ],
   templateUrl: './navbar.component.html',
 })
@@ -48,9 +50,9 @@ export class NavbarComponent {
   }
 
   navigation = [
-    { name: 'Főoldal', href: '/', current: true },
+    { name: 'Főoldal', href: '/', current: false },
     { name: 'Termek', href: '/rooms', current: false },
-    { name: 'Foglalás', href: '/booking', current: false },
+    { name: 'Foglalás', href: '/booking', current: true },
     { name: 'Árak', href: '/prices', current: false },
     { name: 'Kapcsolat', href: '/contact', current: false },
   ]
