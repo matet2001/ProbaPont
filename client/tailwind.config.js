@@ -19,6 +19,10 @@ module.exports = {
           border: '#333333',
         },
       },
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],
