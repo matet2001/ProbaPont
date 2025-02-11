@@ -1,35 +1,47 @@
 import {Component, HostListener} from '@angular/core';
-import {NgClass, NgForOf, NgOptimizedImage} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
 import {ThemeService} from "../../services/theme.service";
 import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
+import {LanguageService} from "../../services/language.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    NgClass,
-    NgOptimizedImage,
     RouterLink,
-    NgForOf,
     ThemeToggleComponent,
     MatIcon,
-    MatIconButton,
+    CommonModule,
+    NgOptimizedImage,
+    TranslatePipe
   ],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
   isDarkMode = false;
+  isUserMenuOpen = false;
 
-  constructor(private themeService: ThemeService) {
+  constructor(private themeService: ThemeService, private languageService: LanguageService) {
     this.themeService.isDarkMode$.subscribe((darkMode) => {
       this.isDarkMode = darkMode;
     });
   }
 
-  isUserMenuOpen = false;
+  changeLanguage(language: string): void {
+    this.languageService.setLanguage(language);
+  }
+
+  toggleLanguage(): void {
+    if (this.languageService.getCurrentLanguage() == "en") this.changeLanguage("hu")
+    else this.changeLanguage("en")
+  }
+
+  getCurrentLanguage(): string {
+    return this.languageService.getCurrentLanguage()
+  }
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
@@ -49,11 +61,17 @@ export class NavbarComponent {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
-  navigation = [
-    { name: 'Főoldal', href: '/', current: false },
-    { name: 'Termek', href: '/rooms', current: false },
-    { name: 'Foglalás', href: '/booking', current: true },
-    { name: 'Árak', href: '/prices', current: false },
-    { name: 'Kapcsolat', href: '/contact', current: false },
-  ]
+  routes = [
+    { cta: false, name: 'NAV.HOME', href: '/' },
+    { cta: false, name: 'NAV.ROOMS', href: '/rooms' },
+    { cta: true, name: 'NAV.BOOKING', href: '/booking' },
+    { cta: false, name: 'NAV.PRICES', href: '/prices' },
+    { cta: false, name: 'NAV.CONTACT', href: '/contact' }
+  ];
+
+  userRoutes = [
+    { name: 'USER.PROFILE', href: '/account' },
+    { name: 'USER.SETTINGS', href: '/settings' },
+    { name: 'USER.LOGOUT', href: '/logout' }
+  ];
 }

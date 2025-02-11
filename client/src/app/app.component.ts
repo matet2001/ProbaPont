@@ -1,14 +1,25 @@
 import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
-import {NavbarComponent} from "./components/navbar/navbar.component";
+import { CommonModule } from '@angular/common';
+
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [
+    CommonModule,
+    NavbarComponent,
+    RouterOutlet,
+    TranslateModule,
+    MatSelectModule,
+    MatFormFieldModule
+  ]
 })
 export class AppComponent {
-  title = 'Próba Pont';
+  title = 'client';
 }

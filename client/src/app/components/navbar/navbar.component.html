@@ -39,23 +39,26 @@
         <!-- Routes -->
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
-            <div *ngFor="let route of navigation">
+            <div *ngFor="let route of routes">
               <a [routerLink]="route.href"
-                 [ngClass]="route.current
+                 [ngClass]="route.cta
                    ? 'text-white bg-primary'
                    : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'"
                  class="rounded-md px-3 py-2 text-sm font-medium"
-                 [attr.aria-current]="route.current ? 'page' : ''">
-                {{ route.name }}
+                 [attr.aria-current]="route.cta ? 'page' : ''">
+                {{ route.name | translate }}
               </a>
             </div>
           </div>
         </div>
       </div>
       <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
+<!--        TODO:Add attribute to Freepik-->
+        <button class="font-emoji" (click)="toggleLanguage()">
+          <img [ngSrc]="getCurrentLanguage() == 'en' ? 'assets/hungary.png' : 'assets/united-kingdom.png'" [alt]='getCurrentLanguage()' height="25" width="25">
+        </button>
         <app-theme-toggle></app-theme-toggle> <!-- Dark Mode Toggle -->
         <div class="relative ml-3 menu-container"> <!-- Profile Dropdown -->
-          <div>
             <button type="button" (click)="toggleUserMenu()"
                     class="relative flex rounded-full bg-light-border dark:bg-dark-border text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -63,15 +66,17 @@
               <span class="sr-only">Open user menu</span>
               <mat-icon>account_circle</mat-icon>
             </button>
-          </div>
           <div [ngClass]="{
             'opacity-0 scale-95': !isUserMenuOpen,
             'opacity-100 scale-100': isUserMenuOpen
           }"
                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-light-card dark:bg-dark-card py-1 shadow-lg ring-1 ring-light-border dark:ring-dark-border transition-all duration-200 ease-out">
-            <a href="#" class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border">Your Profile</a>
-            <a href="#" class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border">Settings</a>
-            <a href="#" class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border">Sign out</a>
+            <div *ngFor="let route of userRoutes">
+              <a [routerLink]="route.href"
+                 class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border">
+                {{ route.name | translate }}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -85,15 +90,15 @@
     id="mobile-menu">
 
     <div class="space-y-1 px-2 pt-2 pb-3">
-      <div *ngFor="let route of navigation">
+      <div *ngFor="let route of routes">
         <a
           [routerLink]="route.href"
-          [ngClass]="route.current
+          [ngClass]="route.cta
             ? 'text-white bg-primary'
             : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'"
           class="block rounded-md px-3 py-2 text-base font-medium"
-          [attr.aria-current]="route.current ? 'page' : ''">
-          {{ route.name }}
+          [attr.aria-current]="route.cta ? 'page' : ''">
+          {{ route.name | translate }}
         </a>
       </div>
     </div>

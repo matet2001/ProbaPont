@@ -1,0 +1,15 @@
+{
+  "NAV": {
+    "HOME": "Főoldal",
+    "ROOMS": "Termek",
+    "BOOKING": "Foglalás",
+    "PRICES": "Árak",
+    "CONTACT": "Kapcsolat"
+  },
+  "USER": {
+    "PROFILE": "Profilod",
+    "SETTINGS": "Beállítások",
+    "LOGOUT": "Kijelentkezés"
+  }
+}
+

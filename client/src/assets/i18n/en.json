@@ -1,0 +1,14 @@
+{
+  "NAV": {
+    "HOME": "Home",
+    "ROOMS": "Rooms",
+    "BOOKING": "Booking",
+    "PRICES": "Prices",
+    "CONTACT": "Contact"
+  },
+  "USER": {
+    "PROFILE": "Your Profile",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Sign out"
+  }
+}
