@@ -1,20 +1,21 @@
 import {Component, HostListener} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
+import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-navbar',
   standalone: true,
   imports: [
-    NgIf,
     NgClass,
     NgOptimizedImage,
     RouterLink,
-    NgForOf
+    NgForOf,
+    ThemeToggleComponent
   ],
-  templateUrl: './header.component.html',
+  templateUrl: './navbar.component.html',
 })
-export class HeaderComponent {
+export class NavbarComponent {
   isUserMenuOpen = false;
 
   toggleUserMenu() {
@@ -42,6 +43,4 @@ export class HeaderComponent {
     { name: 'Árak', href: '/prices', current: false },
     { name: 'Kapcsolat', href: '/contact', current: false },
   ]
-
-
 }
