@@ -1,7 +1,9 @@
 import {Component, HostListener} from '@angular/core';
-import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {NgClass, NgForOf, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
+import {ThemeService} from "../../services/theme.service";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-navbar',
@@ -11,11 +13,20 @@ import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
     NgOptimizedImage,
     RouterLink,
     NgForOf,
-    ThemeToggleComponent
+    ThemeToggleComponent,
+    MatIcon,
   ],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+  isDarkMode = false;
+
+  constructor(private themeService: ThemeService) {
+    this.themeService.isDarkMode$.subscribe((darkMode) => {
+      this.isDarkMode = darkMode;
+    });
+  }
+
   isUserMenuOpen = false;
 
   toggleUserMenu() {

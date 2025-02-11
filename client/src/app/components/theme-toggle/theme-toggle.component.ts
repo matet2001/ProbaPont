@@ -13,14 +13,15 @@ import {MatIconButton} from "@angular/material/button";
   standalone: true
 })
 export class ThemeToggleComponent {
-  isDarkMode: boolean;
+  isDarkMode = false;
 
   constructor(private themeService: ThemeService) {
-    this.isDarkMode = this.themeService.isDarkMode();
+    this.themeService.isDarkMode$.subscribe((darkMode) => {
+      this.isDarkMode = darkMode;
+    });
   }
 
   toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
-    this.themeService.setDarkMode(this.isDarkMode);
+    this.themeService.setDarkMode(!this.isDarkMode);
   }
 }
