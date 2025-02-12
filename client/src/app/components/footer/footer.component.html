@@ -1,0 +1,100 @@
+<footer class="bg-primary-light dark:bg-primary-dark text-light-foreground dark:text-dark-foreground">
+  <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+    <div class=" grid grid-cols-1 md:grid-cols-4 gap-y-5">
+      <div class="mb-5 md:mb-0 flex flex-col">
+        <!--Logo-->
+        <app-logo [width]="400" [height]="200"/>
+        <!--Contact-->
+        <div class="mt-5">
+          <h2 class="mb-4 text-sm font-semibold uppercase">{{ "CONTACT" | translate }}</h2>
+          <p class="mb-3">Budapest, Nagymező u. 44-1st Floor, 1065</p>
+
+          <p class="mb-3">
+            Mobil:
+            <a href="tel:+36301234567" class="text-primary hover:underline"> +36 30 123 4567</a>
+          </p>
+
+          <p>
+            Email:
+            <a href="mailto:info@probpont.hu" class="text-primary hover:underline"> info&#64;probpont.hu</a>
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Partners Section -->
+      <div class="sm:ml-10">
+        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "PARTNERS" | translate }}</h2>
+        <ul>
+          <li *ngFor="let partner of partners" class="mb-4">
+            <a [href]="partner.link" target="_blank" class="hover:underline">{{ partner.name }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Equipments Section -->
+      <div class="sm:ml-10">
+        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "EQUIPMENTS" | translate }}</h2>
+        <ul>
+          <li *ngFor="let brand of equipments" class="mb-4">
+            <h3>{{ brand.name }}</h3>
+            <ul>
+              <li *ngFor="let product of brand.list">
+                <a [href]="product.link" target="_blank" class="hover:underline text-xs">{{ product.name }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Artists Section -->
+      <div class="sm:ml-10">
+        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "ARTISTS" | translate }}</h2>
+        <ul>
+          <li *ngFor="let artist of artists" class="mb-4">
+            <a [href]="artist.link" class="hover:underline">{{ artist.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="my-6 border-light-border dark:border-dark-border" />
+
+    <div class="sm:flex sm:items-center sm:justify-between">
+
+      <!--Disclaimers-->
+      <div class="text-sm justify-between items-center flex gap-x-4">
+          <span>© 2025 PróbaPont</span>
+          <span>|</span>
+          <span>{{ "RIGHTS" | translate }}</span>
+          <span>|</span>
+          <span>
+            {{ "WEBDEVELOPMENT" | translate }}:
+            <a href="https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/" class="hover:text-primary" target="_blank">
+              Pojbics Máté
+            </a>
+            <span>|</span>
+          </span>
+          <span>
+            <a href="https://www.flaticon.com/free-icons/hungary" title="hungary icons">Flag icons created by Freepik - Flaticon</a>
+          </span>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-6 text-2xl">
+        <a href="https://www.instagram.com/" target="_blank" class="hover:text-primary">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/" target="_blank" class="hover:text-primary">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.tiktok.com/" target="_blank" class="hover:text-primary">
+          <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a href="https://www.youtube.com/" target="_blank" class="hover:text-primary">
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

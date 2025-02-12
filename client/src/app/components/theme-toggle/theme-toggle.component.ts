@@ -8,7 +8,6 @@ import {MatIconButton} from "@angular/material/button";
   templateUrl: './theme-toggle.component.html',
   imports: [
     MatIcon,
-    MatIconButton
   ],
   standalone: true
 })
