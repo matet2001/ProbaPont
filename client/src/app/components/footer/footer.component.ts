@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {LogoComponent} from "../logo/logo.component";
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgForOf} from "@angular/common";
+import {GlobalService} from "../../services/global.service";
 
 @Component({
   selector: 'app-footer',
@@ -12,15 +13,15 @@ import {NgForOf} from "@angular/common";
     NgForOf
   ],
   templateUrl: './footer.component.html',
-  styles: ``
 })
 export class FooterComponent {
+  constructor(public global: GlobalService) {}
+
   partners = [
     { name: 'AKAI Professional', link: 'https://www.akaipro.com/' },
     { name: 'Ibanez', link: 'https://www.ibanez.com/eu/' },
     { name: 'Fender', link: 'https://www.fender.com/en-HU/start' }
   ];
-
   equipments = [
     { name: 'YAMAHA', list: [
         { name: "Yamaha Oak Custom", link: 'https://usa.yamaha.com/products/musical_instruments/drums/'},
@@ -38,7 +39,6 @@ export class FooterComponent {
       ]
     },
   ];
-
   artists = [
     { name: 'Billie Eilish', link: 'https://store.billieeilish.com/' },
     { name: 'Måneskin', link: 'https://maneskin.com/' },

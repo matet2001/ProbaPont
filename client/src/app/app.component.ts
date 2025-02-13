@@ -20,7 +20,7 @@ import {FooterComponent} from "./components/footer/footer.component";
     MatSelectModule,
     MatFormFieldModule,
     FooterComponent
-  ]
+  ],
 })
 export class AppComponent {
   title = 'client';

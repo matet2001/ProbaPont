@@ -16,5 +16,23 @@
     "ARTISTS": "Famous customers",
   "RIGHTS": "All Rights Reserved",
   "CONTACT": "Contact",
-  "WEBDEVELOPMENT": "Development"
+  "DEVELOPMENT": "Development",
+  "HERO": {
+    "TITLE": "PróbaPont",
+    "DESCRIPTION": "Six soundproof, modern rehearsal rooms in downtown Budapest",
+    "CTA": "Book now!",
+    "CTA_BOOK": "Online booking",
+    "CTA_PHONE": "Call 9AM to 22PM"
+  },
+  "FEATURES": {
+    "TITLE": "What We Offer",
+    "ROOMS_SPACIOUS": "Spacious Rooms",
+    "ROOMS_SPACIOUS_DESC": "Rooms range from 20m² to 40m², giving you plenty of space.",
+    "AFFORDABLE": "Affordable Prices",
+    "AFFORDABLE_DESC": "Rooms start from just 4000 HUF/hour.",
+    "PREMIUM_EQUIPMENT": "Premium Equipment",
+    "PREMIUM_EQUIPMENT_DESC": "High-quality gear available, plus extra rentals.",
+    "AIR_CONDITIONED": "Air Conditioned",
+    "AIR_CONDITIONED_DESC": "Stay cool with fully air-conditioned rooms."
+  }
 }

@@ -11,12 +11,12 @@
 
           <p class="mb-3">
             Mobil:
-            <a href="tel:+36301234567" class="text-primary hover:underline"> +36 30 123 4567</a>
+            <a [href]="'tel:' + global.businessPhone" class="text-primary hover:underline">{{ global.businessPhone }}</a>
           </p>
 
           <p>
             Email:
-            <a href="mailto:info@probpont.hu" class="text-primary hover:underline"> info&#64;probpont.hu</a>
+            <a [href]="'mailto:' + global.businessEmail" class="text-primary hover:underline">{{ global.businessEmail }}</a>
           </p>
         </div>
       </div>
@@ -69,7 +69,7 @@
           <span>{{ "RIGHTS" | translate }}</span>
           <span>|</span>
           <span>
-            {{ "WEBDEVELOPMENT" | translate }}:
+            {{ "DEVELOPMENT" | translate }}:
             <a href="https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/" class="hover:text-primary" target="_blank">
               Pojbics Máté
             </a>

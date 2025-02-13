@@ -16,6 +16,24 @@
   "ARTISTS": "Nálunk próbálnak",
   "RIGHTS": "Minden jog fenntartva",
   "CONTACT": "Elérhetőségeink",
-  "WEBDEVELOPMENT": "Webfejlesztés"
+  "DEVELOPMENT": "Webfejlesztés",
+  "HERO": {
+    "TITLE": "PróbaPont",
+    "DESCRIPTION": "Hat hangszigetelt, modern próbaterem a Belvárosban.",
+    "CTA": "Foglalj most!",
+    "CTA_BOOK": "Online foglalás",
+    "CTA_PHONE": "9-22 óráig hívható"
+  },
+  "FEATURES": {
+    "TITLE": "Amit kínálunk",
+    "ROOMS_SPACIOUS": "Tágas termek",
+    "ROOMS_SPACIOUS_DESC": "A termek mérete 20m²-től 40m²-ig terjed, így bőven lesz helyed.",
+    "AFFORDABLE": "Megfizethető árak",
+    "AFFORDABLE_DESC": "A termek ára már 4000 Ft/óra-tól elérhetők.",
+    "PREMIUM_EQUIPMENT": "Prémium felszerelés",
+    "PREMIUM_EQUIPMENT_DESC": "Kiváló minőségű eszközök, plusz extra bérlési lehetőségel.",
+    "AIR_CONDITIONED": "Légkondicionált",
+    "AIR_CONDITIONED_DESC": "Minden terem klimatizált a kellemes hőmérsékletért."
+  }
 }
 

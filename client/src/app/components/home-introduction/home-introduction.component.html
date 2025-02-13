@@ -1,0 +1,83 @@
+<div class="relative mt-10 mb-40">
+  <!-- Main Content -->
+  <div class="relative rounded-3xl px-6 lg:px-8 flex flex-col items-center justify-center 2xl:h-[110vh] h-[150vh] bg-[url(assets/images/rehearsal-room.jpg)]
+    bg-cover bg-center">
+    <div class="absolute inset-0 bg-black/50 rounded-3xl"></div> <!-- Dark overlay -->
+
+    <!-- Title + CTAs -->
+    <div class="mx-auto max-w-2xl text-center flex flex-col justify-center z-10">
+      <h1 class="text-5xl font-montserrat font-semibold text-white sm:text-7xl">
+        Próba Pont
+      </h1>
+
+      <p class="mt-8 text-lg font-poppins text-dark-foreground sm:text-xl/8">
+        {{ 'HERO.DESCRIPTION' | translate }}
+      </p>
+
+        <a class="w-full h-full mt-8" routerLink="/booking">
+          <div class="text-lg font-poppins  p-5 text-dark-foreground sm:text-xl/8 flex flex-col rounded bg-primary shadow-lg transform transition-transform duration-300 hover:scale-110 hover:shadow-xl h-full hover:border hover:border-light-border hover:text-white">
+              {{ 'HERO.CTA' | translate }}
+          </div>
+        </a>
+
+      <div class="mt-10 flex flex-col md:flex-row justify-around gap-6 w-full">
+        <app-cta-card
+          [title]="'HERO.CTA_BOOK' | translate"
+          [icon]="'calendar_today'"
+          [link]="'/booking'"
+        ></app-cta-card>
+
+        <app-cta-card
+          [title]="'HERO.CTA_PHONE' | translate"
+          [icon]="'local_phone'"
+          [link]="'/contact'"
+          [content]="global.businessPhone"
+        ></app-cta-card>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="relative mx-auto max-w-xl px-6 lg:px-8 mt-24 w-full">
+      <div class="mx-auto max-w-4xl text-center mb-10">
+        <h2 class="text-4xl font-montserrat font-semibold text-dark-foreground">
+          {{ 'FEATURES.TITLE' | translate }}
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 gap-y-16 sm:gap-y-20 items-center">
+        <div class="text-dark-foreground">
+          <dl class="mt-10 space-y-8 text-base/7">
+            <div class="relative pl-9">
+              <dt class="inline font-semibold font-montserrat flex items-center">
+                <mat-icon class="absolute top-1 left-1 text-primary">space_dashboard</mat-icon>
+                {{ 'FEATURES.ROOMS_SPACIOUS' | translate }}
+              </dt>
+              <dd class="inline font-poppins">{{ 'FEATURES.ROOMS_SPACIOUS_DESC' | translate }}</dd>
+            </div>
+            <div class="relative pl-9">
+              <dt class="inline font-semibold font-montserrat flex items-center">
+                <mat-icon class="absolute top-1 left-1 text-primary">attach_money</mat-icon>
+                {{ 'FEATURES.AFFORDABLE' | translate }}
+              </dt>
+              <dd class="inline font-poppins">{{ 'FEATURES.AFFORDABLE_DESC' | translate }}</dd>
+            </div>
+            <div class="relative pl-9">
+              <dt class="inline font-semibold font-montserrat flex items-center">
+                <mat-icon class="absolute top-1 left-1 text-primary">headphones</mat-icon>
+                {{ 'FEATURES.PREMIUM_EQUIPMENT' | translate }}
+              </dt>
+              <dd class="inline font-poppins">{{ 'FEATURES.PREMIUM_EQUIPMENT_DESC' | translate }}</dd>
+            </div>
+            <div class="relative pl-9">
+              <dt class="inline font-semibold font-montserrat flex items-center">
+                <mat-icon class="absolute top-1 left-1 text-primary">ac_unit</mat-icon>
+                {{ 'FEATURES.AIR_CONDITIONED' | translate }}
+              </dt>
+              <dd class="inline font-poppins">{{ 'FEATURES.AIR_CONDITIONED_DESC' | translate }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
