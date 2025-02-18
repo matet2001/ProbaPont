@@ -1,15 +1,12 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { app } from '../src/app';
-import { UserModel } from '../src/db/user.model';
 
 const user = {
     username: 'test_username',
     email: 'test.email@example.com',
     password: 'password123'
 };
-
-let authToken = '';
 
 beforeAll(async () => {
     const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/proba-pont-db';
@@ -51,20 +48,29 @@ describe('User API', () => {
             .expect(200);
 
         expect(response.body.data).toBeDefined();
-        authToken = response.body.data;
     });
 
-    //it('should access a protected route with token', async () => {
-    //    expect(authToken).not.toBe('');
-    //
-    //    const response = await request(app)
-    //        .get('/api/users/my-account')
-    //        .set('Authorization', `Bearer ${authToken}`)
-    //        .expect(200);
-    //
-    //    expect(response.body.data).toHaveProperty('email', user.email);
-    //    expect(response.body.data).toHaveProperty('username', user.username);
-    //});
+    it('should create account, login and access a protected route with token', async () => {
+        await request(app).post('/api/auth/signup').send(user).expect(201);
+        const loginResponse = await request(app)
+            .post('/api/auth/login')
+            .send({
+                email: user.email,
+                password: user.password
+            })
+            .expect(200);
+
+        const authToken = loginResponse.body.data
+
+        const response = await request(app)
+            .get('/api/users/my-account')
+            .set('Authorization', `Bearer ${authToken}`)
+            .expect(200);
+
+        expect(response.body.data).toHaveProperty('email', user.email);
+        expect(response.body.data).toHaveProperty('username', user.username);
+        expect(response.body.data).toHaveProperty('role', 'user');
+    });
 
     it('should fail to access a protected route without a token', async () => {
         await request(app)

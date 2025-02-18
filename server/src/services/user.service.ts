@@ -3,7 +3,6 @@ import BadRequestError from "../types/errors";
 import { UserModel } from "../db/user.model";
 import { Types } from "mongoose";
 
-
 export const createUser = async (
     username: string,
     email: string,
@@ -57,6 +56,7 @@ export const getUserById = async (userId: Types.ObjectId | undefined) => {
         })
 
     }
+
     const user = await UserModel.findById(userId);
     if (!user) {
         throw new BadRequestError({
@@ -65,9 +65,12 @@ export const getUserById = async (userId: Types.ObjectId | undefined) => {
             logging: true,
         });
     }
+
     return {
+        id: user._id,
         username: user.username,
         email: user.email,
+        role: user.role
     };
 };
 
