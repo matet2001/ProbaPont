@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { AuthRequest } from '../types/AuthRequest';
 
 dotenv.config();
-const secret_key = process.env.JWT_SECRET_KEY || '';
+const secret_key = process.env.JWT_SECRET_KEY || 'secret_key';
 
 export const authenticateToken = (
     req: AuthRequest,
@@ -12,7 +12,7 @@ export const authenticateToken = (
     next: NextFunction,
 ) => {
     const authHeader = req.headers['authorization'];
-    const token: string = (authHeader && authHeader.split(' ')[1]) || '';
+    const token: string = (authHeader && authHeader.split(' ')[1]) as string;
 
     try {
         const jwtPayload = jwt.verify(token, secret_key) as any;

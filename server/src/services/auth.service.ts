@@ -5,8 +5,7 @@ import { UserModel } from '../db/user.model';
 import BadRequestError from '../types/errors';
 dotenv.config();
 
-const secret_key = process.env.JWT_SECRET_KEY as string;
-
+const secret_key = process.env.JWT_SECRET_KEY || 'secret_key';
 
 export const createToken = async (
     email: string,
