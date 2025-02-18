@@ -19,7 +19,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     if (mongoose.connection.db) {
-        //await mongoose.connection.db.dropDatabase();
+        await mongoose.connection.db.dropDatabase();
     }
 });
 
