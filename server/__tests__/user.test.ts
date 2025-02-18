@@ -11,10 +11,7 @@ const user = {
 
 beforeAll(async () => {
     const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/proba-pont-db';
-    if (mongoose.connection.readyState === 0) {
-        await mongoose.connect(mongoUri);
-        await UserModel.findOneAndDelete({ username: user.username, email: user.email })
-    }
+    await mongoose.connect(mongoUri);
 });
 
 beforeEach(async () => {
@@ -24,6 +21,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
+    await UserModel.findOneAndDelete({ email: user.email })
     await mongoose.connection.close();
 });
 
