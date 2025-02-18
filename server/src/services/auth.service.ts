@@ -3,22 +3,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { UserModel } from '../db/user.model';
 import BadRequestError from '../types/errors';
-import { AuthDetails } from '../types/auth.request';
 dotenv.config();
 
 const secret_key = process.env.JWT_SECRET_KEY as string;
-
-export const valitadeToken = (token: string): AuthDetails => {
-    const jwtPayload = jwt.verify(token, secret_key) as any;
-
-    const authDetails: AuthDetails = {
-        userId: jwtPayload['userId'],
-        username: jwtPayload['username'],
-        email: jwtPayload['email'],
-        role: jwtPayload['role'],
-    }
-    return authDetails
-}
 
 
 export const createToken = async (

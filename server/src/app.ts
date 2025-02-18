@@ -1,12 +1,18 @@
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import authRoutes from './routes/auth.routes'
 
 import dotenv from 'dotenv';
+import errorHandler from './middlewares/error.handler';
 dotenv.config();
 
 const app = express();
-const { MONGO_URI = 'mongodb://localhost:27017/proba-pont-db', PORT = 8080, HOST = '0.0.0.0' } = process.env;
+const {
+    MONGO_URI = 'mongodb://localhost:27017/proba-pont-db',
+    PORT = 8080,
+    HOST = '0.0.0.0'
+} = process.env;
 
 
 const allowedOrigins = ['http://localhost:5173', 'http://localhost:80'];
@@ -22,6 +28,9 @@ app.get('/health', (req, res) => {
     res.status(200).send({ messege: "ok" });
 });
 
+app.use('/api/auth', authRoutes);
+
+app.use(errorHandler);
 
 const main = async () => {
     try {

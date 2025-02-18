@@ -1,9 +1,10 @@
 import { Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { AuthRequest } from '../types/auth.request';
-import { valitadeToken } from '../services/auth.service';
+import { AuthRequest } from '../types/AuthRequest';
 
 dotenv.config();
+const secret_key = process.env.JWT_SECRET_KEY || '';
 
 export const authenticateToken = (
     req: AuthRequest,
@@ -14,8 +15,12 @@ export const authenticateToken = (
     const token: string = (authHeader && authHeader.split(' ')[1]) || '';
 
     try {
-        const authDetails = valitadeToken(token);
-        req.auth = authDetails
+        const jwtPayload = jwt.verify(token, secret_key) as any;
+        req.username = jwtPayload['username'];
+        req.userId = jwtPayload['userId'];
+        req.role = jwtPayload['role'];
+        req.email = jwtPayload['email']
+
         next();
     } catch (error) {
         res.status(401).json({ error: 'Unauthorized', log: error });
