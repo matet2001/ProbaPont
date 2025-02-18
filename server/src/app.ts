@@ -9,9 +9,9 @@ dotenv.config();
 
 const app = express();
 const {
-    MONGO_URI = 'mongodb://localhost:27017/proba-pont-db',
-    PORT = 8080,
-    HOST = '0.0.0.0'
+    MONGO_URI,
+    PORT,
+    HOST
 } = process.env;
 
 
@@ -34,9 +34,13 @@ app.use('/api/users', userRoutes);
 app.use(errorHandler);
 
 const main = async () => {
+    if (!MONGO_URI || !PORT || !HOST) {
+        console.error("Missing env vars")
+        return;
+    }
     try {
         await mongoose.connect(MONGO_URI);
-        app.listen(PORT as number, HOST, () => {
+        app.listen(parseInt(PORT), HOST, () => {
             console.log(`App is listening on http://${HOST}:${PORT}`);
         });
     } catch (e) {

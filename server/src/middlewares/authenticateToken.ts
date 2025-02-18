@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { AuthRequest } from '../types/AuthRequest';
 
 dotenv.config();
-const secret_key = process.env.JWT_SECRET_KEY || 'secret_key';
+const secret_key = process.env.JWT_SECRET_KEY as string;
 
 export const authenticateToken = (
     req: AuthRequest,
