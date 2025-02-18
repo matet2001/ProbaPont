@@ -15,7 +15,7 @@ const {
 } = process.env;
 
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:80'];
+const allowedOrigins = ['http://localhost',];
 
 const options: cors.CorsOptions = {
     origin: allowedOrigins,
@@ -41,8 +41,10 @@ const main = async () => {
         });
     } catch (e) {
         console.error(e);
-        process.exit(1);
+        //throw new Error("Failed to connect to MongoDB");
     }
 };
 
 main();
+
+export { app }

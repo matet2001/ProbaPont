@@ -4,13 +4,12 @@ import { createToken } from '../services/auth.service';
 
 const router = express.Router();
 
-router.post('/singup',
+router.post('/signup',
     async (req: Request, res: Response, next: NextFunction): Promise<any> => {
         try {
             const { username, email, password } = req.body;
-            const user = createUser(username, email, password);
-
-            return res.status(201).send(user);
+            const user = await createUser(username, email, password);
+            res.status(201).send({ data: user });
         } catch (err) {
             next(err)
         }
