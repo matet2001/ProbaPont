@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
-import authRoutes from './routes/auth.routes'
-
+import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
 import dotenv from 'dotenv';
 import errorHandler from './middlewares/error.handler';
 dotenv.config();
@@ -29,6 +29,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 
@@ -44,4 +45,4 @@ const main = async () => {
     }
 };
 
-main()
+main();
