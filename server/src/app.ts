@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const { MONGO_URI = 'mongodb://localhost:27017/probapont_db', PORT = 8080, HOST = '0.0.0.0' } = process.env;
+const { MONGO_URI = 'mongodb://localhost:27017/proba-pont-db', PORT = 8080, HOST = '0.0.0.0' } = process.env;
 
 
 const allowedOrigins = ['http://localhost:5173', 'http://localhost:80'];
