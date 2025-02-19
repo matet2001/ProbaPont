@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, numberAttribute} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {ThemeService} from "../../services/theme.service";
@@ -16,14 +16,16 @@ import {ThemeService} from "../../services/theme.service";
       [ngSrc]="isDarkMode ? 'assets/Logo-dark.png' : 'assets/Logo.png'"
       alt="Logo"
       class=""
-      [height]="width"
-      [width]="height">
+      [height]="height * size"
+      [width]="width * size">
   </a>`
 })
 export class LogoComponent {
   isDarkMode = false;
-  @Input() width: number = 200;
-  @Input() height: number = 100;
+
+  @Input({transform: numberAttribute}) size: number = 1;
+  width: number = 211;
+  height: number = 105;
 
   constructor(private themeService: ThemeService) {
     this.themeService.isDarkMode$.subscribe((darkMode) => {
