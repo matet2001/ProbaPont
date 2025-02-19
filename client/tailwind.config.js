@@ -9,12 +9,14 @@ module.exports = {
         light: {
           background: '#f8f9fa',
           foreground: '#2d2d2d',
+          secondary: '#757575',
           card: '#ffffff',
           border: '#e0e0e0',
         },
         dark: {
           background: '#121212',
           foreground: '#e0e0e0',
+          secondary: '#757575',
           card: '#1e1e1e',
           border: '#333333',
         },

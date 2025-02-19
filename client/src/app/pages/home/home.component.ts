@@ -8,12 +8,14 @@ import {CtaCardComponent} from "../../components/cta-card/cta-card.component";
 import {GlobalService} from "../../services/global.service";
 import {NgOptimizedImage} from "@angular/common";
 import {HomeIntroductionComponent} from "../../components/home-introduction/home-introduction.component";
+import {RoomsComponent} from "../rooms/rooms.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    HomeIntroductionComponent
+    HomeIntroductionComponent,
+    RoomsComponent
   ],
   templateUrl: './home.component.html',
   styles: ``

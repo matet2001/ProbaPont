@@ -33,6 +33,43 @@
     "PREMIUM_EQUIPMENT": "Premium Equipment",
     "PREMIUM_EQUIPMENT_DESC": "High-quality gear available, plus extra rentals.",
     "AIR_CONDITIONED": "Air Conditioned",
-    "AIR_CONDITIONED_DESC": "Stay cool with fully air-conditioned rooms."
+    "AIR_CONDITIONED_DESC": "Stay cool with fully air-conditioned rooms.",
+    "PRICE_UNIT": "HUF/hour",
+    "CTA": "Book Here",
+    "ROOM_1": {
+      "1": "Air-conditioned",
+      "2": "Great acoustics",
+      "PRICE_ADD": "Additional charges may apply"
+    },
+    "ROOM_2": {
+      "1": "Natural ambiance",
+      "2": "Relaxing atmosphere",
+      "PRICE_ADD": "Extra fees may apply"
+    },
+    "ROOM_3": {
+      "1": "Fiery lighting",
+      "2": "High-energy space",
+      "PRICE_ADD": "Premium category pricing"
+    },
+    "ROOM_4": {
+      "1": "Neon galaxy lighting",
+      "2": "Futuristic gear",
+      "PRICE_ADD": "High-end pricing"
+    },
+    "ROOM_5": {
+      "1": "Cozy seating",
+      "2": "Vintage equipment",
+      "PRICE_ADD": "Moderate pricing"
+    },
+    "ROOM_6": {
+      "1": "Minimalist design",
+      "2": "High-contrast lighting",
+      "PRICE_ADD": "Premium pricing"
+    }
+  },
+  "ROOMS": {
+    "PRE_TITLE": "Downtown and Modern",
+    "TITLE": "Our Rehearsal Rooms",
+    "DESCRIPTION": "In our rehearsal space, musicians can enjoy 6 soundproof, modern rehearsal rooms ranging from 22 m² to 40 m². Each room is well-equipped with excellent acoustics, an air exchange system, and air conditioning in the two largest rooms to ensure maximum comfort."
   }
 }

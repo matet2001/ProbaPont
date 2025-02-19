@@ -17,7 +17,7 @@ export class ThemeService {
       const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const isDark = storedTheme ? storedTheme === 'dark' : systemPrefersDark;
 
-      this.setDarkMode(isDark); // Initialize theme
+      this.setDarkMode(isDark);
     }
   }
 

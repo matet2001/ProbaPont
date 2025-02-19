@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
+import {NgForOf} from "@angular/common";
+import {RoomCardComponent} from "../../components/room-card/room-card.component";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RoomListComponent} from "../../components/room-list/room-list.component";
 
 @Component({
   selector: 'app-rooms',
   standalone: true,
-  imports: [],
+  imports: [
+    RoomListComponent
+  ],
   templateUrl: './rooms.component.html',
-  styles: ``
 })
 export class RoomsComponent {
 
 }
+
