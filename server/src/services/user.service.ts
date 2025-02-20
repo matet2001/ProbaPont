@@ -44,6 +44,7 @@ export const createUser = async (
     return {
         username: savedUser.username,
         email: savedUser.email,
+        id: savedUser._id,
     };
 };
 

@@ -1,8 +1,11 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import { UserModel } from '../db/user.model';
-import BadRequestError from '../types/errors';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import { UserModel } from "../db/user.model";
+import BadRequestError from "../types/errors";
+import { createUser } from "./user.service";
+import EmailValidation from "../db/email-validation.model";
+import { sendConfirmationEmail } from "./email.service";
 dotenv.config();
 
 const secret_key = process.env.JWT_SECRET_KEY as string;
@@ -15,7 +18,7 @@ export const createToken = async (
     if (!user) {
         throw new BadRequestError({
             code: 400,
-            message: 'No user with email',
+            message: "No user with email",
             logging: true,
         });
     }
@@ -23,7 +26,7 @@ export const createToken = async (
     if (!passwordMatch) {
         throw new BadRequestError({
             code: 400,
-            message: 'Wrong password!',
+            message: "Wrong password!",
             logging: false,
         });
     }
@@ -33,20 +36,39 @@ export const createToken = async (
             userId: user._id,
             role: user.role,
             username: user.username,
-            email: user.email
+            email: user.email,
         },
         secret_key,
         {
-            expiresIn: '24h',
+            expiresIn: "24h",
         },
     );
     if (!token) {
         throw new BadRequestError({
             code: 400,
-            message: 'Could not create token',
+            message: "Could not create token",
             logging: true,
         });
     }
     return token;
 };
 
+export const createUserWithEmailVerification = async (
+    email: string,
+    username: string,
+    password: string,
+) => {
+    const user = await createUser(username, email, password);
+    const emailValidation = new EmailValidation({
+        userId: user.id,
+    });
+    const savedEmailValidation = await emailValidation.save();
+    await sendConfirmationEmail(
+        email,
+        `http://0.0.0.0:8080/email-validation/${savedEmailValidation._id}`,
+    );
+    return {
+        username: user.username,
+        email: user.email,
+    };
+};
