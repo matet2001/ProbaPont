@@ -1,0 +1,31 @@
+services:
+  probapont-mongodb:
+    image: mongo:6.0
+    container_name: probapont-mongodb
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build:
+      context: ./server
+    container_name: backend
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - PORT=${PORT}
+      - HOST=${HOST}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    depends_on:
+      - probapont-mongodb
+
+  client:
+    build:
+      context: ./client
+    container_name: client
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  mongo-data:
+
