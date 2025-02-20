@@ -10,13 +10,13 @@ export const createUser = async (
 ) => {
     if (!username || !email || !password) {
         throw new BadRequestError({
-            message: 'Missing required field',
+            message: "Missing required field",
         });
     }
     const existingUsername = await UserModel.findOne({ username });
     if (existingUsername) {
         throw new BadRequestError({
-            message: 'Username is already taken',
+            message: "Username is already taken",
             code: 400,
             logging: true,
         });
@@ -25,7 +25,7 @@ export const createUser = async (
     const existingEmail = await UserModel.findOne({ email });
     if (existingEmail) {
         throw new BadRequestError({
-            message: 'Email is already taken',
+            message: "Email is already taken",
             code: 400,
             logging: true,
         });
@@ -50,17 +50,16 @@ export const createUser = async (
 export const getUserById = async (userId: Types.ObjectId | undefined) => {
     if (!userId) {
         throw new BadRequestError({
-            message: 'Unauthorized',
+            message: "Unauthorized",
             code: 401,
-            logging: false
-        })
-
+            logging: false,
+        });
     }
 
     const user = await UserModel.findById(userId);
     if (!user) {
         throw new BadRequestError({
-            message: 'No user found',
+            message: "No user found",
             code: 404,
             logging: true,
         });
@@ -70,7 +69,6 @@ export const getUserById = async (userId: Types.ObjectId | undefined) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        role: user.role
+        role: user.role,
     };
 };
-
