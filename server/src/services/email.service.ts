@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import nodemailer from "nodemailer";
-import EmailValidation from "../db/email-validation.model";
+import { EmailValidationModel } from "../db/email-validation.model";
 import BadRequestError from "../types/errors";
 import { UserModel } from "../db/user.model";
 
@@ -19,7 +19,7 @@ export const sendConfirmationEmail = async (
     confirmationLink: string,
 ) => {
     const mailOptions = {
-        from: GMAIL_ADDRESS,
+        from: GMAIL_ADDRESS as string,
         to,
         subject: "Confirm Your Registration on ProbaPont.git",
         html: `<p>Please click the link below to confirm your registration to ProbaPont.git</p>
@@ -34,7 +34,7 @@ export const sendConfirmationEmail = async (
 };
 
 export const verifyUserEmail = async (verificationId: Types.ObjectId) => {
-    const emailValidation = await EmailValidation.findById(verificationId);
+    const emailValidation = await EmailValidationModel.findById(verificationId);
     if (!emailValidation) {
         throw new BadRequestError({ code: 401, message: "Expired token!" });
     }

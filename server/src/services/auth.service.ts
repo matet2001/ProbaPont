@@ -1,11 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import { UserModel } from "../db/user.model";
 import BadRequestError from "../types/errors";
-import { createUser } from "./user.service";
-import EmailValidation from "../db/email-validation.model";
-import { sendConfirmationEmail } from "./email.service";
+import dotenv from "dotenv";
 dotenv.config();
 
 const secret_key = process.env.JWT_SECRET_KEY as string;
@@ -52,23 +49,23 @@ export const createToken = async (
     }
     return token;
 };
-
-export const createUserWithEmailVerification = async (
-    email: string,
-    username: string,
-    password: string,
-) => {
-    const user = await createUser(username, email, password);
-    const emailValidation = new EmailValidation({
-        userId: user.id,
-    });
-    const savedEmailValidation = await emailValidation.save();
-    await sendConfirmationEmail(
-        email,
-        `http://0.0.0.0:8080/email-validation/${savedEmailValidation._id}`,
-    );
-    return {
-        username: user.username,
-        email: user.email,
-    };
-};
+//
+//export const createUserWithEmailVerification = async (
+//    email: string,
+//    username: string,
+//    password: string,
+//) => {
+//    const user = await createUser(username, email, password);
+//    const emailValidation = new EmailValidationModel({
+//        userId: user.id,
+//    });
+//    const savedEmailValidation = await emailValidation.save();
+//    await sendConfirmationEmail(
+//        email,
+//        `http://0.0.0.0:8080/email-validation/${savedEmailValidation._id}`,
+//    );
+//    return {
+//        username: user.username,
+//        email: user.email,
+//    };
+//};
