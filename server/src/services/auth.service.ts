@@ -2,6 +2,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../db/user.model";
 import BadRequestError from "../types/errors";
+import { Types } from "mongoose";
+import { EmailValidationModel } from "../db/email-validation.model";
+import { sendConfirmationEmail } from "./email.service";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -49,23 +52,18 @@ export const createToken = async (
     }
     return token;
 };
-//
-//export const createUserWithEmailVerification = async (
-//    email: string,
-//    username: string,
-//    password: string,
-//) => {
-//    const user = await createUser(username, email, password);
-//    const emailValidation = new EmailValidationModel({
-//        userId: user.id,
-//    });
-//    const savedEmailValidation = await emailValidation.save();
-//    await sendConfirmationEmail(
-//        email,
-//        `http://0.0.0.0:8080/email-validation/${savedEmailValidation._id}`,
-//    );
-//    return {
-//        username: user.username,
-//        email: user.email,
-//    };
-//};
+
+export const createEmailValidation = async (
+    userId: Types.ObjectId,
+    email: string,
+) => {
+    const emailValidation = new EmailValidationModel({
+        userId,
+    });
+    const savedEmailValidation = await emailValidation.save();
+    await sendConfirmationEmail(
+        email,
+        `http://0.0.0.0:8080/email-validation/${savedEmailValidation._id}`,
+    );
+    return savedEmailValidation;
+};

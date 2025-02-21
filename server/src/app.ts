@@ -1,21 +1,16 @@
-import cors from 'cors';
-import express from 'express';
-import mongoose from 'mongoose';
-import authRoutes from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
-import dotenv from 'dotenv';
-import errorHandler from './middlewares/error.handler';
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
+import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
+import errorHandler from "./middlewares/error.handler";
+import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const {
-    MONGO_URI,
-    PORT,
-    HOST
-} = process.env;
+const { MONGO_URI, PORT, HOST } = process.env;
 
-
-const allowedOrigins = ['http://localhost',];
+const allowedOrigins = ["http://localhost"];
 
 const options: cors.CorsOptions = {
     origin: allowedOrigins,
@@ -24,18 +19,18 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 app.use(express.json());
 
-app.get('/health', (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).send({ messege: "ok" });
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(errorHandler);
 
 const main = async () => {
     if (!MONGO_URI || !PORT || !HOST) {
-        console.error("Missing env vars")
+        console.error("Missing env vars");
         return;
     }
     try {
@@ -51,4 +46,4 @@ const main = async () => {
 
 main();
 
-export { app }
+export { app };

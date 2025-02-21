@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { createToken } from "../services/auth.service";
+import { createEmailValidation, createToken } from "../services/auth.service";
 import { createUser } from "../services/user.service";
 
 const router = express.Router();
@@ -10,6 +10,9 @@ router.post(
         try {
             const { username, email, password } = req.body;
             const user = await createUser(username, email, password);
+            const validation = await createEmailValidation(user.id, user.email);
+            console.log(validation);
+
             res.status(201).send({
                 data: { username: user.username, email: user.email },
             });

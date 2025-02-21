@@ -3,6 +3,8 @@ import nodemailer from "nodemailer";
 import { EmailValidationModel } from "../db/email-validation.model";
 import BadRequestError from "../types/errors";
 import { UserModel } from "../db/user.model";
+import dotenv from "dotenv";
+dotenv.config();
 
 const { GMAIL_APP_PASSWORD, GMAIL_ADDRESS } = process.env;
 
