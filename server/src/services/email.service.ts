@@ -1,4 +1,8 @@
+import { Types } from "mongoose";
 import nodemailer from "nodemailer";
+import EmailValidation from "../db/email-validation.model";
+import BadRequestError from "../types/errors";
+import { UserModel } from "../db/user.model";
 
 const { GMAIL_APP_PASSWORD, GMAIL_ADDRESS } = process.env;
 
@@ -27,4 +31,28 @@ export const sendConfirmationEmail = async (
     } catch (error) {
         console.error("Error sending email:", error);
     }
+};
+
+export const verifyUserEmail = async (verificationId: Types.ObjectId) => {
+    const emailValidation = await EmailValidation.findById(verificationId);
+    if (!emailValidation) {
+        throw new BadRequestError({ code: 401, message: "Expired token!" });
+    }
+    const userId = emailValidation.userId;
+    const user = await UserModel.findByIdAndUpdate(
+        { _id: userId },
+        {
+            isVerified: true,
+            updatedAt: Date.now(),
+        },
+        { new: true },
+    );
+    if (!user) {
+        throw new BadRequestError({ code: 404, message: "No user found!" });
+    }
+    return {
+        username: user.username,
+        email: user.email,
+        success: user.isVerified,
+    };
 };
