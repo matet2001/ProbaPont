@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
+import emailRoutes from "./routes/email-validation.routes";
 import errorHandler from "./middlewares/error.handler";
 import dotenv from "dotenv";
 dotenv.config();
@@ -10,12 +11,12 @@ dotenv.config();
 const app = express();
 const { MONGO_URI, PORT, HOST } = process.env;
 
-const allowedOrigins = ["http://localhost"];
+app.use("/email-validation", emailRoutes);
 
+const allowedOrigins = ["http://localhost"];
 const options: cors.CorsOptions = {
     origin: allowedOrigins,
 };
-
 app.use(cors(options));
 app.use(express.json());
 
@@ -40,7 +41,6 @@ const main = async () => {
         });
     } catch (e) {
         console.error(e);
-        //throw new Error("Failed to connect to MongoDB");
     }
 };
 
