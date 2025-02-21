@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const secret_key = process.env.JWT_SECRET_KEY as string;
+const email_validation_url = process.env.EMAIL_VALIDATION_URL as string;
 
 export const createToken = async (
     email: string,
@@ -63,7 +64,7 @@ export const createEmailValidation = async (
     const savedEmailValidation = await emailValidation.save();
     await sendConfirmationEmail(
         email,
-        `http://0.0.0.0:8080/email-validation/${savedEmailValidation._id}`,
+        `${email_validation_url}/email-validation/${savedEmailValidation._id}`,
     );
     return savedEmailValidation;
 };
