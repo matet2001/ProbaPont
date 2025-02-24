@@ -1,7 +1,7 @@
 import {Component, Input, numberAttribute} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {ThemeService} from "../../services/theme.service";
+import {ThemeService} from "../../services/theme/theme.service";
 
 @Component({
   selector: 'app-logo',
@@ -15,7 +15,6 @@ import {ThemeService} from "../../services/theme.service";
       priority
       [ngSrc]="isDarkMode ? 'assets/Logo-dark.png' : 'assets/Logo.png'"
       alt="Logo"
-      class=""
       [height]="height * size"
       [width]="width * size">
   </a>`

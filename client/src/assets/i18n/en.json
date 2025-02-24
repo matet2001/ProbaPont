@@ -70,6 +70,24 @@
   "ROOMS": {
     "PRE_TITLE": "Downtown and Modern",
     "TITLE": "Our Rehearsal Rooms",
-    "DESCRIPTION": "In our rehearsal space, musicians can enjoy 6 soundproof, modern rehearsal rooms ranging from 22 m² to 40 m². Each room is well-equipped with excellent acoustics, an air exchange system, and air conditioning in the two largest rooms to ensure maximum comfort."
+    "DESCRIPTION": "In our rehearsal space, musicians can enjoy 6 soundproof, modern rehearsal rooms ranging from 22 m² to 40 m². Each room is well-equipped with excellent acoustics, an air exchange system, and air conditioning in the two largest rooms to ensure maximum comfort.",
+    "EQUIPMENT": "Equipment",
+    "SIZE": "Size",
+    "BASE_PRICE": "Base Price",
+    "BASE": "Base Equipment",
+    "BASE_DESC": "INCLUDED IN THE PRICE",
+    "RENT": "Rentable Equipment",
+    "RENT_DESC": "NOT INCLUDED IN THE PRICE",
+    "HOURLY_RATES": "Hourly Rates",
+    "CATEGORY": "Category",
+    "NORMAL": "Normal",
+    "LAST_MINUTE": "Last Minute",
+    "BAND": "Band Rehearsal",
+    "INDIVIDUAL": "Individual Practice",
+    "LAST_MINUTE_DEAL": "Last Minute Deal",
+    "LAST_MINUTE_DESC": "Flexible with your schedule? Book a rehearsal room up to 3 hours in advance and enjoy a discounted hourly rate! Fill the gaps in our calendar and save on your practice time!",
+    "INDIVIDUAL_PRACTICE": "Individual Practice",
+    "INDIVIDUAL_DESC": "Practicing solo? Rent a rehearsal room at a discounted rate and enjoy a distraction-free environment to perfect your skills!",
+    "CTA": "Now that you're in the mood"
   }
 }

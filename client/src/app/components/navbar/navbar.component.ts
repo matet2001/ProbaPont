@@ -2,9 +2,9 @@ import {Component, HostListener} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
-import {ThemeService} from "../../services/theme.service";
+import {ThemeService} from "../../services/theme/theme.service";
 import {MatIcon} from "@angular/material/icon";
-import {LanguageService} from "../../services/language.service";
+import {LanguageService} from "../../services/language/language.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {LogoComponent} from "../logo/logo.component";
 

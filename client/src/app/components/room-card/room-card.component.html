@@ -1,6 +1,6 @@
 <a [routerLink]="['/room', room.id]" class="relative flex flex-col my-6 bg-light-card dark:bg-dark-card shadow-sm border border-light-border dark:border-dark-border rounded-lg w-full">
   <div class="relative m-2.5 overflow-hidden text-white rounded-md">
-    <img [ngSrc]="room.image || 'https://via.placeholder.com/422x210?text=No+Image'" alt="{{ room.name }} image"
+    <img [ngSrc]="room.image[0] || 'assets/images/Terrarium.webp'" alt="{{ room.name }} image"
              width="512" height="512"
       class="object-contain object-center transform transition-transform duration-300 hover:scale-110 hover:shadow-xl">
   </div>
@@ -21,7 +21,7 @@
       </li>
     </ul>
   </div>
-  <a [routerLink]="['/room', room.id, '#booking']" class="flex justify-center mt-4 mb-7">
+  <a [routerLink]="['/room', room.id]" [fragment]="'booking'" class="flex justify-center mt-4 mb-7">
     <div class="p-3 rounded-md bg-primary border  border-transparent hover:border-light-border hover:dark:border-light-border text-white
   shadow-lg transform transition-transform duration-300 hover:scale-110 hover:shadow-xl w-full max-w-xs font-semibold uppercase">
       {{ "FEATURES.CTA" | translate }}

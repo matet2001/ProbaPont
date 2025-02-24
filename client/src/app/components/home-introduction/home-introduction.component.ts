@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {CtaCardComponent} from "../cta-card/cta-card.component";
 import {MatIcon} from "@angular/material/icon";
 import {TranslatePipe} from "@ngx-translate/core";
-import {GlobalService} from "../../services/global.service";
+import {GlobalService} from "../../services/global/global.service";
 import {RouterLink} from "@angular/router";
 
 @Component({

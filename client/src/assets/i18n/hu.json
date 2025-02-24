@@ -70,7 +70,25 @@
   "ROOMS": {
     "PRE_TITLE": "Belvárosi És Modern",
     "TITLE": "Próbatermeink",
-    "DESCRIPTION": "Próbahelyünkön 6 hangszigetelt, modern próbaterem várja a zenészeket, 22 m²-től 40 m²-ig. Minden terem jól felszerelt, kiváló akusztikával, légcserélő rendszerrel, és a két legnagyobb próbateremben légkondicionálás is biztosított a maximális kényelem érdekében."
+    "DESCRIPTION": "Próbahelyünkön 6 hangszigetelt, modern próbaterem várja a zenészeket, 22 m²-től 40 m²-ig. Minden terem jól felszerelt, kiváló akusztikával, légcserélő rendszerrel, és a két legnagyobb próbateremben légkondicionálás is biztosított a maximális kényelem érdekében.",
+    "EQUIPMENT": "Felszereltség",
+    "SIZE": "Méret",
+    "BASE_PRICE": "Alapár",
+    "BASE": "Alap felszerelés",
+    "BASE_DESC": "AMI BENNE VAN AZ ÁRBAN",
+    "RENT": "Bérelhető felszerelés",
+    "RENT_DESC": "NINCS BENNE AZ ÁRBAN",
+    "HOURLY_RATES": "Óradíjak",
+    "CATEGORY": "Kategória",
+    "NORMAL": "Normál",
+    "LAST_MINUTE": "Last Minute",
+    "BAND": "Zenekari Próba",
+    "INDIVIDUAL": "Egyéni Próba",
+    "LAST_MINUTE_DEAL": "Last Minute Akció",
+    "LAST_MINUTE_DESC": "Rugalmas vagy? Foglalj próbatermet legfeljebb 3 órával előre, és élvezd a kedvezményes óradíjat! Töltsd meg a naptárunk üres helyeit, és próbálj olcsóbban!",
+    "INDIVIDUAL_PRACTICE": "Egyéni Próba",
+    "INDIVIDUAL_DESC": "Egyedül gyakorolnál? Nálunk kedvezményes áron bérelhetsz próbatermet, hogy zavartalanul fejleszthesd a tudásod!",
+    "CTA":"Most hogy megjött a kedved"
   }
 }
 

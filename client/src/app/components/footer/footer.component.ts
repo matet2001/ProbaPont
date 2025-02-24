@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {LogoComponent} from "../logo/logo.component";
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgForOf} from "@angular/common";
-import {GlobalService} from "../../services/global.service";
+import {GlobalService} from "../../services/global/global.service";
 
 @Component({
   selector: 'app-footer',

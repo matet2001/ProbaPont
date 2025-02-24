@@ -1,18 +1,49 @@
-import { Component } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, ElementRef, Inject, SimpleChanges, ViewChild} from '@angular/core';
+import {ActivatedRoute, RouterLink} from "@angular/router";
+import {GlobalService} from "../../services/global/global.service";
+import {DOCUMENT, NgForOf, NgOptimizedImage, NgStyle} from "@angular/common";
+import {CtaCardComponent} from "../../components/cta-card/cta-card.component";
+import {TranslatePipe} from "@ngx-translate/core";
+import {MatIcon} from "@angular/material/icon";
+import {IconComponent} from "../../components/icon/icon.component";
+import {RoomListComponent} from "../../components/room-list/room-list.component";
 
 @Component({
   selector: 'app-room-detail',
   standalone: true,
-  imports: [],
+  imports: [
+    CtaCardComponent,
+    RouterLink,
+    TranslatePipe,
+    MatIcon,
+    NgForOf,
+    IconComponent,
+    NgStyle,
+    RoomListComponent
+  ],
   templateUrl: './room-detail.component.html',
 })
 export class RoomDetailComponent {
-  roomId!: string;
+  roomId!: number;
+  room!: any;
+  randomRooms: any[] = []
 
-  constructor(private route: ActivatedRoute) {}
+  @ViewChild('booking') bookingSection!: ElementRef;
 
-  ngOnInit() {
-    this.roomId = this.route.snapshot.paramMap.get('id')!; // Get ID from URL
+  constructor(private route: ActivatedRoute, public global: GlobalService) {
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.roomId = +params['id'];
+      this.room = this.global.rooms.find(room => room.id === this.roomId);
+      this.randomRooms = this.global.getRandomRooms(3, this.roomId);
+    });
+  }
+
+  getBackgroundImage(room: any, index: number): string {
+    const fallbackImage = 'assets/images/rooms/Terrarium.webp';
+    const imageUrl = room.image?.[index] || fallbackImage;
+    return `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)), url(${imageUrl})`;
   }
 }

@@ -44,3 +44,7 @@ body::before {
     content: "XXL";
   }
 }
+
+/*html {*/
+/*  scroll-behavior: smooth;*/
+/*}*/

@@ -5,7 +5,7 @@ import {MatIcon} from "@angular/material/icon";
 import {TranslatePipe} from "@ngx-translate/core";
 import {LogoComponent} from "../../components/logo/logo.component";
 import {CtaCardComponent} from "../../components/cta-card/cta-card.component";
-import {GlobalService} from "../../services/global.service";
+import {GlobalService} from "../../services/global/global.service";
 import {NgOptimizedImage} from "@angular/common";
 import {HomeIntroductionComponent} from "../../components/home-introduction/home-introduction.component";
 import {RoomsComponent} from "../rooms/rooms.component";
@@ -18,8 +18,6 @@ import {RoomsComponent} from "../rooms/rooms.component";
     RoomsComponent
   ],
   templateUrl: './home.component.html',
-  styles: ``
 })
 export class HomeComponent {
-
 }
