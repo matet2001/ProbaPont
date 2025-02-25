@@ -7,7 +7,7 @@
 
         <!--Contact-->
         <div class="mt-5">
-          <h2 class="mb-4 text-sm font-semibold uppercase">{{ "CONTACT" | translate }}</h2>
+          <h2 class="mb-4 text-sm font-semibold uppercase">{{ "FOOTER.CONTACT" | translate }}</h2>
           <p class="mb-3">Budapest, Nagymező u. 44-1st Floor, 1065</p>
 
           <p class="mb-3">
@@ -25,7 +25,7 @@
 
       <!-- Partners Section -->
       <div class="sm:ml-10">
-        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "PARTNERS" | translate }}</h2>
+        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "FOOTER.PARTNERS" | translate }}</h2>
         <ul>
           <li *ngFor="let partner of partners" class="mb-4">
             <a [href]="partner.link" target="_blank" class="hover:underline">{{ partner.name }}</a>
@@ -35,7 +35,7 @@
 
       <!-- Equipments Section -->
       <div class="sm:ml-10">
-        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "EQUIPMENTS" | translate }}</h2>
+        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "FOOTER.EQUIPMENTS" | translate }}</h2>
         <ul>
           <li *ngFor="let brand of equipments" class="mb-4">
             <h3>{{ brand.name }}</h3>
@@ -50,7 +50,7 @@
 
       <!-- Artists Section -->
       <div class="sm:ml-10">
-        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "ARTISTS" | translate }}</h2>
+        <h2 class="mb-4 text-sm font-semibold uppercase">{{ "FOOTER.ARTISTS" | translate }}</h2>
         <ul>
           <li *ngFor="let artist of artists" class="mb-4">
             <a [href]="artist.link" class="hover:underline">{{ artist.name }}</a>
@@ -67,10 +67,10 @@
       <div class="text-sm justify-between items-center flex gap-x-4">
           <span>© 2025 PróbaPont</span>
           <span>|</span>
-          <span>{{ "RIGHTS" | translate }}</span>
+          <span>{{ "FOOTER.RIGHTS" | translate }}</span>
           <span>|</span>
           <span>
-            {{ "DEVELOPMENT" | translate }}:
+            {{ "FOOTER.DEVELOPMENT" | translate }}:
             <a href="https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/" class="hover:text-primary" target="_blank">
               Pojbics Máté
             </a>

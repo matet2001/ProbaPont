@@ -11,12 +11,14 @@
     "SETTINGS": "Settings",
     "LOGOUT": "Sign out"
   },
-  "PARTNERS": "Partners",
-  "EQUIPMENTS": "Equipments",
-    "ARTISTS": "Famous customers",
-  "RIGHTS": "All Rights Reserved",
-  "CONTACT": "Contact",
-  "DEVELOPMENT": "Development",
+  "FOOTER": {
+    "PARTNERS": "Partners",
+    "EQUIPMENTS": "Equipments",
+      "ARTISTS": "Famous customers",
+    "RIGHTS": "All Rights Reserved",
+    "DEVELOPMENT": "Development",
+    "CONTACT": "Contact"
+  },
   "HERO": {
     "TITLE": "PróbaPont",
     "DESCRIPTION": "Six soundproof, modern rehearsal rooms in downtown Budapest",
@@ -89,5 +91,13 @@
     "INDIVIDUAL_PRACTICE": "Individual Practice",
     "INDIVIDUAL_DESC": "Practicing solo? Rent a rehearsal room at a discounted rate and enjoy a distraction-free environment to perfect your skills!",
     "CTA": "Now that you're in the mood"
+  },
+  "CONTACT": {
+    "PRE_TITLE": "How to Find Us",
+    "TITLE": "Visit Our Rehearsal Space",
+    "DESC": "Our entrance is through the gate next to Pepco on Nagymező street. Press the button labeled 'PróbaPont' to ring the bell.",
+    "PUBLIC_TRANSPORT": "You can easily reach us by public transport: trams 2 and 2A, trolleybuses 70 and 78, buses 15 and 115, and the M3 metro are all just 5 minutes away from our rehearsal space.",
+    "GOOGLE_MAPS": "Open in Google Maps",
+    "BKK_FUTAR": "Plan Route with BKK Futár"
   }
 }

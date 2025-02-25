@@ -11,12 +11,14 @@
     "SETTINGS": "Beállítások",
     "LOGOUT": "Kijelentkezés"
   },
-  "PARTNERS": "Partnerek",
-  "EQUIPMENTS": "Felszerelések",
-  "ARTISTS": "Nálunk próbálnak",
-  "RIGHTS": "Minden jog fenntartva",
-  "CONTACT": "Elérhetőségeink",
-  "DEVELOPMENT": "Webfejlesztés",
+  "FOOTER": {
+    "PARTNERS": "Partnerek",
+    "EQUIPMENTS": "Felszerelések",
+    "ARTISTS": "Nálunk próbálnak",
+    "RIGHTS": "Minden jog fenntartva",
+    "CONTACT": "Elérhetőségeink",
+    "DEVELOPMENT": "Webfejlesztés"
+  },
   "HERO": {
     "TITLE": "PróbaPont",
     "DESCRIPTION": "Hat hangszigetelt, modern próbaterem a Belvárosban.",
@@ -89,6 +91,14 @@
     "INDIVIDUAL_PRACTICE": "Egyéni Próba",
     "INDIVIDUAL_DESC": "Egyedül gyakorolnál? Nálunk kedvezményes áron bérelhetsz próbatermet, hogy zavartalanul fejleszthesd a tudásod!",
     "CTA":"Most hogy megjött a kedved"
+  },
+  "CONTACT": {
+    "PRE_TITLE": "Hogyan Találsz Meg Minket?",
+    "TITLE": "Látogass el a próbaterműnkbe",
+    "DESC": "A bejáratunk a Pepco melletti kapu a Nagymező utcában. Nyomd meg a 'PróbaPont' feliratú gombot a csengetéshez.",
+    "PUBLIC_TRANSPORT": "Könnyedén megközelíthetsz bennünket tömegközlekedési eszközökkel: 2-es és 2A villamos, 70-es és 78-as trolibusz, 15-ös és 115-ös busz, M3 metró… mind csupán 5 percre a próbahelyünktől.",
+    "GOOGLE_MAPS": "Megnyitás Google Térképen",
+    "BKK_FUTAR": "Útvonaltervezés BKK Futárral"
   }
 }
 

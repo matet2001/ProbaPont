@@ -1,1 +1,36 @@
-<p>contact works!</p>
+<div
+  class="relative mt-20 rounded-3xl p-10 px-6 lg:px-8  min-h-[80vh] sm:min-h-screen h-auto bg-cover bg-center text-white"
+  [ngStyle]="{'background-image': getBackgroundImage()}">
+
+  <div class="flex flex-col items-center justify-start w-full max-w-7xl mx-auto bg-black/30 backdrop-blur-sm rounded-xl my-10 p-5">
+    <h2 class="text-base/7 uppercase text-dark-secondary font-poppins tracking-[0.25em]">
+      {{ "CONTACT.PRE_TITLE" | translate }}
+    </h2>
+    <h1 class="mt-2 text-3xl font-semibold tracking-tight text-pretty sm:text-5xl lg:text-balance mb-7">
+      {{ "CONTACT.TITLE" | translate }}
+    </h1>
+
+    <div id="map" class="w-full max-w-3xl min-h-[60vh] mb-10"></div>
+
+    <div class="text-lg text-dark-foreground max-w-3xl mx-auto leading-relaxed">
+      <p>{{ "CONTACT.DESC" | translate }}</p>
+      <p class="mt-4">{{ "CONTACT.PUBLIC_TRANSPORT" | translate }}</p>
+
+      <div class="flex justify-between gap-4 mt-6">
+        <!-- Google Maps Link -->
+        <a href="https://www.google.com/maps?q=Budapest,Nagymező+u.+44-1st+Floor,1065"
+           target="_blank"
+           class="px-6 py-3 bg-primary text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
+          {{ "CONTACT.GOOGLE_MAPS" | translate }}
+        </a>
+
+        <!-- BKK Futár Link -->
+        <a href="http://futar.bkk.hu/?toCoord=47.505075%2C19.057828&amp;toName=Pr%C3%B3baterem%20-%20Pr%C3%B3bapont&amp;toSubName=Nagymez%C5%91%20u.%2044-1st%20Floor%2C%201065&amp;layers=GSVB"
+           target="_blank"
+           class="px-6 py-3 bg-primary text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
+          {{ "CONTACT.BKK_FUTAR" | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
