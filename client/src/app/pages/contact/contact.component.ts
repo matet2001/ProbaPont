@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Loader} from "@googlemaps/js-api-loader";
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgStyle} from "@angular/common";
 import mapStyle from "../../../assets/map-styles.json";
@@ -15,31 +14,40 @@ import mapStyle from "../../../assets/map-styles.json";
 })
 export class ContactComponent {
   ngOnInit() {
-    const loader = new Loader({
-      apiKey: 'AIzaSyApJybOR12b3mq7Fy00OsnVkpHoP0u0gjQ',
-    });
+    let map: google.maps.Map;
 
-    loader.load().then(() => {
+    async function initMap(): Promise<void> {
       const center = { lat: 47.50507459467509, lng: 19.05782807046606 };
+      const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+      const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-      const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      map = new Map(document.getElementById("map") as HTMLElement, {
         center: center,
         zoom: 17,
         styles: mapStyle,
+        mapId: "9fc67a33f8cd6041"
       });
 
-      // Add a marker at the center
-      new google.maps.Marker({
-        position: center,
-        map: map,
-        title: 'Our Location',
-        icon: {
-          url: 'assets/Logo-dark.png', // Your logo path
-          scaledSize: new google.maps.Size(100, 50), // Adjust size
-          anchor: new google.maps.Point(25, 50) // Centers the image
-        }
+      // A marker using a Font Awesome icon for the glyph.
+      const icon = document.createElement('div');
+      icon.innerHTML = '<i class="fa fa-music fa-lg"></i>';
+      const faPin = new PinElement({
+        glyph: icon,
+        glyphColor: '#ffffff',
+        background: '#008080',
+        borderColor: '#000000',
       });
-    });
+
+      new AdvancedMarkerElement({
+        map,
+        position: center,
+        content: faPin.element,
+        title: 'A marker using a FontAwesome icon for the glyph.'
+      });
+    }
+
+    initMap();
+
   }
 
   getBackgroundImage(): string {
