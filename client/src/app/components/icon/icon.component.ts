@@ -8,7 +8,7 @@ import {NgOptimizedImage} from "@angular/common";
     NgOptimizedImage
   ],
   template: `
-    <img class="h-10 w-10" [ngSrc]="'assets/icons/new/' + iconName + '.png'" width="512" height="512" alt="{{ iconName }} icon">
+    <img class="h-10 w-10" [ngSrc]="'assets/icons/' + iconName + '.png'" width="512" height="512" alt="{{ iconName }} icon">
   `,
 })
 export class IconComponent {

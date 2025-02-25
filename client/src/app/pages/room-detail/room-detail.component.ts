@@ -7,6 +7,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {MatIcon} from "@angular/material/icon";
 import {IconComponent} from "../../components/icon/icon.component";
 import {RoomListComponent} from "../../components/room-list/room-list.component";
+import {SalesSectionComponent} from "../../components/sales-section/sales-section.component";
 
 @Component({
   selector: 'app-room-detail',
@@ -19,7 +20,8 @@ import {RoomListComponent} from "../../components/room-list/room-list.component"
     NgForOf,
     IconComponent,
     NgStyle,
-    RoomListComponent
+    RoomListComponent,
+    SalesSectionComponent
   ],
   templateUrl: './room-detail.component.html',
 })

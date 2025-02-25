@@ -33,9 +33,9 @@
           </h3>
           <p class="mt-2 text-3xl sm:text-4xl font-semibold">{{ "ROOMS.BASE" | translate }}</p>
           <ul class="text-left font-poppins text-lg sm:text-xl mt-5 space-y-3 flex-1">
-            <li *ngFor="let equipment of room.equipment" class="flex items-center gap-x-4">
-              <app-icon [iconName]="equipment.icon" class="h-10 w-10"/>
-              {{ equipment.name }}
+            <li *ngFor="let equipmentId of room.equipmentIds" class="flex items-center gap-x-4">
+              <app-icon [iconName]="global.equipmentList[equipmentId].icon" class="h-10 w-10"/>
+              {{ global.equipmentList[equipmentId].name }}
             </li>
           </ul>
         </div>
@@ -47,9 +47,9 @@
           </h3>
           <p class="mt-2 text-3xl sm:text-4xl font-semibold">{{ "ROOMS.RENT" | translate }}</p>
           <ul class="text-left font-poppins text-lg sm:text-xl mt-5 space-y-3 flex-1">
-            <li *ngFor="let equipment of room.equipment" class="flex items-center gap-x-4">
-              <app-icon [iconName]="equipment.icon" class="h-10 w-10"/>
-              {{ equipment.name }} <p class="text-light-secondary">- 300 {{ "FEATURES.PRICE_UNIT" | translate }}</p>
+            <li *ngFor="let equipmentId of room.rentableEquipmentIds" class="flex items-center gap-x-4">
+              <app-icon [iconName]="global.rentableEquipmentList[equipmentId].icon" class="h-10 w-10"/>
+              {{ global.rentableEquipmentList[equipmentId].name }} <p class="text-light-secondary">- {{ global.rentableEquipmentList[equipmentId].price }} {{ "FEATURES.PRICE_UNIT" | translate }}</p>
             </li>
           </ul>
         </div>
@@ -86,16 +86,16 @@
                   {{ room.price }} {{ "FEATURES.PRICE_UNIT" | translate }}
                 </td>
                 <td class="px-6 py-4 text-center text-lg sm:text-xl font-bold">
-                  {{ room.price }} {{ "FEATURES.PRICE_UNIT" | translate }}
+                  {{ global.calculateLastMinutePrice(room.price) }} {{ "FEATURES.PRICE_UNIT" | translate }}
                 </td>
               </tr>
               <tr>
                 <td class="px-6 py-4 text-lg sm:text-xl font-medium">{{ 'ROOMS.INDIVIDUAL' | translate }}</td>
                 <td class="px-6 py-4 text-center text-lg sm:text-xl font-bold">
-                  {{ room.price }} {{ "FEATURES.PRICE_UNIT" | translate }}
+                  {{ global.calculateLastMinutePrice(room.price) }} {{ "FEATURES.PRICE_UNIT" | translate }}
                 </td>
                 <td class="px-6 py-4 text-center text-lg sm:text-xl font-bold">
-                  {{ room.price }} {{ "FEATURES.PRICE_UNIT" | translate }}
+                  {{ global.calculatePriceWithBothSales(room.price) }} {{ "FEATURES.PRICE_UNIT" | translate }}
                 </td>
               </tr>
               </tbody>
@@ -105,18 +105,9 @@
       </div>
 
       <!-- Sales Section -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 mt-16 gap-10 mb-10">
-        <div class="max-w-xl mx-auto text-center">
-          <h2 class="text-3xl font-semibold">{{ 'ROOMS.LAST_MINUTE_DEAL' | translate }}</h2>
-          <p class="font-poppins text-lg sm:text-xl mt-4 text-dark-secondary">{{ 'ROOMS.LAST_MINUTE_DESC' | translate }}</p>
-        </div>
-        <div class="max-w-xl mx-auto text-center">
-          <h2 class="text-3xl font-semibold">{{ 'ROOMS.INDIVIDUAL_PRACTICE' | translate }}</h2>
-          <p class="font-poppins text-lg sm:text-xl mt-4 text-dark-secondary">{{ 'ROOMS.INDIVIDUAL_DESC' | translate }}</p>
-        </div>
-      </div>
+      <app-sales-section />
+
     </div>
-  </div>
 </div>
 
 
@@ -124,17 +115,17 @@
      [ngStyle]="{'background-image': getBackgroundImage(room, 1)}">
   <!--Booking Section-->
   <div id="booking" #booking class="w-full max-w-7xl mx-auto bg-black/30 backdrop-blur-sm rounded-xl my-10 p-5">
-    <div class="mx-auto max-w-2xl text-center flex flex-col justify-center my-10">
+    <div class="mx-auto max-w-xl text-center flex flex-col justify-center my-10">
       <h2 class="text-3xl sm:text-4xl font-semibold">{{ 'ROOMS.CTA' | translate }}</h2>
 
       <a class="w-full h-full mt-8" routerLink="/booking">
-        <div class="text-lg font-poppins  p-5 text-dark-foreground sm:text-xl/8 flex flex-col rounded bg-primary shadow-lg transform transition-transform duration-300 hover:scale-110 hover:shadow-xl h-full border border-transparent hover:border-light-border hover:text-white">
+        <div class="text-lg font-poppins p-5 text-dark-foreground sm:text-xl/8 flex flex-col rounded bg-primary shadow-lg transform transition-transform duration-300 hover:scale-110 hover:shadow-xl h-full border border-transparent hover:border-light-border hover:text-white">
           {{ 'HERO.CTA' | translate }}
         </div>
       </a>
 
       <!-- Book CTA    -->
-      <div class="mt-10 flex flex-col md:flex-row justify-around gap-6 w-full">
+      <div class="mt-10 flex flex-col md:flex-row justify-between gap-6 w-full text-light-foreground dark:text-dark-foreground">
         <app-cta-card
           [title]="'HERO.CTA_BOOK' | translate"
           [icon]="'calendar_today'"

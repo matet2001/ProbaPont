@@ -38,35 +38,13 @@
     "AIR_CONDITIONED_DESC": "Minden terem klimatizált a kellemes hőmérsékletért.",
     "PRICE_UNIT": "FT/óra",
     "CTA": "Ide Foglalok",
-    "ROOM_1": {
-      "1": "Légkondicionált",
-      "2": "Kiváló akusztika",
-      "PRICE_ADD": "További költségek érvényesek"
-    },
-    "ROOM_2": {
-      "1": "Természetes környezet",
-      "2": "Nyugtató atmoszféra",
-      "PRICE_ADD": "További díjak lehetségesek"
-    },
-    "ROOM_3": {
-      "1": "Tüzes világítás",
-      "2": "Energiával teli tér",
-      "PRICE_ADD": "Prémium árkategóriás díjak"
-    },
-    "ROOM_4": {
-      "1": "Neon galaxis világítás",
-      "2": "Futurisztikus felszerelés",
-      "PRICE_ADD": "Magas árkategória"
-    },
-    "ROOM_5": {
-      "1": "Kényelmes ülőhelyek",
-      "2": "Vintage felszerelés",
-      "PRICE_ADD": "Közepes árkategória"
-    },
-    "ROOM_6": {
-      "1": "Minimalista dizájn",
-      "2": "Kontrasztos világítás",
-      "PRICE_ADD": "Prémium árkategória"
+    "FEATURES": {
+      "ROOM_1": "Kiváló akusztika",
+      "ROOM_2": "Természetes hangulat",
+      "ROOM_3": "Lángoló világítás",
+      "ROOM_4": "Neon galaxis világítás",
+      "ROOM_5": "Kényelmes ülőhelyek",
+      "ROOM_6": "Minimalista dizájn"
     }
   },
   "ROOMS": {
@@ -99,6 +77,11 @@
     "PUBLIC_TRANSPORT": "Könnyedén megközelíthetsz bennünket tömegközlekedési eszközökkel: 2-es és 2A villamos, 70-es és 78-as trolibusz, 15-ös és 115-ös busz, M3 metró… mind csupán 5 percre a próbahelyünktől.",
     "GOOGLE_MAPS": "Megnyitás Google Térképen",
     "BKK_FUTAR": "Útvonaltervezés BKK Futárral"
+  },
+  "PRICES": {
+    "PRE_TITLE": "Hogyan számolhattok",
+    "TITLE": "Áraink",
+    "HOUR_PRICE": "Óradíjaink"
   }
 }
 
