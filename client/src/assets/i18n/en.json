@@ -81,6 +81,8 @@
   "PRICES": {
     "PRE_TITLE": "What you can expect",
     "TITLE": "Our Prices",
-    "HOUR_PRICE": "Hourly Rate"
+    "HOUR_PRICE": "Hourly Rate",
+    "PRICE_UNIT": "HUF",
+    "AC": "AC Included"
   }
 }

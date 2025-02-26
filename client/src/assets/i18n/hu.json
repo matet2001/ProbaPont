@@ -81,7 +81,9 @@
   "PRICES": {
     "PRE_TITLE": "Hogyan számolhattok",
     "TITLE": "Áraink",
-    "HOUR_PRICE": "Óradíjaink"
+    "HOUR_PRICE": "Óradíjaink",
+    "PRICE_UNIT": "FT",
+    "AC": "Légkondis"
   }
 }
 
