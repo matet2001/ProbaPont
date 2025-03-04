@@ -7,6 +7,7 @@ import {MatIcon} from "@angular/material/icon";
 import {LanguageService} from "../../services/language/language.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {LogoComponent} from "../logo/logo.component";
+import {AuthButtonComponent} from "../auth/auth-button/auth-button.component";
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,8 @@ import {LogoComponent} from "../logo/logo.component";
     CommonModule,
     NgOptimizedImage,
     TranslatePipe,
-    LogoComponent
+    LogoComponent,
+    AuthButtonComponent
   ],
   templateUrl: './navbar.component.html',
 })

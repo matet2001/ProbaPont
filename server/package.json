@@ -6,7 +6,7 @@
         "test": "jest --detectOpenHandles --forceExit",
         "start": "node dist/app.js",
         "build": "tsc",
-        "dev": "nodemon --watch 'src/**/*' --exec 'ts-node -r dotenv/config' src/app.ts"
+        "dev": "nodemon --watch \"src/**/*\" --exec \"npx ts-node -r dotenv/config\" src/app.ts"
     },
     "keywords": [],
     "author": "",

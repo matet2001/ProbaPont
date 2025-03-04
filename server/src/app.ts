@@ -15,7 +15,7 @@ const {
 } = process.env;
 
 
-const allowedOrigins = ['http://localhost',];
+const allowedOrigins = ['http://localhost**',];
 
 const options: cors.CorsOptions = {
     origin: allowedOrigins,

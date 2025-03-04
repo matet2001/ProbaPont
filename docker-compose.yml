@@ -9,6 +9,8 @@ services:
     build:
       context: ./server
     container_name: backend
+    ports:
+      - "8080:8080"
     environment:
       - MONGO_URI=${MONGO_URI}
       - PORT=${PORT}

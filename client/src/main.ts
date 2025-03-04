@@ -1,15 +1,13 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import {provideRouter, withComponentInputBinding, withInMemoryScrolling} from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi} from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { ViewportScroller } from '@angular/common';
-import { Router, Scroll } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import { AppComponent } from './app/app.component';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {routes} from "./app/app.routes";
+import {authInterceptor} from "./app/services/auth/auth-interceptor.service";
 
 // Factory function for translation loader
 export function HttpLoaderFactory(http: HttpClient) {
@@ -18,7 +16,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -27,6 +24,7 @@ bootstrapApplication(AppComponent, {
       }),
       withComponentInputBinding()
     ),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

@@ -45,12 +45,12 @@
         </div>
       </div>
       <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
-<!--        TODO:Add attribute to Freepik-->
         <button class="font-emoji" (click)="toggleLanguage()">
           <img [ngSrc]="getCurrentLanguage() == 'en' ? 'assets/hungary.png' : 'assets/united-kingdom.png'" [alt]='getCurrentLanguage()' height="25" width="25">
         </button>
-        <app-theme-toggle></app-theme-toggle> <!-- Dark Mode Toggle -->
-        <div class="relative ml-3 menu-container"> <!-- Profile Dropdown -->
+        <app-theme-toggle /> <!-- Dark Mode Toggle -->
+        <!-- Profile Dropdown -->
+        <div class="relative ml-3 menu-container">
             <button type="button" (click)="toggleUserMenu()"
                     class="relative flex rounded-full bg-light-border dark:bg-dark-border text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -71,6 +71,7 @@
             </div>
           </div>
         </div>
+        <app-auth-button />
       </div>
     </div>
   </div>
