@@ -84,6 +84,20 @@
     "HOUR_PRICE": "Óradíjaink",
     "PRICE_UNIT": "FT",
     "AC": "Légkondis"
+  },
+  "AUTH": {
+    "LOGIN": "Bejelentkezés",
+    "REGISTER": "Regisztráció",
+    "USERNAME": "Felhasználónév",
+    "EMAIL": "Email cím",
+    "PASSWORD": "Jelszó",
+    "USERNAME_REQUIRED": "A felhasználónév kötelező (min. 3 karakter)",
+    "EMAIL_REQUIRED": "Érvényes email cím szükséges",
+    "PASSWORD_REQUIRED": "A jelszónak legalább 6 karakterből kell állnia",
+    "NEED_ACCOUNT": "Nincs még fiókod?",
+    "HAVE_ACCOUNT": "Már van fiókod?",
+    "ERROR_MESSAGE": "Hiba történt, próbáld újra!",
+    "CLOSE": "Bezárás"
   }
 }
 

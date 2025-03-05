@@ -44,35 +44,23 @@
           </div>
         </div>
       </div>
-      <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
-        <button class="font-emoji" (click)="toggleLanguage()">
-          <img [ngSrc]="getCurrentLanguage() == 'en' ? 'assets/hungary.png' : 'assets/united-kingdom.png'" [alt]='getCurrentLanguage()' height="25" width="25">
-        </button>
-        <app-theme-toggle /> <!-- Dark Mode Toggle -->
-        <!-- Profile Dropdown -->
-        <div class="relative ml-3 menu-container">
-            <button type="button" (click)="toggleUserMenu()"
-                    class="relative flex rounded-full bg-light-border dark:bg-dark-border text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
-                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">Open user menu</span>
-              <mat-icon>account_circle</mat-icon>
+        <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
+            <button class="font-emoji" (click)="toggleLanguage()">
+                <img [ngSrc]="getCurrentLanguage() == 'en' ? 'assets/hungary.png' : 'assets/united-kingdom.png'"
+                     [alt]='getCurrentLanguage()' height="25" width="25">
             </button>
-          <div [ngClass]="{
-            'opacity-0 scale-95': !isUserMenuOpen,
-            'opacity-100 scale-100': isUserMenuOpen
-          }"
-               class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-light-card dark:bg-dark-card py-1 shadow-lg ring-1 ring-light-border dark:ring-dark-border transition-all duration-200 ease-out">
-            <div *ngFor="let route of userRoutes">
-              <a [routerLink]="route.href"
-                 class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border">
-                {{ route.name | translate }}
-              </a>
-            </div>
-          </div>
+            <app-theme-toggle/> <!-- Dark Mode Toggle -->
         </div>
-        <app-auth-button />
-      </div>
+        <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
+            <div *ngIf="authService.isAuthenticated() | async; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+                <app-profile-dropdown/>
+            </ng-template>
+            <ng-template #elseBlock>
+                <app-auth-button/>
+            </ng-template>
+
+        </div>
     </div>
   </div>
 

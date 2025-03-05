@@ -84,5 +84,19 @@
     "HOUR_PRICE": "Hourly Rate",
     "PRICE_UNIT": "HUF",
     "AC": "AC Included"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "USERNAME": "Username",
+    "EMAIL": "Email address",
+    "PASSWORD": "Password",
+    "USERNAME_REQUIRED": "Username is required (min. 3 characters)",
+    "EMAIL_REQUIRED": "Valid email is required",
+    "PASSWORD_REQUIRED": "Password must be at least 6 characters",
+    "NEED_ACCOUNT": "Need an account?",
+    "HAVE_ACCOUNT": "Already have an account?",
+    "ERROR_MESSAGE": "An error occurred, please try again!",
+    "CLOSE": "Close"
   }
 }

@@ -1,56 +1,119 @@
-<div
-        class="relative z-20"
-        aria-labelledby="modal-title"
-        role="dialog"
-        aria-modal="true"
-        [hidden]="!authService.isOpen"
->
-    <!-- Backdrop -->
-    <div
-        (mousedown)="authService.closeModal()"
-        *ngIf="authService.isOpen"
-        class="fixed inset-0 bg-gray-500/75 transition-opacity ease-out duration-200 opacity-100"
-        aria-hidden="true"
-    ></div>
+<dialog #authModal id="authModal" class="modal">
+    <div class="modal-box flex flex-col justify-center p-4 bg-light-card dark:bg-dark-card">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
 
-    <div class="fixed inset-0 z-20 w-screen overflow-y-auto flex items-center justify-center">
-        <!-- Modal Panel -->
-        <div
-                [ngClass]="{
-        'opacity-100 translate-y-0 sm:scale-100 transition ease-out duration-300': authService.isOpen,
-        'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95 transition ease-in duration-200': !authService.isOpen
-      }"
-                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl sm:w-full sm:max-w-md modal-container"
-        >
-            <!-- Modal content -->
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <!-- Red X close button -->
-                <button (click)="authService.closeModal()" class="absolute top-0 right-0 m-2 text-red-600 text-xl font-bold">
-                    &times;
-                </button>
-                <h3 class="text-lg font-semibold text-gray-900" id="modal-title">
-                    {{ isLoginMode ? 'Login' : 'Register' }}
-                </h3>
-                <div class="mt-2">
-                    <input
-                            *ngIf="!isLoginMode"
-                            [(ngModel)]="username"
-                            type="text"
-                            placeholder="Username"
-                            class="w-full px-3 py-2 border rounded-lg"
-                    />
-                    <input [(ngModel)]="email" type="email" placeholder="Email" class="w-full mt-2 px-3 py-2 border rounded-lg" />
-                    <input [(ngModel)]="password" type="password" placeholder="Password" class="w-full mt-2 px-3 py-2 border rounded-lg" />
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col justify-center items-center mt-5">
+            <h2 class="text-center text-3xl/9 font-bold tracking-tight">
+                {{ (isLoginMode ? 'AUTH.LOGIN' : 'AUTH.REGISTER') | translate }}
+            </h2>
+        </div>
+
+        <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form #authForm="ngForm" (ngSubmit)="submit()" class="space-y-6">
+
+                <!-- Username (Only for Registration) -->
+                <div *ngIf="!isLoginMode">
+
+                    <label for="username" class="block text-sm font-medium">{{ 'AUTH.USERNAME' | translate }}</label>
+                    <div class="mt-2">
+                        <input
+                                id="username"
+                                [(ngModel)]="username"
+                                name="username"
+                                type="text"
+                                [placeholder]="'AUTH.USERNAME' | translate"
+                                class="input w-full mt-2 bg-light-card dark:bg-dark-card border"
+                                required
+                                minlength="3"
+                                #usernameRef="ngModel"
+                        />
+                    </div>
+                    <p *ngIf="usernameRef.invalid && usernameRef.touched" class="text-red-500 text-sm mt-3">
+                        {{ 'AUTH.USERNAME_REQUIRED' | translate }}
+                    </p>
                 </div>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 flex justify-between">
-                <button (click)="submit()" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
-                    {{ isLoginMode ? 'Login' : 'Register' }}
+
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium">{{ 'AUTH.EMAIL' | translate }}</label>
+
+                    <div class="mt-2">
+                        <input
+                                [(ngModel)]="email"
+                                id="email"
+                                name="email"
+                                type="email"
+                                [placeholder]="'AUTH.EMAIL' | translate"
+                                class="input w-full mt-2 bg-light-card dark:bg-dark-card border"
+                                required
+                                email
+                                #emailRef="ngModel"
+                        />
+                    </div>
+                    <p *ngIf="emailRef.invalid && emailRef.touched" class="text-red-500 text-sm mt-3">
+                        {{ 'AUTH.EMAIL_REQUIRED' | translate }}
+                    </p>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium">{{ 'AUTH.PASSWORD' | translate }}</label>
+                    <div class="relative mt-2">
+                        <input
+                                [(ngModel)]="password"
+                                [type]="showPassword ? 'text' : 'password'"
+                                [placeholder]="'AUTH.PASSWORD' | translate"
+                                name="password"
+                                id="password"
+                                autocomplete="current-password"
+                                required
+                                minlength="6"
+                                class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
+                                #passwordRef="ngModel"
+                        />
+                        <button type="button" (click)="showPassword = !showPassword" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                            </svg>
+                            <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p *ngIf="passwordRef.invalid && passwordRef.touched" class="text-red-500 text-sm mt-3">
+                        {{ 'AUTH.PASSWORD_REQUIRED' | translate }}
+                    </p>
+                </div>
+
+                <!-- Error Message from Backend -->
+                <div *ngIf="error" class="mt-4 p-2 text-sm text-red-600 bg-red-100 border border-red-400 rounded">
+                    {{ error }}
+                </div>
+
+                <!-- Submit Button -->
+                <div class="modal-action">
+                    <button type="submit" class="btn flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-primary/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" [disabled]="authForm.invalid">
+                        {{ (isLoginMode ? 'AUTH.REGISTER' : 'AUTH.LOGIN') | translate }}
+                    </button>
+                </div>
+            </form>
+
+
+            <p class="my-5 text-center text-lg/6 text-light-secondary dark:text-dark-secondary">
+                {{ (isLoginMode ? 'AUTH.NEED_ACCOUNT' : 'AUTH.HAVE_ACCOUNT') | translate }}
+
+                <button (click)="toggleMode()" class="font-semibold text-primary hover:text-primary/80">
+                    {{ (isLoginMode ? 'AUTH.LOGIN' : 'AUTH.REGISTER') | translate }}
                 </button>
-                <button (click)="toggleMode()" class="text-sm text-blue-600">
-                    {{ isLoginMode ? 'Need an account?' : 'Already have an account?' }}
-                </button>
-            </div>
+            </p>
         </div>
     </div>
-</div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button>{{ 'AUTH.CLOSE' | translate }}</button>
+    </form>
+</dialog>
+

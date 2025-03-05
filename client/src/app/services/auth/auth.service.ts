@@ -16,7 +16,6 @@ export class AuthService {
   private apiUrl = '/api/auth'; // Update with your backend URL
   private authState = new BehaviorSubject<boolean>(this.hasToken());
   private document: Document;
-  public isOpen = false;
 
   constructor(private localStorageService: LocalStorageService, @Inject(DOCUMENT) private injectedDocument: Document) {
     this.document = injectedDocument;
@@ -24,22 +23,9 @@ export class AuthService {
     this.closeModal();
   }
 
-  public openModal() {
-    this.isOpen = true;
-    // this.renderer.addClass(this.document.body, 'overflow-hidden');
-  }
-
-  @HostListener('document:click', ['$event'])
-  closeModalOutside(event: Event) {
-    const targetElement = event.target as HTMLElement;
-    if (!targetElement.closest('.modal-container')) {
-      this.isOpen = false;
-    }
-  }
-
-  public closeModal() {
-    this.isOpen = false;
-    // this.renderer.removeClass(this.document.body, 'overflow-hidden');
+  closeModal() {
+    const modal = this.document.getElementById("authModal") as HTMLDialogElement;
+    modal?.close();
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
@@ -54,8 +40,8 @@ export class AuthService {
   register(username: string, email: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, { username, email, password }).pipe(
       tap((res) => {
-        this.localStorageService.set('token', res.data);
-        this.authState.next(true);
+        // this.localStorageService.set('token', res.data);
+        // this.authState.next(true);
       })
     );
   }

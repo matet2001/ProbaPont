@@ -14,9 +14,7 @@ const errorHandler = (
     }
 
     res.status(err.status || err._code || 500).json({
-        error: {
-            message: err.message || 'Internal Server Error',
-        },
+        message: err.message || 'Internal Server Error',
     });
 };
 
