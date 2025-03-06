@@ -1,4 +1,4 @@
-import {Injectable, inject, Renderer2, Inject, Input, HostListener} from '@angular/core';
+import {Injectable, inject, Inject} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {LocalStorageService} from "../locale-storage/local-storage.service";
@@ -6,6 +6,12 @@ import {DOCUMENT} from "@angular/common";
 
 interface AuthResponse {
   data: string; // Token received from the backend
+}
+
+interface UserData {
+  username: string;
+  email: string;
+  role: string;
 }
 
 @Injectable({
@@ -17,15 +23,25 @@ export class AuthService {
   private authState = new BehaviorSubject<boolean>(this.hasToken());
   private document: Document;
 
+  private modal: HTMLDialogElement | null = null;
+  public userData: UserData;
+
   constructor(private localStorageService: LocalStorageService, @Inject(DOCUMENT) private injectedDocument: Document) {
     this.document = injectedDocument;
 
     this.closeModal();
   }
 
+  initModal() {
+    this.modal = this.document.getElementById("authModal") as HTMLDialogElement;
+  }
+
+  openModal() {
+    this.modal?.showModal();
+  }
+
   closeModal() {
-    const modal = this.document.getElementById("authModal") as HTMLDialogElement;
-    modal?.close();
+    this.modal?.close();
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
@@ -35,6 +51,14 @@ export class AuthService {
         this.authState.next(true);
       })
     );
+  }
+
+  getUserData() {
+    this.http.get<UserData>(`${this.apiUrl}/my-account`).pipe(
+        tap((res) => {
+          this.userData = res;
+        })
+    )
   }
 
   register(username: string, email: string, password: string): Observable<AuthResponse> {
@@ -51,8 +75,9 @@ export class AuthService {
     this.authState.next(false);
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return this.authState.asObservable();
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return token != null;
   }
 
   private hasToken(): boolean {

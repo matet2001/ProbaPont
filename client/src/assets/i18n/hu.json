@@ -98,6 +98,9 @@
     "HAVE_ACCOUNT": "Már van fiókod?",
     "ERROR_MESSAGE": "Hiba történt, próbáld újra!",
     "CLOSE": "Bezárás"
+  },
+  "BOOKING": {
+    "TITLE": "Foglalás"
   }
 }
 

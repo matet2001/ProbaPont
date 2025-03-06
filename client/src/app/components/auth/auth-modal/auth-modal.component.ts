@@ -25,6 +25,10 @@ export class AuthModalComponent {
 
   constructor(private authService: AuthService) {}
 
+  ngOnInit() {
+    this.authService.initModal();
+  }
+
   ngAfterViewInit() {
     this.authModal.nativeElement.addEventListener('close', () => {
       this.resetForm();

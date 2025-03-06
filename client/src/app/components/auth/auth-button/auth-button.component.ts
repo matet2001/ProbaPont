@@ -9,7 +9,7 @@ import {TranslatePipe} from "@ngx-translate/core";
   imports: [NgIf, AsyncPipe, TranslatePipe],
   template: `
     <div class="text-sm">
-      <button *ngIf="!(authService.isAuthenticated() | async)" onclick="authModal.showModal()" class="btn bg-primary">
+      <button *ngIf="!(authService.isAuthenticated())" onclick="authModal.showModal()" class="btn bg-primary">
         {{ 'AUTH.LOGIN' | translate }}
       </button>
     </div>

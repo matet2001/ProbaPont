@@ -19,7 +19,7 @@
             </a>
         </div>
         <div>
-            <button *ngIf="authService.isAuthenticated() | async" (click)="authService.logout()" class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border w-full text-left">
+            <button *ngIf="authService.isAuthenticated()" (click)="authService.logout()" class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border w-full text-left">
               Logout
             </button>
         </div>

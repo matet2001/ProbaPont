@@ -98,5 +98,8 @@
     "HAVE_ACCOUNT": "Already have an account?",
     "ERROR_MESSAGE": "An error occurred, please try again!",
     "CLOSE": "Close"
+  },
+  "BOOKING": {
+    "TITLE": "Booking"
   }
 }
