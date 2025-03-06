@@ -1,19 +1,16 @@
-<div class="relative mt-10 rounded-3xl p-10 px-6 lg:px-16 min-h-[80vh] sm:min-h-screen h-auto bg-cover bg-center text-white"
+<div class="relative mt-10 rounded-3xl p-6 px-4 lg:px-8 min-h-[60vh] sm:min-h-screen h-auto bg-cover bg-center text-white"
      [ngStyle]="{'background-image': getBackgroundImage()}">
 
     <!-- Main Container -->
-    <div class="flex flex-col items-center w-full mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-8 sm:p-10">
+    <div class="flex flex-col items-center w-full mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-6 sm:p-8">
 
         <!-- Section Title -->
-<!--        <h2 class="text-sm uppercase text-dark-secondary font-poppins tracking-widest">-->
-<!--            {{ "PRICES.PRE_TITLE" | translate }}-->
-<!--        </h2>-->
-        <h1 class="mt-4 text-4xl sm:text-6xl font-bold text-center text-white">
+        <h1 class="mt-4 text-3xl sm:text-4xl font-bold text-center text-white">
             {{ "BOOKING.TITLE" | translate }}
         </h1>
 
         <!-- Price Table -->
-        <div class="flex justify-center w-full mt-8 mx-16">
+        <div class="flex justify-center w-full mt-6 mx-8">
             <div class="w-full overflow-hidden border border-light-border rounded-lg shadow-lg">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-x-2 divide-light-border border border-gray-700 font-poppins">
@@ -21,19 +18,19 @@
                         <!-- Table Header -->
                         <thead class="text-primary">
                         <tr>
-                            <th class="px-6 py-5 text-center text-lg sm:text-xl font-semibold uppercase">
+                            <th class="px-4 py-3 text-center text-sm sm:text-lg font-semibold uppercase">
                                 {{ 'PRICES.HOUR_PRICE' | translate }}
                             </th>
                             <th
                                     *ngFor="let room of global.rooms"
-                                    class="px-4 py-5 text-center h-full align-top"
+                                    class="px-3 py-3 text-center h-full align-top"
                             >
                                 <div class="flex flex-col justify-start items-center h-full">
-                                    <h3 class="text-2xl sm:text-3xl font-extrabold whitespace-nowrap">
+                                    <h3 class="text-xl sm:text-2xl font-extrabold whitespace-nowrap">
                                         {{ room.name }}
                                     </h3>
                                     <p>{{ room.size }}</p>
-                                    <p class="text-sm sm:text-base text-gray-300 mt-3">
+                                    <p class="text-xs sm:text-sm text-gray-300 mt-2">
                                         {{ room.price }} {{ "PRICES.PRICE_UNIT" | translate }}
                                     </p>
                                 </div>
@@ -42,20 +39,26 @@
                         </thead>
 
                         <!-- Table Body -->
-                        <tbody class="divide-y divide-gray-700 text-white text-lg">
+                        <tbody class="divide-y divide-gray-700 text-white text-sm sm:text-base">
                             @for (time of getOpeningHours(); track time) {
                                 <tr>
-                                    <td class="px-6 py-5 text-center font-semibold">
+                                    <td class="px-4 py-3 text-center font-semibold">
                                         {{ time }} - {{ time + 1}}
                                     </td>
 
                                     @for (room of global.rooms; track room) {
                                         @if (isBookingPresent(room.id, time)) {
-                                            <td class="p-5 text-center bg-primary/70">
-                                                {{ getBooking(room.id, time)?.user }}
-                                            </td>
+                                            @if (getBooking(room.id, time)?.status == BookingStatus.BOOKED ) {
+                                                <td class="p-4 text-center bg-primary/70">
+                                                    {{ getBooking(room.id, time)?.user }}
+                                                </td>
+                                            } @else {
+                                                <td class="p-4 text-center bg-yellow-500/80">
+                                                    {{ getBooking(room.id, time)?.user }}
+                                                </td>
+                                            }
                                         } @else {
-                                            <td class="p-5 bg-light-secondary/30 hover:bg-yellow-500/60 text-center align-middle">
+                                            <td class="p-4 bg-light-secondary/30 hover:bg-yellow-400/30 text-center align-middle">
                                                 <button class="w-full h-full" (click)="tryToBook(room.id, time)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline-block">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -69,6 +72,19 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <div class="mt-5 max-w-md space-y-5">
+            <!-- Section Title -->
+            <h1 class="mt-4 text-2xl sm:text-3xl font-bold text-center text-white">
+                Foglalás véglegesítése
+            </h1>
+            <p class="text-center text-light-secondary">
+                Helyfoglalásod legkésőbb a lefoglalt időpontot megelőző 72. óráig bármikor lemondhatod. 72 órán belüli lemondás esetén a teljes bérleti díjat ki kell fizetned!
+            </p>
+            <div class="mt-5">
+                <app-button (click)="sendBooks()" [disabled]="canBook()">Booking</app-button>
             </div>
         </div>
 

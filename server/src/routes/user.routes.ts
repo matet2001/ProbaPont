@@ -13,7 +13,7 @@ router.get(
             const userId = req.userId;
             const user = await getUserById(userId)
 
-            res.status(200).send({ data: user })
+            res.status(200).send({ user })
         } catch (err) {
             next(err)
         }

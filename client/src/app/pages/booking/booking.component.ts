@@ -1,11 +1,10 @@
-import {Component, inject} from '@angular/core';
-import {IconComponent} from "../../components/icon/icon.component";
-import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {ChangeDetectorRef, Component} from '@angular/core';
+import {NgForOf, NgStyle} from "@angular/common";
 import {SalesSectionComponent} from "../../components/sales-section/sales-section.component";
 import {TranslatePipe} from "@ngx-translate/core";
 import {GlobalService} from "../../services/global/global.service";
 import {AuthService} from "../../services/auth/auth.service";
-import {async} from "rxjs";
+import {ButtonComponent} from "../../components/button/button.component";
 
 interface OpeningHours {
     opening: number,
@@ -36,7 +35,8 @@ enum BookingStatus {
         NgForOf,
         SalesSectionComponent,
         TranslatePipe,
-        NgStyle
+        NgStyle,
+        ButtonComponent
     ],
   templateUrl: './booking.component.html',
 })
@@ -63,9 +63,9 @@ export class BookingComponent {
         }
     ]
 
-    bookings: Map<number, Map<number, Booking>> = new Map();
+    bookings: Map<number, Map<number, Booking>> = new Map()
 
-    constructor(public global: GlobalService, public authService: AuthService) {
+    constructor(public global: GlobalService, public authService: AuthService, private cdr: ChangeDetectorRef) {
         this.fillBookings(this.bookingsFromBackend);
     }
 
@@ -92,27 +92,44 @@ export class BookingComponent {
     }
 
     isBookingPresent(roomId: number, time: number) : boolean {
-        return this.getBooking(roomId, time) != null;
+        return this.getBooking(roomId, time) != undefined;
     }
 
-    // getBooking(roomId: number, time: number) : Booking | null {
-    //     for (const booking of this.bookings) {
-    //         if ( booking.roomId === roomId && booking.from <= time && booking.to > time ) {
-    //             return booking;
-    //         }
-    //     }
-    //
-    //     return null;
-    // }
+    getBooking(roomId: number, time: number) : Booking | undefined {
+       return this.bookings.get(roomId)?.get(time);
+    }
 
     tryToBook(roomId: number, time: number) {
         if (this.authService.isAuthenticated()) {
-            this.planedBookings.push({
+            const newBookings = new Map(this.bookings);
+            let roomBookings = newBookings.get(roomId) || new Map<number, Booking>();
 
-            })
-        } else {
+            roomBookings.set(time, <Booking>{
+                status: BookingStatus.PLANNED,
+                user: this.authService.getUserData()?.username
+            });
+
+            newBookings.set(roomId, roomBookings);
+            this.bookings = newBookings;
+
+            this.cdr.detectChanges();
+        }
+        else {
             this.authService.openModal();
         }
+    }
+
+    sendBooks() {
+        this.bookings.forEach((roomBookings) => {
+            roomBookings.forEach((booking, time) => {
+                booking.status = BookingStatus.BOOKED;
+            });
+        });
+    }
+
+    canBook() : null | boolean {
+        console.log(!this.bookings.has(BookingStatus.PLANNED));
+        return !this.bookings.has(BookingStatus.PLANNED)
     }
 
     getBackgroundImage(): string {
@@ -120,4 +137,6 @@ export class BookingComponent {
         const imageUrl = "assets/images/price_background.jpg" || fallbackImage;
         return `linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url(${imageUrl})`;
     }
+
+    protected readonly BookingStatus = BookingStatus;
 }

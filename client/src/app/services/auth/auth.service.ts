@@ -8,7 +8,17 @@ interface AuthResponse {
   data: string; // Token received from the backend
 }
 
+interface UserDataResponse {
+  data: {
+    id: string;
+    username: string;
+    email: string;
+    role: string;
+  }
+}
+
 interface UserData {
+  id: string;
   username: string;
   email: string;
   role: string;
@@ -19,12 +29,12 @@ interface UserData {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = '/api/auth'; // Update with your backend URL
+  private apiUrl = '/api'; // Update with your backend URL
   private authState = new BehaviorSubject<boolean>(this.hasToken());
   private document: Document;
 
   private modal: HTMLDialogElement | null = null;
-  public userData: UserData;
+  public userData: UserData | null = null;
 
   constructor(private localStorageService: LocalStorageService, @Inject(DOCUMENT) private injectedDocument: Document) {
     this.document = injectedDocument;
@@ -45,24 +55,35 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
-      tap((res) => {
-        this.localStorageService.set('token', res.data);
-        this.authState.next(true);
-      })
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
+        tap((res) => {
+          this.localStorageService.set('token', res.data);
+          this.authState.next(true);
+
+          this.fetchUserData().subscribe();
+        })
     );
   }
 
-  getUserData() {
-    this.http.get<UserData>(`${this.apiUrl}/my-account`).pipe(
+  fetchUserData(): Observable<UserDataResponse> {
+    return this.http.get<UserDataResponse>(`${this.apiUrl}/users/my-account`).pipe(
         tap((res) => {
-          this.userData = res;
+          this.userData = res.data;
+          this.localStorageService.set('userData', res.data);
         })
-    )
+    );
+  }
+
+  getUserData() : UserData | null {
+    if (this.userData) {
+      return this.userData;
+    } else {
+      return this.localStorageService.get('userData');
+    }
   }
 
   register(username: string, email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, { username, email, password }).pipe(
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/signup`, { username, email, password }).pipe(
       tap((res) => {
         // this.localStorageService.set('token', res.data);
         // this.authState.next(true);
@@ -76,7 +97,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = this.localStorageService.get('token');
     return token != null;
   }
 
