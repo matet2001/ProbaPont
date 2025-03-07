@@ -1,22 +1,20 @@
-FROM node:18-alpine AS builder
+FROM node:18-alpine AS build
 
-WORKDIR /app
+WORKDIR /dist/src/app
 
-COPY package*.json ./
-
-RUN npm install
+RUN npm cache clean --force
 
 COPY . .
 
-RUN npm run build
+RUN npm install
 
-FROM nginx:alpine
+RUN npm run build --omit=dev
 
-#RUN rm /etc/nginx/conf.d/default.conf
+FROM nginx:alpine AS ngi
+
+COPY --from=build /dist/src/app/dist/client/browser  /usr/share/nginx/html
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
-COPY --from=builder /app/dist/client/browser /usr/share/nginx/html
 
 EXPOSE 80
 
