@@ -5,14 +5,13 @@ services:
     volumes:
       - mongo-data:/data/db
     ports:
-      - "27017:27017"
+      - '27017:27017'
 
   backend:
     build:
       context: ./server
     container_name: backend
-    ports:
-      - "8080:8080"
+
     environment:
       - MONGO_URI=${MONGO_URI}
       - PORT=${PORT}
@@ -20,16 +19,17 @@ services:
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     depends_on:
       - probapont-mongodb
-#
-#  client:
-#    build:
-#      context: ./client
-#    container_name: client
-#    depends_on:
-#      - backend
-#    ports:
-#      - "80:80"
+    ports:
+      - '8080:8080'
+
+  client:
+    build:
+      context: ./client
+    container_name: client
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
 
 volumes:
   mongo-data:
-

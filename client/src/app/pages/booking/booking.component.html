@@ -78,13 +78,14 @@
         <div class="mt-5 max-w-md space-y-5">
             <!-- Section Title -->
             <h1 class="mt-4 text-2xl sm:text-3xl font-bold text-center text-white">
-                Foglalás véglegesítése
+                {{ "FINALIZE_ORDER" | translate }}
+
             </h1>
             <p class="text-center text-light-secondary">
-                Helyfoglalásod legkésőbb a lefoglalt időpontot megelőző 72. óráig bármikor lemondhatod. 72 órán belüli lemondás esetén a teljes bérleti díjat ki kell fizetned!
+                {{ "ORDER_DISCLAIM" | translate }}
             </p>
             <div class="mt-5">
-                <app-button (click)="sendBooks()" [disabled]="canBook()">Booking</app-button>
+                <app-button (click)="sendBooks()">Booking</app-button>
             </div>
         </div>
 

@@ -100,7 +100,14 @@
     "CLOSE": "Bezárás"
   },
   "BOOKING": {
-    "TITLE": "Foglalás"
+    "TITLE": "Foglalás",
+    "SUCCESS_TITLE": "Sikeres foglalás!",
+    "SUCCESS_CONTENT": "Várunk szeretettel",
+    "FINALIZE_ORDER": "Foglalás véglegesítése",
+    "ORDER_DISCLAIM": "Helyfoglalásod legkésőbb a lefoglalt időpontot megelőző 72. óráig bármikor lemondhatod. 72 órán belüli lemondás esetén a teljes bérleti díjat ki kell fizetned!"
+  },
+  "INFO": {
+    "CLOSE": "Bezárás"
   }
 }
 
