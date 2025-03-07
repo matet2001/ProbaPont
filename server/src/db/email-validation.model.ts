@@ -1,21 +1,17 @@
-import mongoose, { Document, Schema, Types } from "mongoose";
+import mongoose, { Date, Document, Schema, Types } from "mongoose";
 
 interface IEmailValidation extends Document {
     _id: Types.ObjectId;
     userId: Types.ObjectId;
     createdAt: Date;
-    expiresAt: string;
+    expiresAt: Date;
 }
 
 const EmailValidationSchema = new Schema(
     {
         userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         createdAt: { type: Date, default: Date.now },
-        expiresAt: {
-            type: String,
-            default: "Kaki",
-            index: { expires: "1h" },
-        },
+        expiresAt: { type: Date, required: true },
     },
     { timestamps: true },
 );

@@ -58,8 +58,10 @@ export const createEmailValidation = async (
     userId: Types.ObjectId,
     email: string,
 ) => {
+    const oneHourFromNow = new Date().setHours(1);
     const emailValidation = new EmailValidationModel({
         userId,
+        expiresAt: oneHourFromNow,
     });
     const savedEmailValidation = await emailValidation.save();
     await sendConfirmationEmail(
