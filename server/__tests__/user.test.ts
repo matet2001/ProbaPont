@@ -1,6 +1,9 @@
 import request from "supertest";
 import mongoose from "mongoose";
 import app from "../src/app";
+import { config } from "../src/config";
+
+const { MONGO_URI, PORT, HOST } = config;
 
 const user = {
     username: "test_username",
@@ -9,9 +12,8 @@ const user = {
 };
 
 beforeAll(async () => {
-    const mongoUri =
-        process.env.MONGO_URI || "mongodb://localhost:27017/proba-pont-db";
-    await mongoose.connect(mongoUri);
+    const mongoTestUri = MONGO_URI + "-test";
+    await mongoose.connect(mongoTestUri);
 });
 
 beforeEach(async () => {
@@ -68,9 +70,9 @@ describe("User API", () => {
             .set("Authorization", `Bearer ${authToken}`)
             .expect(200);
 
-        expect(response.body.data).toHaveProperty("email", user.email);
-        expect(response.body.data).toHaveProperty("username", user.username);
-        expect(response.body.data).toHaveProperty("role", "user");
+        expect(response.body.user).toHaveProperty("email", user.email);
+        expect(response.body.user).toHaveProperty("username", user.username);
+        expect(response.body.user).toHaveProperty("role", "user");
     });
 
     it("should fail to access a protected route without a token", async () => {
