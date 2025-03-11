@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import app from "../src/app";
 import { config } from "../src/config";
 
-const { MONGO_URI, PORT, HOST } = config;
+const { MONGO_URI } = config;
 
 const user = {
     username: "test_username",
