@@ -6,9 +6,6 @@ import {MatIconButton} from "@angular/material/button";
 @Component({
   selector: 'app-theme-toggle',
   templateUrl: './theme-toggle.component.html',
-  imports: [
-    MatIcon,
-  ],
   standalone: true
 })
 export class ThemeToggleComponent {

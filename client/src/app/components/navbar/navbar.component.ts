@@ -10,6 +10,7 @@ import {LogoComponent} from "../logo/logo.component";
 import {AuthButtonComponent} from "../auth/auth-button/auth-button.component";
 import {ProfileDropdownComponent} from "../profile-dropdown/profile-dropdown.component";
 import {AuthService} from "../../services/auth/auth.service";
+import {LanguageToggleComponent} from "../language-toggle/language-toggle.component";
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,8 @@ import {AuthService} from "../../services/auth/auth.service";
     TranslatePipe,
     LogoComponent,
     AuthButtonComponent,
-    ProfileDropdownComponent
+    ProfileDropdownComponent,
+    LanguageToggleComponent
   ],
   templateUrl: './navbar.component.html',
 })
@@ -36,18 +38,7 @@ export class NavbarComponent {
     });
   }
 
-  changeLanguage(language: string): void {
-    this.languageService.setLanguage(language);
-  }
 
-  toggleLanguage(): void {
-    if (this.languageService.getCurrentLanguage() == "en") this.changeLanguage("hu")
-    else this.changeLanguage("en")
-  }
-
-  getCurrentLanguage(): string {
-    return this.languageService.getCurrentLanguage()
-  }
 
   isMobileMenuOpen = false;
 

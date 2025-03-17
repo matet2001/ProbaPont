@@ -9,7 +9,7 @@ interface AuthResponse {
 }
 
 interface UserDataResponse {
-  data: {
+  user: {
     id: string;
     username: string;
     email: string;
@@ -68,8 +68,8 @@ export class AuthService {
   fetchUserData(): Observable<UserDataResponse> {
     return this.http.get<UserDataResponse>(`${this.apiUrl}/users/my-account`).pipe(
         tap((res) => {
-          this.userData = res.data;
-          this.localStorageService.set('userData', res.data);
+          this.userData = res.user;
+          this.localStorageService.set('userData', res.user);
         })
     );
   }
