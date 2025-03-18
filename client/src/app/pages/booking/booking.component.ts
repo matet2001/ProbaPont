@@ -5,6 +5,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {GlobalService} from "../../services/global/global.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {ButtonComponent} from "../../components/button/button.component";
+import {AlertService} from "../../services/alert.service";
 
 interface OpeningHours {
     opening: number,
@@ -41,8 +42,6 @@ enum BookingStatus {
   templateUrl: './booking.component.html',
 })
 export class BookingComponent {
-
-
     openingHours: OpeningHours = {
         opening: 10,
         closing: 22,
@@ -65,7 +64,7 @@ export class BookingComponent {
 
     bookings: Map<number, Map<number, Booking>> = new Map()
 
-    constructor(public global: GlobalService, public authService: AuthService, private cdr: ChangeDetectorRef) {
+    constructor(public global: GlobalService, public authService: AuthService, private cdr: ChangeDetectorRef, private alertService: AlertService) {
         this.fillBookings(this.bookingsFromBackend);
     }
 
@@ -115,6 +114,7 @@ export class BookingComponent {
             this.cdr.detectChanges();
         }
         else {
+            this.alertService.warning("BOOKING.ALERT.LOGIN", "auth");
             this.authService.openModal();
         }
     }
@@ -125,6 +125,8 @@ export class BookingComponent {
                 booking.status = BookingStatus.BOOKED;
             });
         });
+
+        this.alertService.success("BOOKING.ALERT.SUCCESS");
     }
 
     canBook() : null | boolean {

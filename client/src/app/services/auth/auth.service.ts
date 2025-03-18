@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {LocalStorageService} from "../locale-storage/local-storage.service";
 import {DOCUMENT} from "@angular/common";
 
-interface AuthResponse {
+export interface AuthResponse {
   data: string; // Token received from the backend
 }
 
@@ -29,7 +29,7 @@ interface UserData {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = '/api'; // Update with your backend URL
+  private apiUrl = 'http://localhost:8080/api'; // Update with your backend URL
   private authState = new BehaviorSubject<boolean>(this.hasToken());
   private document: Document;
 

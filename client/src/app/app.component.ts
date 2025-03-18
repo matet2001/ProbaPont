@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FooterComponent} from "./components/footer/footer.component";
 import {AuthButtonComponent} from "./components/auth/auth-button/auth-button.component";
 import {AuthModalComponent} from "./components/auth/auth-modal/auth-modal.component";
+import {AlertComponent} from "./components/alert/alert.component";
 
 @Component({
   selector: 'app-root',
@@ -22,8 +23,8 @@ import {AuthModalComponent} from "./components/auth/auth-modal/auth-modal.compon
         MatSelectModule,
         MatFormFieldModule,
         FooterComponent,
-        AuthButtonComponent,
-        AuthModalComponent
+        AuthModalComponent,
+        AlertComponent
     ],
 })
 export class AppComponent {

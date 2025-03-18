@@ -97,14 +97,23 @@
     "NEED_ACCOUNT": "Nincs még fiókod?",
     "HAVE_ACCOUNT": "Már van fiókod?",
     "ERROR_MESSAGE": "Hiba történt, próbáld újra!",
-    "CLOSE": "Bezárás"
+    "CLOSE": "Bezárás",
+    "ALERT": {
+      "REGISTRATION_SUCCESS": "Sikeres regisztráció! Kérjük jelentkezz be!",
+      "LOGIN_SUCCESS": "Sikeres bejelentkezzés! Szia ",
+      "FAIL": "Hiba történt :( Kérjük próbálja újra később"
+    }
   },
   "BOOKING": {
     "TITLE": "Foglalás",
-    "SUCCESS_TITLE": "Sikeres foglalás!",
     "SUCCESS_CONTENT": "Várunk szeretettel",
     "FINALIZE_ORDER": "Foglalás véglegesítése",
-    "ORDER_DISCLAIM": "Helyfoglalásod legkésőbb a lefoglalt időpontot megelőző 72. óráig bármikor lemondhatod. 72 órán belüli lemondás esetén a teljes bérleti díjat ki kell fizetned!"
+    "ORDER_DISCLAIM": "Helyfoglalásod legkésőbb a lefoglalt időpontot megelőző 72. óráig bármikor lemondhatod. 72 órán belüli lemondás esetén a teljes bérleti díjat ki kell fizetned!",
+    "ALERT": {
+      "SUCCESS": "Sikeres foglalás!",
+      "FAIL": "Sikertelen foglalás :( Kérjük próbálja meg később",
+      "LOGIN": "Kérjük jelentkezzen be a foglaláshoz!"
+    }
   },
   "INFO": {
     "CLOSE": "Bezárás"

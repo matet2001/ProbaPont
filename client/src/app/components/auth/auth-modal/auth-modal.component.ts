@@ -1,15 +1,18 @@
 import {Component, ElementRef, Inject, inject, Input, Renderer2, ViewChild} from '@angular/core';
 import {DOCUMENT, NgClass, NgIf} from '@angular/common';
 import {FormsModule, NgForm} from '@angular/forms';
-import {AuthService} from "../../../services/auth/auth.service";
+import {AuthResponse, AuthService} from "../../../services/auth/auth.service";
 import {IconComponent} from "../../icon/icon.component";
 import {LogoComponent} from "../../logo/logo.component";
 import {TranslatePipe} from "@ngx-translate/core";
+import {AlertComponent} from "../../alert/alert.component";
+import {AlertService} from "../../../services/alert.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-auth-modal',
   standalone: true,
-  imports: [NgIf, FormsModule, NgClass, IconComponent, LogoComponent, TranslatePipe],
+  imports: [NgIf, FormsModule, TranslatePipe, AlertComponent],
   templateUrl: './auth-modal.component.html',
 })
 export class AuthModalComponent {
@@ -23,7 +26,8 @@ export class AuthModalComponent {
   password = '';
   error = ''; // Store error message
 
-  constructor(private authService: AuthService) {}
+  authService: AuthService = inject(AuthService);
+  alertService: AlertService = inject(AlertService);
 
   ngOnInit() {
     this.authService.initModal();
@@ -32,6 +36,7 @@ export class AuthModalComponent {
   ngAfterViewInit() {
     this.authModal.nativeElement.addEventListener('close', () => {
       this.resetForm();
+      this.alertService.closeAllAuthAlerts();
     });
   }
 
@@ -43,13 +48,19 @@ export class AuthModalComponent {
         : this.authService.register(this.username, this.email, this.password);
 
     authRequest.subscribe({
-      next: () => this.closeModal(), // Success
+      next: (response) => this.onSuccessfulResponse(response), // Success
       error: (err) => this.handleError(err), // Handle error
     });
   }
 
+  onSuccessfulResponse(response: AuthResponse) {
+    this.alertService.success(response.data);
+    this.closeModal();
+  }
+
   closeModal() {
     this.authModal.nativeElement.close(); // Close modal
+    // this.alertService.closeAllAlerts();
   }
 
   resetForm() {
@@ -64,6 +75,8 @@ export class AuthModalComponent {
   }
 
   private handleError(error: any) {
-    this.error = error.error.message || 'Something went wrong. Please try again.';
+    this.error = error.message || 'Something went wrong. Please try again.';
+    this.alertService.error(error.message || 'Something went wrong. Please try again.', "auth");
+
   }
 }

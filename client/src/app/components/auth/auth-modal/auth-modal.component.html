@@ -1,4 +1,6 @@
 <dialog #authModal id="authModal" class="modal">
+    <app-alert type="auth"/>
+
     <div class="modal-box flex flex-col justify-center p-4 bg-light-card dark:bg-dark-card">
         <form method="dialog">
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -38,7 +40,6 @@
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium">{{ 'AUTH.EMAIL' | translate }}</label>
-
                     <div class="mt-2">
                         <input
                                 [(ngModel)]="email"

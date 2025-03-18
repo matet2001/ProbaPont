@@ -104,7 +104,12 @@
     "SUCCESS_TITLE": "Reservation was successful!",
     "SUCCESS_CONTENT": "Várunk szeretettel",
     "FINALIZE_ORDER": "Finalize Reservation",
-    "ORDER_DISCLAIM": "You can cancel your reservation at any time up to 72 hours before the booked time. If you cancel within 72 hours, you must pay the full rental fee!"
+    "ORDER_DISCLAIM": "You can cancel your reservation at any time up to 72 hours before the booked time. If you cancel within 72 hours, you must pay the full rental fee!",
+    "ALERT": {
+      "SUCCESS": "Successful booking!",
+      "FAIL": "Booking failed :( Please try again later.",
+      "LOGIN": "Please log in to make a booking!"
+    }
   },
   "INFO": {
     "CLOSE": "Close"
