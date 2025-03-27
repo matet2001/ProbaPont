@@ -1,19 +1,19 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import {provideRouter, withComponentInputBinding, withInMemoryScrolling} from '@angular/router';
-import {
-    HTTP_INTERCEPTORS,
-    provideHttpClient,
-    withFetch,
-    withInterceptors,
-    withInterceptorsFromDi
-} from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {routes} from "./app/app.routes";
-import {AuthInterceptor} from "./app/services/auth/auth-interceptor.service";
+
+// Firebase Imports
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import {provideFirestore, getFirestore, addDoc, collection} from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
+import {environment} from "./enviroments/enviroment";
 
 // Factory function for translation loader
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,12 +30,7 @@ bootstrapApplication(AppComponent, {
       }),
       withComponentInputBinding()
     ),
-    provideHttpClient(withInterceptorsFromDi(), withFetch()),
-      {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor, // DI-based interceptor
-          multi: true
-      },
+    TranslateService,
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
@@ -45,7 +40,11 @@ bootstrapApplication(AppComponent, {
         },
       })
     ),
-    TranslateService,
+  provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+  provideAuth(() => getAuth()),
+  provideFirestore(() => getFirestore()),
+  provideStorage(() => getStorage()),
+  provideAnalytics(() => getAnalytics()),
+  provideHttpClient(withInterceptorsFromDi(), withFetch())
   ],
 }).catch(err => console.error(err));
-

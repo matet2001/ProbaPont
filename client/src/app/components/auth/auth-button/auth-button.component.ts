@@ -6,7 +6,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 @Component({
   selector: 'app-auth-button',
   standalone: true,
-  imports: [NgIf, AsyncPipe, TranslatePipe],
+  imports: [NgIf, TranslatePipe],
   template: `
     <div class="text-sm">
       <button *ngIf="!(authService.isAuthenticated())" onclick="authModal.showModal()" class="btn bg-primary">

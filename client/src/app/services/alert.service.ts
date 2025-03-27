@@ -16,9 +16,9 @@ export class AlertService {
     this.alertComponentAuth = alertComponent;
   }
 
-  success(message: string, type: "default" | "auth" = "default") {
+  success(message: string, type: "default" | "auth" = "default", additionalMessage: string = '') {
     const targetAlertComponent: AlertComponent = (type === "default") ? this.alertComponentDefault : this.alertComponentAuth;
-    targetAlertComponent.showAlert('success', message);
+    targetAlertComponent.showAlert('success', message, additionalMessage);
   }
 
   warning(message: string, type: "default" | "auth" = "default") {

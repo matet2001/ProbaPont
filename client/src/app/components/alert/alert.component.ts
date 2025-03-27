@@ -6,7 +6,8 @@ import {TranslatePipe} from "@ngx-translate/core";
 
 interface Alert {
   type: 'success' | 'warning' | 'error';
-  message: string;
+  translatedMessage: string;
+  additionalMessage: string;
 }
 
 @Component({
@@ -35,8 +36,8 @@ export class AlertComponent {
     }
   }
 
-  showAlert(type: 'success' | 'warning' | 'error', message: string) {
-    const alert: Alert = { type, message };
+  showAlert(type: 'success' | 'warning' | 'error', translatedMessage: string, additionalMessage: string = '') {
+    const alert: Alert = { type, translatedMessage: translatedMessage, additionalMessage };
     this.alerts.push(alert);
 
     setTimeout(() => {

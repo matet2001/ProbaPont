@@ -91,25 +91,48 @@
     "USERNAME": "Username",
     "EMAIL": "Email address",
     "PASSWORD": "Password",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "PHONE": "Phone Number",
+    "FIRST_NAME_REQUIRED": "First name is required.",
+    "LAST_NAME_REQUIRED": "Last name is required.",
+    "PHONE_INVALID": "Please enter a valid phone number.",
     "USERNAME_REQUIRED": "Username is required (min. 3 characters)",
     "EMAIL_REQUIRED": "Valid email is required",
     "PASSWORD_REQUIRED": "Password must be at least 6 characters",
     "NEED_ACCOUNT": "Need an account?",
     "HAVE_ACCOUNT": "Already have an account?",
     "ERROR_MESSAGE": "An error occurred, please try again!",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "WELCOME_BACK": "Welcome back ",
+    "ERRORS": {
+      "EMAIL_IN_USE": "This email is already in use.",
+      "INVALID_EMAIL": "Invalid email format.",
+      "WEAK_PASSWORD": "Password should be at least 6 characters.",
+      "USER_NOT_FOUND": "User not found. Please check your email.",
+      "INVALID_CREDENTIAL": "Wrong email, or password.",
+      "DEFAULT": "Something went wrong. Please try again."
+    },
+    "PASSWORD_RESET": {
+      "TITLE": "Forgot Password",
+      "DESC": "Please enter your email and we'll send you a link to reset your password.",
+      "CALL": "Forgot password?",
+      "SUBMIT": "Reset your password",
+      "SUCCESS": "Password reset email sent! Please check your emails"
+    }
   },
   "BOOKING": {
     "TITLE": "Booking",
     "SUCCESS_TITLE": "Reservation was successful!",
-    "SUCCESS_CONTENT": "Várunk szeretettel",
+    "SUCCESS_CONTENT": "See you soon :)",
     "FINALIZE_ORDER": "Finalize Reservation",
     "ORDER_DISCLAIM": "You can cancel your reservation at any time up to 72 hours before the booked time. If you cancel within 72 hours, you must pay the full rental fee!",
     "ALERT": {
       "SUCCESS": "Successful booking!",
       "FAIL": "Booking failed :( Please try again later.",
       "LOGIN": "Please log in to make a booking!"
-    }
+    },
+    "SUBMIT": "Booking"
   },
   "INFO": {
     "CLOSE": "Close"

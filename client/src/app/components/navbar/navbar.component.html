@@ -45,14 +45,6 @@
         </div>
       </div>
         <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
-<!--            <button class="font-emoji" (click)="toggleLanguage()">-->
-<!--                <img [ngSrc]="getCurrentLanguage() == 'en' ? 'assets/hungary.png' : 'assets/united-kingdom.png'"-->
-<!--                     [alt]='getCurrentLanguage()' height="25" width="25">-->
-<!--            </button>-->
-            <app-language-toggle />
-            <app-theme-toggle/> <!-- Dark Mode Toggle -->
-        </div>
-        <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
             <div *ngIf="authService.isAuthenticated(); then thenBlock else elseBlock"></div>
             <ng-template #thenBlock>
                 <app-profile-dropdown/>
@@ -60,7 +52,10 @@
             <ng-template #elseBlock>
                 <app-auth-button/>
             </ng-template>
-
+        </div>
+        <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
+            <app-language-toggle />
+            <app-theme-toggle/> <!-- Dark Mode Toggle -->
         </div>
     </div>
   </div>

@@ -91,6 +91,12 @@
     "USERNAME": "Felhasználónév",
     "EMAIL": "Email cím",
     "PASSWORD": "Jelszó",
+    "FIRST_NAME": "Keresztnév",
+    "LAST_NAME": "Vezetéknév",
+    "PHONE": "Telefonszám",
+    "FIRST_NAME_REQUIRED": "A keresztnév megadása kötelező.",
+    "LAST_NAME_REQUIRED": "A vezetéknév megadása kötelező.",
+    "PHONE_INVALID": "Kérjük, adjon meg egy érvényes telefonszámot.",
     "USERNAME_REQUIRED": "A felhasználónév kötelező (min. 3 karakter)",
     "EMAIL_REQUIRED": "Érvényes email cím szükséges",
     "PASSWORD_REQUIRED": "A jelszónak legalább 6 karakterből kell állnia",
@@ -98,10 +104,26 @@
     "HAVE_ACCOUNT": "Már van fiókod?",
     "ERROR_MESSAGE": "Hiba történt, próbáld újra!",
     "CLOSE": "Bezárás",
+    "WELCOME_BACK": "Üdv újra, ",
     "ALERT": {
       "REGISTRATION_SUCCESS": "Sikeres regisztráció! Kérjük jelentkezz be!",
       "LOGIN_SUCCESS": "Sikeres bejelentkezzés! Szia ",
       "FAIL": "Hiba történt :( Kérjük próbálja újra később"
+    },
+    "ERRORS": {
+      "EMAIL_IN_USE": "Ez az e-mail cím már foglalt.",
+      "INVALID_EMAIL": "Érvénytelen e-mail formátum.",
+      "WEAK_PASSWORD": "A jelszónak legalább 6 karakter hosszúnak kell lennie.",
+      "USER_NOT_FOUND": "Felhasználó nem található. Ellenőrizze az e-mail címét.",
+      "INVALID_CREDENTIAL": "Hibás jelszó, vagy email cím.",
+      "DEFAULT": "Valami hiba történt. Kérjük, próbálja újra."
+    },
+    "PASSWORD_RESET": {
+      "TITLE": "Elfelejtett jelszó",
+      "DESC": "Kérjük adja meg az e-mail címét, és küldünk egy linket a jelszó visszaállításához.",
+      "CALL": "Elfelejtette a jelszavát?",
+      "SUBMIT": "Jelszó visszaállítása",
+      "SUCCESS": "A jelszó-visszaállító e-mail elküldve! Kérjük, ellenőrizze az e-mailjeit."
     }
   },
   "BOOKING": {
@@ -113,7 +135,8 @@
       "SUCCESS": "Sikeres foglalás!",
       "FAIL": "Sikertelen foglalás :( Kérjük próbálja meg később",
       "LOGIN": "Kérjük jelentkezzen be a foglaláshoz!"
-    }
+    },
+    "SUBMIT": "Foglalás"
   },
   "INFO": {
     "CLOSE": "Bezárás"

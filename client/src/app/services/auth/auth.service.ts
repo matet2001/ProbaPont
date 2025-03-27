@@ -1,107 +1,114 @@
-import {Injectable, inject, Inject} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import {LocalStorageService} from "../locale-storage/local-storage.service";
-import {DOCUMENT} from "@angular/common";
+import {inject, Injectable} from '@angular/core';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut, updateProfile,
+  User
+} from '@angular/fire/auth';
+import {AlertService} from "../alert.service";
+import {Firestore, doc, setDoc, getDoc} from '@angular/fire/firestore';
+import {TranslateService} from "@ngx-translate/core";
 
-export interface AuthResponse {
-  data: string; // Token received from the backend
-}
-
-interface UserDataResponse {
-  user: {
-    id: string;
-    username: string;
-    email: string;
-    role: string;
-  }
-}
-
-interface UserData {
-  id: string;
-  username: string;
+interface UserDetails {
   email: string;
-  role: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api'; // Update with your backend URL
-  private authState = new BehaviorSubject<boolean>(this.hasToken());
-  private document: Document;
+  localUser: UserDetails | null = null; // Store logged-in user data
 
-  private modal: HTMLDialogElement | null = null;
-  public userData: UserData | null = null;
+  alertService: AlertService = inject(AlertService);
+  translate: TranslateService = inject(TranslateService);
 
-  constructor(private localStorageService: LocalStorageService, @Inject(DOCUMENT) private injectedDocument: Document) {
-    this.document = injectedDocument;
+  constructor(private auth: Auth, private firestore: Firestore) {}
 
-    this.closeModal();
-  }
+  async register(email: string, password: string, firstName: string, lastName: string, phone: string) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user;
 
-  initModal() {
-    this.modal = this.document.getElementById("authModal") as HTMLDialogElement;
-  }
+      if (user) {
+        await updateProfile(user, { displayName: `${firstName} ${lastName}` });
 
-  openModal() {
-    this.modal?.showModal();
-  }
+        const userRef = doc(this.firestore, "users", user.uid);
+        await setDoc(userRef, {
+          uid: user.uid,
+          email: user.email,
+          firstName,
+          lastName,
+          phone,
+          createdAt: new Date(),
+        });
 
-  closeModal() {
-    this.modal?.close();
-  }
-
-  login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
-        tap((res) => {
-          this.localStorageService.set('token', res.data);
-          this.authState.next(true);
-
-          this.fetchUserData().subscribe();
-        })
-    );
-  }
-
-  fetchUserData(): Observable<UserDataResponse> {
-    return this.http.get<UserDataResponse>(`${this.apiUrl}/users/my-account`).pipe(
-        tap((res) => {
-          this.userData = res.user;
-          this.localStorageService.set('userData', res.user);
-        })
-    );
-  }
-
-  getUserData() : UserData | null {
-    if (this.userData) {
-      return this.userData;
-    } else {
-      return this.localStorageService.get('userData');
+        this.alertService.success(this.translate.instant("AUTH.REGISTER_SUCCESS"));
+      }
+    } catch (error: any) {
+      console.error("Error signing up:", error);
+      throw new Error(error.code); // Return only error code
     }
   }
 
-  register(username: string, email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/signup`, { username, email, password }).pipe(
-      tap((res) => {
-        // this.localStorageService.set('token', res.data);
-        // this.authState.next(true);
-      })
-    );
+  async login(email: string, password: string) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = userCredential.user;
+
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const userSnapshot = await getDoc(userRef);
+
+        if (userSnapshot.exists()) {
+          const userData = userSnapshot.data() as UserDetails;
+          this.localUser = userData;
+          this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!" );
+        } else {
+          this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!" );
+        }
+      }
+    } catch (error: any) {
+      console.error('Error logging in:', error);
+      throw new Error(error.code); // Return only error code
+    }
   }
 
-  logout() {
-    this.localStorageService.remove('token');
-    this.authState.next(false);
+  async forgotPassword(email: string) {
+    if (!email) {
+      this.alertService.error("Please enter your email address first.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      this.alertService.success("Password reset email sent!");
+    } catch (error: any) {
+      console.error("Error resetting password:", error.message);
+      this.alertService.error(error.message);
+    }
   }
 
-  isAuthenticated(): boolean {
-    const token = this.localStorageService.get('token');
-    return token != null;
+  async logout() {
+    try {
+      await signOut(this.auth);
+      this.localUser = null;
+      console.log('User logged out');
+    } catch (error: any) {
+      console.error('Error logging out:', error.message);
+    }
   }
 
-  private hasToken(): boolean {
-    return !!this.localStorageService.get('token');
+  public getUser(): UserDetails | null {
+    return this.localUser;
+  }
+
+  public isAuthenticated()  {
+    return this.localUser;
   }
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {NgForOf, NgStyle} from "@angular/common";
 import {SalesSectionComponent} from "../../components/sales-section/sales-section.component";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -6,6 +6,7 @@ import {GlobalService} from "../../services/global/global.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {ButtonComponent} from "../../components/button/button.component";
 import {AlertService} from "../../services/alert.service";
+import {AuthModalService} from "../../services/auth/auth-modal.service";
 
 interface OpeningHours {
     opening: number,
@@ -61,6 +62,8 @@ export class BookingComponent {
             roomId: 3,
         }
     ]
+    authModalService: AuthModalService = inject(AuthModalService);
+
 
     bookings: Map<number, Map<number, Booking>> = new Map()
 
@@ -105,7 +108,7 @@ export class BookingComponent {
 
             roomBookings.set(time, <Booking>{
                 status: BookingStatus.PLANNED,
-                user: this.authService.getUserData()?.username
+                user: this.authService.getUser()?.email
             });
 
             newBookings.set(roomId, roomBookings);
@@ -115,7 +118,7 @@ export class BookingComponent {
         }
         else {
             this.alertService.warning("BOOKING.ALERT.LOGIN", "auth");
-            this.authService.openModal();
+            this.authModalService.openModal();
         }
     }
 
