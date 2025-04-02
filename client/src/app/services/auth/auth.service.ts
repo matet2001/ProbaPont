@@ -1,17 +1,20 @@
 import {inject, Injectable} from '@angular/core';
 import {
   Auth,
-  createUserWithEmailAndPassword,
+  createUserWithEmailAndPassword, onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signOut, updateProfile,
+  signOut,
+  updateProfile,
   User
 } from '@angular/fire/auth';
 import {AlertService} from "../alert.service";
-import {Firestore, doc, setDoc, getDoc} from '@angular/fire/firestore';
+import {doc, Firestore, getDoc, setDoc} from '@angular/fire/firestore';
 import {TranslateService} from "@ngx-translate/core";
+import {LocalStorageService} from "../locale-storage/local-storage.service";
 
-interface UserDetails {
+export interface UserDetails {
+  uid: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -27,8 +30,29 @@ export class AuthService {
 
   alertService: AlertService = inject(AlertService);
   translate: TranslateService = inject(TranslateService);
+  localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth, private firestore: Firestore) {
+    this.loadUserOnStart();
+  }
+
+  private loadUserOnStart() {
+    onAuthStateChanged(this.auth, async (user: User | null) => {
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const userSnapshot = await getDoc(userRef);
+
+        if (userSnapshot.exists()) {
+          this.localUser = userSnapshot.data() as UserDetails;
+          this.localStorageService.set('user', JSON.stringify(this.localUser)); // Store user in localStorage
+        }
+      } else {
+        this.localUser = null;
+        this.localStorageService.remove('user'); // Clear localStorage on logout
+      }
+    });
+  }
+
 
   async register(email: string, password: string, firstName: string, lastName: string, phone: string) {
     try {
@@ -66,8 +90,7 @@ export class AuthService {
         const userSnapshot = await getDoc(userRef);
 
         if (userSnapshot.exists()) {
-          const userData = userSnapshot.data() as UserDetails;
-          this.localUser = userData;
+          this.localUser = userSnapshot.data() as UserDetails;
           this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!" );
         } else {
           this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!" );

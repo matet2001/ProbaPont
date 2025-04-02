@@ -5,46 +5,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/*body::before {*/
-/*  content: "XS";*/
-/*  color: red;*/
-/*  font-size: 2rem;*/
-/*  font-weight: bold;*/
-/*  position: fixed;*/
-/*  top: 0;*/
-/*  right: 0;*/
+/*.mat-datepicker-content {*/
+/*    background-color: rgb(30, 30, 30) !important;*/
+/*    color: rgb(255, 255, 255) !important;*/
+/*    border: #333333*/
 /*}*/
 
-/*@media (min-width: 576px) {*/
-/*  body::before {*/
-/*    content: "SM";*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 768px) {*/
-/*  body::before {*/
-/*    content: "MD";*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 992px) {*/
-/*  body::before {*/
-/*    content: "LG";*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 1200px) {*/
-/*  body::before {*/
-/*    content: "XL";*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 1400px) {*/
-/*  body::before {*/
-/*    content: "XXL";*/
-/*  }*/
-/*}*/
-
-/*html {*/
-/*  scroll-behavior: smooth;*/
-/*}*/

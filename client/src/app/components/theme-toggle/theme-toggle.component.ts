@@ -21,6 +21,6 @@ export class ThemeToggleComponent {
 
   toggleTheme() {
     this.themeService.setDarkMode(!this.isDarkMode);
-    this.alertService.success("Theme toggled successfully.");
+    // this.alertService.success("Theme toggled successfully.");
   }
 }

@@ -3,28 +3,24 @@
 
     <!-- Main Container -->
     <div class="flex flex-col items-center w-full mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-6 sm:p-8">
-
-        <!-- Section Title -->
-        <h1 class="mt-4 text-3xl sm:text-4xl font-bold text-center text-white">
-            {{ "BOOKING.TITLE" | translate }}
-        </h1>
-
-        <!-- Price Table -->
         <div class="flex justify-center w-full mt-6 mx-8">
             <div class="w-full overflow-hidden border border-light-border rounded-lg shadow-lg">
+
+                <!-- Section Title -->
+                <h1 class="mt-4 text-3xl sm:text-4xl font-bold text-center text-white">
+                    {{ "BOOKING.TITLE" | translate }}
+                </h1>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-x-2 divide-light-border border border-gray-700 font-poppins">
 
                         <!-- Table Header -->
                         <thead class="text-primary">
                         <tr>
-                            <th class="px-4 py-3 text-center text-sm sm:text-lg font-semibold uppercase">
-                                {{ 'PRICES.HOUR_PRICE' | translate }}
+                            <th class="px-4 py-4 text-center text-sm sm:text-lg font-semibold uppercase">
+                                <app-date-picker (dateSelected)="onDatePicked($event)"></app-date-picker>
                             </th>
-                            <th
-                                    *ngFor="let room of global.rooms"
-                                    class="px-3 py-3 text-center h-full align-top"
-                            >
+                            <th *ngFor="let room of global.rooms" class="px-3 py-3 text-center h-full align-top">
                                 <div class="flex flex-col justify-start items-center h-full">
                                     <h3 class="text-xl sm:text-2xl font-extrabold whitespace-nowrap">
                                         {{ room.name }}
@@ -45,27 +41,30 @@
                                     <td class="px-4 py-3 text-center font-semibold">
                                         {{ time }} - {{ time + 1}}
                                     </td>
-
                                     @for (room of global.rooms; track room) {
                                         @if (isBookingPresent(room.id, time)) {
-                                            @if (getBooking(room.id, time)?.status == BookingStatus.BOOKED ) {
-                                                <td class="p-4 text-center bg-primary/70">
-                                                    {{ getBooking(room.id, time)?.user }}
-                                                </td>
+                                                @if (getBooking(room.id, time)?.status == BookingStatus.BOOKED) {
+                                                    <td class="p-4 text-center bg-primary/70">
+                                                        {{ getUserNameFromBooking(getBooking(room.id, time)) }}
+                                                    </td>
+                                                } @else if (getBooking(room.id, time)?.status == BookingStatus.PLANNED) {
+                                                    <td class="p-4 text-center bg-yellow-500/80">
+                                                        {{ getUserNameFromBooking(getBooking(room.id, time)) }}
+                                                    </td>
+                                                } @else if (getBooking(room.id, time)?.status == BookingStatus.UNVERIFIED) {
+                                                    <td class="p-4 text-center bg-green-400/80">
+                                                        {{ getUserNameFromBooking(getBooking(room.id, time)) }}
+                                                    </td>
+                                                }
                                             } @else {
-                                                <td class="p-4 text-center bg-yellow-500/80">
-                                                    {{ getBooking(room.id, time)?.user }}
+                                                <td class="bg-light-secondary/30 hover:bg-yellow-400/30 relative">
+                                                    <button class="absolute inset-0" (click)="tryToBook(room.id, time)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline-block">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                        </svg>
+                                                    </button>
                                                 </td>
                                             }
-                                        } @else {
-                                            <td class="bg-light-secondary/30 hover:bg-yellow-400/30 relative">
-                                                <button class="absolute inset-0" (click)="tryToBook(room.id, time)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline-block">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                                    </svg>
-                                                </button>
-                                            </td>
-                                        }
                                     }
                                 </tr>
                             }
@@ -74,6 +73,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="mt-5 max-w-md space-y-5">
             <!-- Section Title -->

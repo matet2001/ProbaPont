@@ -1,0 +1,26 @@
+/*!* Dark mode for the datepicker popup *!*/
+/*.dark .mat-datepicker-content {*/
+/*    background-color: theme('colors.dark.card') !important;*/
+/*    color: theme('colors.dark.foreground') !important;*/
+/*}*/
+
+/*!* Light mode for the datepicker popup *!*/
+/*.mat-datepicker-content {*/
+/*    background-color: theme('colors.light.card') !important;*/
+/*    color: theme('colors.light.foreground') !important;*/
+/*}*/
+
+/*!* Selected date styling *!*/
+/*.mat-calendar-body-selected {*/
+/*    background-color: theme('colors.primary') !important;*/
+/*    color: white !important;*/
+/*}*/
+
+/*!* Hover effect on calendar dates *!*/
+/*.mat-calendar-body-cell:hover {*/
+/*    background-color: rgba(0, 128, 128, 0.3) !important;*/
+/*}*/
+
+/*.custom-datepicker {*/
+/*    background-color: rgba(0, 128, 128, 0) !important;*/
+/*}*/
