@@ -7,9 +7,10 @@ import { AuthService } from "../../services/auth/auth.service";
 import { ButtonComponent } from "../../components/button/button.component";
 import { AlertService } from "../../services/alert.service";
 import { DatePickerComponent } from "../../components/date-picker/date-picker.component";
-import { Firestore, doc, runTransaction, getDoc } from '@angular/fire/firestore';
+import {Firestore, doc, runTransaction, getDoc, setDoc, deleteDoc} from '@angular/fire/firestore';
 import { AuthModalService } from "../../services/auth/auth-modal.service";
 import { UserDetails } from "../../services/auth/auth.service";
+import {EmailService} from "../../services/email/email.service";
 
 interface OpeningHours {
     opening: number,
@@ -24,7 +25,7 @@ interface Booking {
 export enum BookingStatus {
     PLANNED,
     UNVERIFIED,
-    BOOKED
+    VERIFIED
 }
 
 @Component({
@@ -37,7 +38,6 @@ export enum BookingStatus {
         NgStyle,
         ButtonComponent,
         DatePickerComponent,
-        DatePipe,
         CommonModule
     ],
     templateUrl: './booking.component.html',
@@ -53,7 +53,8 @@ export class BookingComponent {
         private authModalService: AuthModalService,
         public authService: AuthService,
         private cdr: ChangeDetectorRef,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private emailService: EmailService,
     ) {
         this.fetchBookings(this.selectedDate);
     }
@@ -174,11 +175,21 @@ export class BookingComponent {
         this.cdr.detectChanges();
     }
 
-
+    // Convert Map<number, Map<number, Booking>> to a plain object
+    convertMapToObject(map: Map<any, any>): any {
+        const obj: any = {};
+        map.forEach((value, key) => {
+            // If value is a nested Map, convert it too
+            obj[key] = value instanceof Map ? this.convertMapToObject(value) : value;
+        });
+        return obj;
+    }
 
     async sendBooks() {
         const formattedDate = this.formatDate(this.selectedDate);
         const bookingDocRef = doc(this.firestore, "bookings", formattedDate);
+        const user = this.authService.getUser();
+        if (!user) return;
 
         try {
             await runTransaction(this.firestore, async (transaction) => {
@@ -193,7 +204,7 @@ export class BookingComponent {
                 const updates: any = {};
                 this.bookings.forEach((roomBookings, roomId) => {
                     roomBookings.forEach((booking, time) => {
-                        if (booking.status === BookingStatus.PLANNED && booking.userId === this.authService.getUser()?.uid) {
+                        if (booking.status === BookingStatus.PLANNED && booking.userId === user.uid) {
                             updates[`rooms.${roomId}.${time}.status`] = BookingStatus.UNVERIFIED;
                         }
                     });
@@ -206,7 +217,25 @@ export class BookingComponent {
                 transaction.update(bookingDocRef, updates);
             });
 
-            this.alertService.success("All planned bookings confirmed!");
+            // Generate a unique verification token
+            const verificationToken = this.generateVerificationToken();
+            const verificationDocRef = doc(this.firestore, "booking_verifications", verificationToken);
+
+            // 🔹 Convert `this.bookings` to a plain object
+            const serializedBookings = this.convertMapToObject(this.bookings);
+
+            await setDoc(verificationDocRef, {
+                userId: user.uid,
+                date: formattedDate,
+                bookings: serializedBookings, // ✅ Now it's a plain object!
+                status: "pending",
+                createdAt: new Date().toISOString()
+            });
+
+            // Send verification email
+            this.sendVerificationEmail(user.email, verificationToken);
+
+            this.alertService.success("A verification email has been sent!");
         } catch (error: any) {
             console.error("Send Books error:", error);
             this.alertService.error(error.message);
@@ -215,6 +244,51 @@ export class BookingComponent {
         this.fetchBookings(this.selectedDate);
         this.cdr.detectChanges();
     }
+
+
+    private generateVerificationToken(): string {
+        return Math.random().toString(36).substring(2) + Date.now().toString(36);
+    }
+
+    async sendVerificationEmail(email: string, token: string) {
+        const verificationLink = `http://localhost:4200/verify-booking?token=${token}`;
+
+        const emailHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+            <!-- Logo -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img ngSrc="cid:logo" alt="Company Logo" style="max-width: 150px;">
+            </div>
+
+            <!-- Title -->
+            <h2 style="color: #008080; text-align: center;">Confirm Your Booking</h2>
+
+            <!-- Message -->
+            <p style="font-size: 16px; color: #555;">Hello,</p>
+            <p style="font-size: 16px; color: #555;">
+                You requested to verify your booking. Click the button below to complete your verification:
+            </p>
+
+            <!-- Button -->
+            <div style="text-align: center; margin: 20px 0;">
+                <a href="${verificationLink}" 
+                   style="background-color: #008080; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block;">
+                    Verify Booking
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <p style="font-size: 14px; color: #777; text-align: center;">
+                If you did not request this, you can ignore this email.
+            </p>
+            <p style="font-size: 14px; color: #777; text-align: center;">Thank you!</p>
+        </div>
+    `;
+
+        await this.emailService.sendEmail(email, "Verify Your Booking", emailHtml);
+    }
+
+
 
     private formatDate(date: Date): string {
         const year = date.getFullYear();

@@ -43,8 +43,8 @@
                                     </td>
                                     @for (room of global.rooms; track room) {
                                         @if (isBookingPresent(room.id, time)) {
-                                                @if (getBooking(room.id, time)?.status == BookingStatus.BOOKED) {
-                                                    <td class="p-4 text-center bg-primary/70">
+                                                @if (getBooking(room.id, time)?.status == BookingStatus.VERIFIED) {
+                                                    <td class="p-4 text-center bg-green-400/80">
                                                         {{ getUserNameFromBooking(getBooking(room.id, time)) }}
                                                     </td>
                                                 } @else if (getBooking(room.id, time)?.status == BookingStatus.PLANNED) {
@@ -52,7 +52,7 @@
                                                         {{ getUserNameFromBooking(getBooking(room.id, time)) }}
                                                     </td>
                                                 } @else if (getBooking(room.id, time)?.status == BookingStatus.UNVERIFIED) {
-                                                    <td class="p-4 text-center bg-green-400/80">
+                                                    <td class="p-4 text-center bg-primary/70">
                                                         {{ getUserNameFromBooking(getBooking(room.id, time)) }}
                                                     </td>
                                                 }
