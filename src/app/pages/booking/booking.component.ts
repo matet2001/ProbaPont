@@ -7,10 +7,11 @@ import { AuthService } from "../../services/auth/auth.service";
 import { ButtonComponent } from "../../components/button/button.component";
 import { AlertService } from "../../services/alert.service";
 import { DatePickerComponent } from "../../components/date-picker/date-picker.component";
-import {Firestore, doc, runTransaction, getDoc, setDoc, deleteDoc} from '@angular/fire/firestore';
+import {Firestore, doc, runTransaction, getDoc, setDoc} from '@angular/fire/firestore';
 import { AuthModalService } from "../../services/auth/auth-modal.service";
 import { UserDetails } from "../../services/auth/auth.service";
 import {EmailService} from "../../services/email/email.service";
+import {RouterLink} from "@angular/router";
 
 interface OpeningHours {
     opening: number,
@@ -38,7 +39,8 @@ export enum BookingStatus {
         NgStyle,
         ButtonComponent,
         DatePickerComponent,
-        CommonModule
+        CommonModule,
+        RouterLink
     ],
     templateUrl: './booking.component.html',
 })

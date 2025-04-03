@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.dev.yourdomain.com',
+  apiUrl: 'https://probapont.com',
   googleMapsApiKey: 'AIzaSyApJybOR12b3mq7Fy00OsnVkpHoP0u0gjQ',
   firebaseConfig: {
     apiKey: "AIzaSyCIIzcJlQGrke4rF6HGeTICHJXvJ3laAZY",

@@ -1,7 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {NgClass, NgForOf} from "@angular/common";
+import {Component, Inject, Input} from '@angular/core';
+import {DOCUMENT, NgClass, NgForOf} from "@angular/common";
 import {AlertService} from "../../services/alert.service";
-import {of} from "rxjs";
 import {TranslatePipe} from "@ngx-translate/core";
 
 interface Alert {
@@ -26,7 +25,11 @@ export class AlertComponent {
 
   @Input() type: "default" | "auth" = "default";
 
-  constructor(private alertService: AlertService) {}
+  private document: Document;
+
+  constructor(private alertService: AlertService,@Inject(DOCUMENT) private injectedDocument: Document) {
+    this.document = injectedDocument;
+  }
 
   ngOnInit(): void {
     if(this.type === "default") {
@@ -48,7 +51,7 @@ export class AlertComponent {
   fadeOutAlert(alert: Alert) {
     const index = this.alerts.indexOf(alert);
     if (index !== -1) {
-      document.querySelectorAll('.alert')[index]?.classList.add('fade-out');
+      this.document.querySelectorAll('.alert')[index]?.classList.add('fade-out');
     }
   }
 

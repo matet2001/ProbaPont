@@ -22,9 +22,11 @@
                             </th>
                             <th *ngFor="let room of global.rooms" class="px-3 py-3 text-center h-full align-top">
                                 <div class="flex flex-col justify-start items-center h-full">
-                                    <h3 class="text-xl sm:text-2xl font-extrabold whitespace-nowrap">
-                                        {{ room.name }}
-                                    </h3>
+                                    <a [routerLink]="['/room', room.id]">
+                                        <h3 class="text-xl sm:text-2xl font-extrabold whitespace-nowrap">
+                                            {{ room.name }}
+                                        </h3>
+                                    </a>
                                     <p>{{ room.size }}</p>
                                     <p class="text-xs sm:text-sm text-gray-300 mt-2">
                                         {{ room.price }} {{ "PRICES.PRICE_UNIT" | translate }}
