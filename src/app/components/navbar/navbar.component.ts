@@ -19,7 +19,6 @@ import {LanguageToggleComponent} from "../language-toggle/language-toggle.compon
     RouterLink,
     ThemeToggleComponent,
     CommonModule,
-    NgOptimizedImage,
     TranslatePipe,
     LogoComponent,
     AuthButtonComponent,
@@ -37,8 +36,6 @@ export class NavbarComponent {
       this.isDarkMode = darkMode;
     });
   }
-
-
 
   isMobileMenuOpen = false;
 

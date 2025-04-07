@@ -1,6 +1,6 @@
 import {Component, Inject, Input} from '@angular/core';
 import {DOCUMENT, NgClass, NgForOf} from "@angular/common";
-import {AlertService} from "../../services/alert.service";
+import {AlertService} from "../../services/alert/alert.service";
 import {TranslatePipe} from "@ngx-translate/core";
 
 interface Alert {

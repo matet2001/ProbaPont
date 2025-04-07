@@ -5,7 +5,7 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { GlobalService } from "../../services/global/global.service";
 import { AuthService } from "../../services/auth/auth.service";
 import { ButtonComponent } from "../../components/button/button.component";
-import { AlertService } from "../../services/alert.service";
+import { AlertService } from "../../services/alert/alert.service";
 import { DatePickerComponent } from "../../components/date-picker/date-picker.component";
 import {Firestore, doc, runTransaction, getDoc, setDoc} from '@angular/fire/firestore';
 import { AuthModalService } from "../../services/auth/auth-modal.service";

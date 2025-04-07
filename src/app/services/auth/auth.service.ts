@@ -8,7 +8,7 @@ import {
   updateProfile,
   User
 } from '@angular/fire/auth';
-import {AlertService} from "../alert.service";
+import {AlertService} from "../alert/alert.service";
 import {doc, Firestore, getDoc, setDoc} from '@angular/fire/firestore';
 import {TranslateService} from "@ngx-translate/core";
 import {LocalStorageService} from "../locale-storage/local-storage.service";

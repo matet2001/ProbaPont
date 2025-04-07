@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { Firestore, doc, runTransaction } from '@angular/fire/firestore';
-import {AlertService} from "../../services/alert.service";
+import {AlertService} from "../../services/alert/alert.service";
 import {BookingStatus} from "../../pages/booking/booking.component";
 import {NgIf} from "@angular/common";
 import {ButtonComponent} from "../button/button.component";

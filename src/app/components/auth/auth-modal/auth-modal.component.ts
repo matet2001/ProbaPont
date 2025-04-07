@@ -4,7 +4,7 @@ import {FormsModule, NgForm} from '@angular/forms';
 import {AuthService} from "../../../services/auth/auth.service";
 import {TranslatePipe} from "@ngx-translate/core";
 import {AlertComponent} from "../../alert/alert.component";
-import {AlertService} from "../../../services/alert.service";
+import {AlertService} from "../../../services/alert/alert.service";
 import {AuthModalService} from "../../../services/auth/auth-modal.service";
 import {FormInputComponent} from "../../form-input/form-input.component";
 import {Auth, sendPasswordResetEmail} from "@angular/fire/auth";
@@ -42,16 +42,20 @@ export class AuthModalComponent {
 
   ngAfterViewInit() {
     this.authModal.nativeElement.addEventListener('close', () => {
-      this.resetForm();
+      setTimeout(() => {
+        this.resetForm();
+      }, 300);
       this.alertService.closeAllAuthAlerts();
     });
   }
 
   closeModal() {
+    console.log("close form");
     this.authModal.nativeElement.close(); // Close modal
   }
 
   resetForm() {
+    console.log("resetForm");
     this.authForm?.resetForm(); // Reset form
     this.error = ''; // Clear error message
     this.isLoginMode = true;
