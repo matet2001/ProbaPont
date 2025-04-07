@@ -2,15 +2,17 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-date-picker',
   standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule
-  ],
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        TranslatePipe
+    ],
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.css'
 })

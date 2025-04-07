@@ -1,5 +1,5 @@
 <mat-form-field class="">
-    <mat-label>Choose a date</mat-label>
+    <mat-label>{{ "BOOKING.CHOOSE_DATE" | translate }}</mat-label>
     <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" class="bg-transparent">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>

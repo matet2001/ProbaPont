@@ -26,7 +26,7 @@
             <form #authForm="ngForm" (ngSubmit)="submit()">
                 <!-- Email -->
                 <div class="mt-4">
-                    <label for="email" class="block text-sm font-medium">{{ 'AUTH.EMAIL' | translate }}</label>
+                    <label for="email" class="block text-sm font-medium">{{ 'AUTH.EMAIL' | translate }}<span *ngIf="!isLoginMode" class="text-red-600"> *</span></label>
                     <div class="relative mt-1">
                         <input
                             id="email"
@@ -48,7 +48,7 @@
                     <!-- Password -->
                     <div class="mt-4">
                         <div class="flex items-center justify-between">
-                            <label for="password" class="block text-sm/6 font-medium">{{ 'AUTH.PASSWORD' | translate }}</label>
+                            <label for="password" class="block text-sm/6 font-medium">{{ 'AUTH.PASSWORD' | translate }}<span *ngIf="!isLoginMode" class="text-red-600"> *</span></label>
                             @if (isLoginMode) {
                                 <div class="text-sm">
                                     <button (click)="switchToForgotPassword()" class="font-semibold text-primary hover:text-primary/80">
@@ -88,67 +88,66 @@
                     <!-- Other input fields, conditional based on isLoginMode -->
                     <ng-container *ngIf="!isLoginMode">
 
-                        <div class="grid grid-cols-2 gap-5 mt-4">
-                            <!-- First Name -->
-                            <div class="mt-4">
-                                <label for="first_name" class="block text-sm font-medium">{{ 'AUTH.FIRST_NAME' | translate }}</label>
-                                <div class="relative mt-1">
-                                    <input
-                                            id="first_name"
-                                            type="text"
-                                            name="firstName"
-                                            [(ngModel)]="firstName"
-                                            placeholder="{{ 'AUTH.FIRST_NAME' | translate }}"
-                                            required
-                                            class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
-                                            #first_nameRef="ngModel"
-                                    />
-                                </div>
-                                <p *ngIf="first_nameRef.invalid && first_nameRef.touched" class="text-red-500 text-sm mt-3">
-                                    {{ 'AUTH.FIRST_NAME_REQUIRED' | translate }}
-                                </p>
-                            </div>
-
-                            <!-- Last Name -->
-                            <div class="mt-4">
-                                <label for="last_name" class="block text-sm font-medium">{{ 'AUTH.LAST_NAME' | translate }}</label>
-                                <div class="relative mt-1">
-                                    <input
-                                            id="last_name"
-                                            type="text"
-                                            name="lastName"
-                                            [(ngModel)]="lastName"
-                                            placeholder="{{ 'AUTH.LAST_NAME' | translate }}"
-                                            required
-                                            class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
-                                            #last_nameRef="ngModel"
-                                    />
-                                </div>
-                                <p *ngIf="last_nameRef.invalid && last_nameRef.touched" class="text-red-500 text-sm mt-3">
-                                    {{ 'AUTH.LAST_NAME_REQUIRED' | translate }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Phone -->
-                        <div class="mt-4">
-                            <label for="phone" class="block text-sm font-medium">{{ 'AUTH.PHONE' | translate }}</label>
+                        <!-- Full Name -->
+                        <div class="mt-4 col-span-2">
+                            <label for="full_name" class="block text-sm font-medium">
+                                {{ 'AUTH.FULL_NAME' | translate }}
+                            </label>
                             <div class="relative mt-1">
                                 <input
-                                    id="phone"
-                                    type="tel"
-                                    name="phone"
-                                    [(ngModel)]="phone"
-                                    placeholder="{{ 'AUTH.PHONE' | translate }}"
-                                    required
-                                    class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
-                                    #phoneRef="ngModel"
+                                        id="full_name"
+                                        type="text"
+                                        name="fullName"
+                                        [(ngModel)]="fullName"
+                                        placeholder="{{ 'AUTH.FULL_NAME' | translate }}"
+                                        required
+                                        class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
+                                        #full_nameRef="ngModel"
                                 />
                             </div>
-                            <p *ngIf="phoneRef.invalid && phoneRef.touched" class="text-red-500 text-sm mt-3">
-                                {{ 'AUTH.EMAIL_REQUIRED' | translate }}
+                            <p *ngIf="full_nameRef.invalid && full_nameRef.touched" class="text-red-500 text-sm mt-3">
+                                {{ 'AUTH.FULL_NAME_REQUIRED' | translate }}
                             </p>
                         </div>
+
+                        <!-- Band Name (Optional) -->
+                        <div class="mt-4 col-span-2">
+                            <label for="band_name" class="block text-sm font-medium">
+                                {{ 'AUTH.BAND_NAME' | translate }} ({{ 'AUTH.OPTIONAL' | translate }})
+                            </label>
+                            <div class="relative mt-1">
+                                <input
+                                        id="band_name"
+                                        type="text"
+                                        name="bandName"
+                                        [(ngModel)]="bandName"
+                                        placeholder="{{ 'AUTH.BAND_NAME' | translate }}"
+                                        class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
+                                />
+                            </div>
+                        </div>
+
+                    <!-- Phone -->
+                    <div class="mt-4">
+                        <label for="phone" class="block text-sm font-medium">{{ 'AUTH.PHONE' | translate }}<span class="text-red-600"> *</span></label>
+                        <div class="relative mt-1">
+                            <input
+                                id="phone"
+                                type="tel"
+                                name="phone"
+                                pattern="^[0-9\-]+$"
+                                inputmode="tel"
+                                [(ngModel)]="phone"
+                                placeholder="{{ 'AUTH.PHONE' | translate }}"
+                                required
+                                class="input w-full pr-10 bg-light-card dark:bg-dark-card border"
+                                #phoneRef="ngModel"
+                            />
+                        </div>
+                        <p *ngIf="phoneRef.invalid && phoneRef.touched" class="text-red-500 text-sm mt-3">
+                            {{ 'AUTH.PHONE_INVALID' | translate }}
+                        </p>
+                    </div>
                     </ng-container>
                 }
 

@@ -54,25 +54,25 @@ export class AuthService {
   }
 
 
-  async register(email: string, password: string, firstName: string, lastName: string, phone: string) {
+  async register(email: string, password: string, fullName: string, bandName: string, phone: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       const user = userCredential.user;
 
       if (user) {
-        await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+        await updateProfile(user, { displayName: `${fullName} ${bandName}` });
 
         const userRef = doc(this.firestore, "users", user.uid);
         await setDoc(userRef, {
           uid: user.uid,
           email: user.email,
-          firstName,
-          lastName,
+          fullName,
+          bandName,
           phone,
           createdAt: new Date(),
         });
 
-        this.alertService.success(this.translate.instant("AUTH.REGISTER_SUCCESS"));
+        this.alertService.success(this.translate.instant("AUTH.ALERT.REGISTRATION_SUCCESS"));
       }
     } catch (error: any) {
       console.error("Error signing up:", error);

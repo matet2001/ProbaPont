@@ -23,8 +23,8 @@ export class AuthModalComponent {
   isForgotPasswordMode = false;
   showPassword = false;
 
-  firstName = '';
-  lastName = '';
+  fullName = '';
+  bandName = '';
   phone = '';
   email = '';
   password = '';
@@ -90,7 +90,7 @@ export class AuthModalComponent {
     } else {
       const authRequest = this.isLoginMode
           ? this.authService.login(this.email, this.password)
-          : this.authService.register(this.email, this.password, this.firstName, this.lastName, this.phone);
+          : this.authService.register(this.email, this.password, this.fullName, this.bandName, this.phone);
 
       authRequest
           .then(() => {

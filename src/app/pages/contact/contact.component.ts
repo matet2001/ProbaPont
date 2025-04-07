@@ -13,41 +13,42 @@ import mapStyle from "../../../assets/map-styles.json";
   templateUrl: './contact.component.html',
 })
 export class ContactComponent {
-  ngOnInit() {
-    let map: google.maps.Map;
-
-    async function initMap(): Promise<void> {
-      const center = { lat: 47.50507459467509, lng: 19.05782807046606 };
-      const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-      const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-
-      map = new Map(document.getElementById("map") as HTMLElement, {
-        center: center,
-        zoom: 17,
-        styles: mapStyle,
-        mapId: "9fc67a33f8cd6041"
-      });
-
-      // A marker using a Font Awesome icon for the glyph.
-      const icon = document.createElement('div');
-      icon.innerHTML = '<i class="fa fa-music fa-lg"></i>';
-      const faPin = new PinElement({
-        glyph: icon,
-        glyphColor: '#ffffff',
-        background: '#008080',
-        borderColor: '#000000',
-      });
-
-      new AdvancedMarkerElement({
-        map,
-        position: center,
-        content: faPin.element,
-        title: 'A marker using a FontAwesome icon for the glyph.'
-      });
+  ngAfterViewInit() {
+    if (typeof google === "undefined") {
+      console.error("Google Maps API is not loaded.");
+      return;
     }
 
-    initMap();
+    this.initMap();
+  }
 
+  async initMap(): Promise<void> {
+    const center = { lat: 47.50507459467509, lng: 19.05782807046606 };
+    const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+
+    const map = new Map(document.getElementById("map") as HTMLElement, {
+      center: center,
+      zoom: 17,
+      styles: mapStyle,
+      mapId: "9fc67a33f8cd6041"
+    });
+
+    const icon = document.createElement('div');
+    icon.innerHTML = '<i class="fa fa-music fa-lg"></i>';
+    const faPin = new PinElement({
+      glyph: icon,
+      glyphColor: '#ffffff',
+      background: '#008080',
+      borderColor: '#000000',
+    });
+
+    new AdvancedMarkerElement({
+      map,
+      position: center,
+      content: faPin.element,
+      title: 'A marker using a FontAwesome icon for the glyph.'
+    });
   }
 
   getBackgroundImage(): string {
