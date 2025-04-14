@@ -16,8 +16,8 @@ import {LocalStorageService} from "../locale-storage/local-storage.service";
 export interface UserDetails {
   uid: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  bandName: string;
+  fullName: string;
   phone: string;
 }
 

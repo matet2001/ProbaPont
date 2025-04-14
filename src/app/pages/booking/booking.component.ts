@@ -63,6 +63,17 @@ export class BookingComponent {
 
     openingHours: OpeningHours = { opening: 10, closing: 22 };
 
+    isBookButtonDisabled(): boolean {
+        for (const outerMap of this.bookings.values()) {
+            for (const booking of outerMap.values()) {
+                if (booking.status === BookingStatus.PLANNED) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     getOpeningHours(): number[] {
         return Array.from({ length: this.openingHours.closing - this.openingHours.opening }, (_, i) => i + this.openingHours.opening);
     }
@@ -177,11 +188,9 @@ export class BookingComponent {
         this.cdr.detectChanges();
     }
 
-    // Convert Map<number, Map<number, Booking>> to a plain object
     convertMapToObject(map: Map<any, any>): any {
         const obj: any = {};
         map.forEach((value, key) => {
-            // If value is a nested Map, convert it too
             obj[key] = value instanceof Map ? this.convertMapToObject(value) : value;
         });
         return obj;
@@ -252,45 +261,10 @@ export class BookingComponent {
         return Math.random().toString(36).substring(2) + Date.now().toString(36);
     }
 
-    async sendVerificationEmail(email: string, token: string) {
+    async sendVerificationEmail(to: string, token: string) {
         const verificationLink = `http://localhost:4200/verify-booking?token=${token}`;
-
-        const emailHtml = `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
-            <!-- Logo -->
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img ngSrc="cid:logo" alt="Company Logo" style="max-width: 150px;">
-            </div>
-
-            <!-- Title -->
-            <h2 style="color: #008080; text-align: center;">Confirm Your Booking</h2>
-
-            <!-- Message -->
-            <p style="font-size: 16px; color: #555;">Hello,</p>
-            <p style="font-size: 16px; color: #555;">
-                You requested to verify your booking. Click the button below to complete your verification:
-            </p>
-
-            <!-- Button -->
-            <div style="text-align: center; margin: 20px 0;">
-                <a href="${verificationLink}" 
-                   style="background-color: #008080; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block;">
-                    Verify Booking
-                </a>
-            </div>
-
-            <!-- Footer -->
-            <p style="font-size: 14px; color: #777; text-align: center;">
-                If you did not request this, you can ignore this email.
-            </p>
-            <p style="font-size: 14px; color: #777; text-align: center;">Thank you!</p>
-        </div>
-    `;
-
-        await this.emailService.sendEmail(email, "Verify Your Booking", emailHtml);
+        this.emailService.sendVerificationEmail(to, "Verify Your Booking", verificationLink);
     }
-
-
 
     private formatDate(date: Date): string {
         const year = date.getFullYear();
@@ -306,15 +280,25 @@ export class BookingComponent {
         return `linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url(${imageUrl})`;
     }
 
-    getUserNameFromBooking(booking: Booking | undefined): string {
+    getBookDisplayName(booking: Booking | undefined): string {
         if (!booking?.userId) {
             return "Unknown User"; // No userId found in booking
         }
 
         // Check cache for user details
         const user = this.userCache.get(booking.userId);
-        return user ? user.firstName : "Unknown User";
+
+        if (user) {
+            if (user.bandName) {
+                return user.bandName;
+            } else {
+                const nameSplit = user.fullName.split(" ");
+                return `${nameSplit[0]} ${nameSplit[0].charAt(0)}.`
+            }
+        } else return "Unknown User";
     }
+
+
 
     protected readonly BookingStatus = BookingStatus;
 }

@@ -10,10 +10,6 @@ A responsive web application for music rehearsal room businesses. The site allow
 - [Features](#features)
 - [Built With](#built-with)
 - [Future Plans](#future-plans)
-- [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Dockerization](#dockerization)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Contributors](#contributors)
@@ -62,6 +58,7 @@ This project is designed as a business site for music rehearsal rooms. Venues ca
 ---
 
 ### Usage
+You can reach the site on: https://probapont.web.app/
 
 Static Pages: Browse room details, pricing, and equipment information.
 User Account: Register and log in using the Firebase authentication system.
