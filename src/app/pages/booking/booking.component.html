@@ -12,7 +12,7 @@
                 </h1>
 
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-x-2 divide-light-border border border-gray-700 font-poppins">
+                    <table class="min-w-full table-fixed divide-y divide-x-2 divide-light-border border border-gray-700 font-poppins">
 
                         <!-- Table Header -->
                         <thead class="text-primary">
@@ -41,37 +41,21 @@
                         <tbody class="divide-y divide-gray-700 text-white text-sm sm:text-base">
                             @for (time of getOpeningHours(); track time) {
                                 <tr>
-                                    <!-- 🔧 Made narrower -->
                                     <td class="px-2 py-3 text-center font-semibold whitespace-nowrap">
                                         {{ time }} - {{ time + 1 }}
                                     </td>
-
-                                    @for (room of global.rooms; track room) {
-                                        @if (isBookingPresent(room.id, time)) {
-                                            @if (getBooking(room.id, time)?.status == BookingStatus.VERIFIED) {
-                                                <td class="p-4 text-center bg-green-400/80">
-                                                    {{ getBookDisplayName(getBooking(room.id, time)) }}
-                                                </td>
-                                            } @else if (getBooking(room.id, time)?.status == BookingStatus.PLANNED) {
-                                                <td class="p-4 text-center bg-yellow-500/80">
-                                                    {{ getBookDisplayName(getBooking(room.id, time)) }}
-                                                </td>
-                                            } @else if (getBooking(room.id, time)?.status == BookingStatus.UNVERIFIED) {
-                                                <td class="p-4 text-center bg-primary/70">
-                                                    {{ getBookDisplayName(getBooking(room.id, time)) }}
-                                                </td>
-                                            }
-                                        } @else {
-                                            <td class="bg-light-secondary/30 hover:bg-yellow-400/30 relative">
-                                                <button class="absolute inset-0" (click)="tryToBook(room.id, time)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline-block">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                                    </svg>
-                                                </button>
-                                            </td>
-                                        }
-                                    }
+                                    <td
+                                        booking-cell
+                                        *ngFor="let room of global.rooms"
+                                        [roomId]="room.id"
+                                        [time]="time"
+                                        [getBooking]="getBooking"
+                                        [isBookingPresent]="isBookingPresent"
+                                        [getBookDisplayName]="getBookDisplayName"
+                                        (tryToBook)="tryToBook($event)"
+                                    ></td>
                                 </tr>
+
                             }
 
                         <tr>

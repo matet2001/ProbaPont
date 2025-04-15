@@ -12,7 +12,9 @@ import { AuthService } from '../../services/auth/auth.service';
 import { AuthModalService } from '../../services/auth/auth-modal.service';
 import { AlertService } from '../../services/alert/alert.service';
 import { RouterLink } from '@angular/router';
-import { BookingStatus, Booking, OpeningHours } from '../../models/booking.model';
+import {BookingStatus, Booking, OpeningHours, BookingIntent} from '../../models/booking.model';
+import {BookingCellComponent} from "../../components/booking/booking-cell/booking-cell.component";
+import {of} from "rxjs";
 
 @Component({
     selector: 'app-booking',
@@ -25,7 +27,8 @@ import { BookingStatus, Booking, OpeningHours } from '../../models/booking.model
         ButtonComponent,
         DatePickerComponent,
         CommonModule,
-        RouterLink
+        RouterLink,
+        BookingCellComponent
     ],
     templateUrl: './booking.component.html',
 })
@@ -34,7 +37,6 @@ export class BookingComponent {
     bookings: Map<number, Map<number, Booking>> = new Map();
 
     openingHours: OpeningHours = { opening: 10, closing: 22 };
-    protected readonly BookingStatus = BookingStatus;
 
     constructor(
         public global: GlobalService,
@@ -58,7 +60,7 @@ export class BookingComponent {
     }
 
     getBooking(roomId: number, time: number): Booking | undefined {
-        return this.bookings.get(roomId)?.get(time);
+        return this.bookings?.get(roomId)?.get(time);
     }
 
     onDatePicked(date: Date) {
@@ -83,7 +85,7 @@ export class BookingComponent {
         return false;
     }
 
-    async tryToBook(roomId: number, time: number) {
+    async tryToBook($event: BookingIntent) {
         if (!this.authService.isAuthenticated()) {
             this.alertService.warning("BOOKING.ALERT.LOGIN", "auth");
             this.authModalService.openModal();
@@ -94,7 +96,7 @@ export class BookingComponent {
         if (!user) return;
 
         try {
-            this.bookingService.planBooking(this.selectedDate, roomId, time, user);
+            this.bookingService.planBooking(this.selectedDate, $event.roomId, $event.time, user);
             const updatedBookings = await this.bookingService.getBookings(this.selectedDate);
             this.bookings = await this.bookingService.mapBookings(updatedBookings.rooms);
             this.cdr.detectChanges();

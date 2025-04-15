@@ -6,6 +6,11 @@ export interface Booking {
     user?: UserDetails;
 }
 
+export interface BookingIntent {
+    roomId: number;
+    time: number
+}
+
 export enum BookingStatus {
     PLANNED,
     UNVERIFIED,

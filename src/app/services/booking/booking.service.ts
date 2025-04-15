@@ -49,7 +49,6 @@ export class BookingService {
     return result;
   }
 
-
   planBooking(date: Date, roomId: number, time: number, user: UserDetails): void {
     const roomMap = this.localPlannedBookings.get(roomId) || new Map<number, Booking>();
 
