@@ -6,7 +6,6 @@ import {NgClass} from "@angular/common";
   selector: 'app-button',
   standalone: true,
   imports: [
-    NgClass
   ],
   templateUrl: './button.component.html',
 })

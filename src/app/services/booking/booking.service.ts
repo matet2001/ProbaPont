@@ -3,17 +3,34 @@ import {doc, Firestore, getDoc, runTransaction, setDoc} from "@angular/fire/fire
 import {UserDetails} from "../auth/auth.service";
 import {Booking, BookingStatus} from "../../models/booking.model";
 import {UserService} from "../user/user.service";
+import { format } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
   private localPlannedBookings: Map<number, Map<number, Booking>> = new Map();
+  bookings: Map<number, Map<number, Booking>> = new Map();
 
-  constructor(private firestore: Firestore, private userService: UserService) {}
+  constructor(private firestore: Firestore, private userService: UserService) {
+
+  }
 
   private formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
+    return format(date, 'yyyy-MM-dd');
+  }
+
+  public isBookingPresent(roomId: number, time: number): boolean {
+    return !!this.getBooking(roomId, time);
+  }
+
+  public getBooking(roomId: number, time: number): Booking | undefined {
+    return this.bookings?.get(roomId)?.get(time);
+  }
+
+  async fetchBookings(date: Date) {
+    const data = await this.getBookings(date);
+    this.bookings = await this.mapBookings(data.rooms);
   }
 
   async getBookings(date: Date): Promise<any> {
@@ -49,7 +66,7 @@ export class BookingService {
     return result;
   }
 
-  planBooking(date: Date, roomId: number, time: number, user: UserDetails): void {
+  planBooking(roomId: number, time: number, user: UserDetails): void {
     const roomMap = this.localPlannedBookings.get(roomId) || new Map<number, Booking>();
 
     if (roomMap.has(time)) {
@@ -67,13 +84,16 @@ export class BookingService {
   ): Promise<{ verificationLink: string }> {
     const formattedDate = this.formatDate(date);
     const ref = doc(this.firestore, 'bookings', formattedDate);
-    const verificationToken = this.generateVerificationToken();
-    const verificationRef = doc(this.firestore, 'booking_verifications', verificationToken);
 
     await runTransaction(this.firestore, async (tx) => {
       const snap = await tx.get(ref);
-      const existing = snap.data();
-      if (!existing?.['rooms']) throw new Error('No bookings found!');
+      let existing = snap.data();
+
+      if (!snap.exists()) {
+        // Document doesn't exist yet → create base structure
+        existing = { rooms: {} };
+        tx.set(ref, existing); // initialize doc in the same transaction
+      }
 
       const updates: any = {};
       bookings.forEach((room, roomId) => {
@@ -92,6 +112,8 @@ export class BookingService {
       tx.update(ref, updates);
     });
 
+    const verificationToken = this.generateVerificationToken();
+    const verificationRef = doc(this.firestore, 'booking_verifications', verificationToken);
     const serialized = this.convertMapToObject(bookings);
     await setDoc(verificationRef, {
       userId: user.uid,

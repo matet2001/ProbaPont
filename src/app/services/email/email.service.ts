@@ -51,5 +51,6 @@ export class EmailService {
             <p style="font-size: 14px; color: #777; text-align: center;">Thank you!</p>
         </div>
     `;
+    this.sendEmail(to, subject, emailHtml);
   }
 }

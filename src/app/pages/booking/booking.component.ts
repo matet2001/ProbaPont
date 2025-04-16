@@ -34,7 +34,6 @@ import {of} from "rxjs";
 })
 export class BookingComponent {
     selectedDate: Date = new Date();
-    bookings: Map<number, Map<number, Booking>> = new Map();
 
     openingHours: OpeningHours = { opening: 10, closing: 22 };
 
@@ -44,7 +43,7 @@ export class BookingComponent {
         private alertService: AlertService,
         private authModalService: AuthModalService,
         public authService: AuthService,
-        private bookingService: BookingService,
+        public bookingService: BookingService,
         private userService: UserService,
         private emailService: EmailService
     ) {
@@ -55,34 +54,25 @@ export class BookingComponent {
         return Array.from({ length: this.openingHours.closing - this.openingHours.opening }, (_, i) => i + this.openingHours.opening);
     }
 
-    isBookingPresent(roomId: number, time: number): boolean {
-        return !!this.getBooking(roomId, time);
-    }
-
-    getBooking(roomId: number, time: number): Booking | undefined {
-        return this.bookings?.get(roomId)?.get(time);
-    }
-
     onDatePicked(date: Date) {
         this.selectedDate = date;
         this.fetchBookings(date);
     }
 
     async fetchBookings(date: Date) {
-        const data = await this.bookingService.getBookings(date);
-        this.bookings = await this.bookingService.mapBookings(data.rooms);
+        await this.bookingService.fetchBookings(date);
         this.cdr.detectChanges();
     }
 
     isBookButtonDisabled(): boolean {
-        for (const outerMap of this.bookings.values()) {
+        for (const outerMap of this.bookingService.bookings.values()) {
             for (const booking of outerMap.values()) {
                 if (booking.status === BookingStatus.PLANNED) {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     async tryToBook($event: BookingIntent) {
@@ -96,9 +86,8 @@ export class BookingComponent {
         if (!user) return;
 
         try {
-            this.bookingService.planBooking(this.selectedDate, $event.roomId, $event.time, user);
-            const updatedBookings = await this.bookingService.getBookings(this.selectedDate);
-            this.bookings = await this.bookingService.mapBookings(updatedBookings.rooms);
+            this.bookingService.planBooking($event.roomId, $event.time, user);
+            await this.bookingService.fetchBookings(this.selectedDate);
             this.cdr.detectChanges();
         } catch (error: any) {
             this.alertService.error(error.message);
@@ -106,11 +95,13 @@ export class BookingComponent {
     }
 
     async sendBooks() {
+        if (this.isBookButtonDisabled()) return;
+
         const user = this.authService.getUser();
         if (!user) return;
 
         try {
-            const result = await this.bookingService.confirmPlannedBookings(this.bookings, this.selectedDate, user);
+            const result = await this.bookingService.confirmPlannedBookings(this.bookingService.bookings, this.selectedDate, user);
             this.emailService.sendVerificationEmail(user.email, 'Verify Your Booking', result.verificationLink);
             this.alertService.success("A verification email has been sent!");
             this.fetchBookings(this.selectedDate);

@@ -1,5 +1,5 @@
-<ng-container *ngIf="isBookingPresent(roomId, time); else emptySlot">
-    {{ getBookDisplayName(getBooking(roomId, time)) }}
+<ng-container *ngIf="bookingService.isBookingPresent(roomId, time); else emptySlot">
+    {{ getBookDisplayName(bookingService.getBooking(roomId, time)) }}
 </ng-container>
 
 <ng-template #emptySlot class="bg-light-secondary/30 hover:bg-yellow-400/30">
