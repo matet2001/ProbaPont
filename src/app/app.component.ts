@@ -10,6 +10,7 @@ import {FooterComponent} from "./components/footer/footer.component";
 import {AuthButtonComponent} from "./components/auth/auth-button/auth-button.component";
 import {AuthModalComponent} from "./components/auth/auth-modal/auth-modal.component";
 import {AlertComponent} from "./components/alert/alert.component";
+import {ConfirmationModalComponent} from "./components/confirmation-modal/confirmation-modal.component";
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ import {AlertComponent} from "./components/alert/alert.component";
         MatFormFieldModule,
         FooterComponent,
         AuthModalComponent,
-        AlertComponent
+        AlertComponent,
+        ConfirmationModalComponent
     ],
 })
 export class AppComponent {

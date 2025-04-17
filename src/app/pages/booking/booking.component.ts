@@ -15,6 +15,8 @@ import { RouterLink } from '@angular/router';
 import {BookingStatus, Booking, OpeningHours, BookingIntent} from '../../models/booking.model';
 import {BookingCellComponent} from "../../components/booking/booking-cell/booking-cell.component";
 import {of} from "rxjs";
+import {ConfirmModalService} from "../../services/modal/confirm-modal.service";
+import {user} from "@angular/fire/auth";
 
 @Component({
     selector: 'app-booking',
@@ -45,7 +47,8 @@ export class BookingComponent {
         public authService: AuthService,
         public bookingService: BookingService,
         private userService: UserService,
-        private emailService: EmailService
+        private emailService: EmailService,
+        private confirmModalService: ConfirmModalService
     ) {
         this.fetchBookings(this.selectedDate);
     }
@@ -75,13 +78,17 @@ export class BookingComponent {
         return true;
     }
 
-    async tryToBook($event: BookingIntent) {
+    tryToPlanBook($event: BookingIntent) {
         if (!this.authService.isAuthenticated()) {
             this.alertService.warning("BOOKING.ALERT.LOGIN", "auth");
             this.authModalService.openModal();
             return;
         }
 
+        this.planBooking($event);
+    }
+
+    async planBooking($event: BookingIntent) {
         const user = this.authService.getUser();
         if (!user) return;
 
@@ -94,9 +101,18 @@ export class BookingComponent {
         }
     }
 
-    async sendBooks() {
+    async tryToSendBooks() {
         if (this.isBookButtonDisabled()) return;
 
+        this.confirmModalService.openModal(
+            'BOOKING.CONFIRM_MODAL.TITLE',
+            'BOOKING.CONFIRM_MODAL.CONTENT',
+            () => this.sendBooks(),
+            () => console.log("Cancelled")
+        );
+    }
+
+    async sendBooks() {
         const user = this.authService.getUser();
         if (!user) return;
 

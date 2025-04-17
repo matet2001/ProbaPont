@@ -137,7 +137,11 @@
       "FAIL": "Booking failed :( Please try again later.",
       "LOGIN": "Please log in to make a booking!"
     },
-    "SUBMIT": "Booking"
+    "SUBMIT": "Booking",
+    "CONFIRM_MODAL": {
+      "TITLE": "Confirm Your Reservation",
+      "CONTENT": "Are you sure you want to confirm your bookings? Once confirmed, you can only cancel up to 72 hours before the reserved time."
+    }
   },
   "INFO": {
     "CLOSE": "Close"

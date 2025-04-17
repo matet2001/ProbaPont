@@ -50,7 +50,7 @@
                                         [roomId]="room.id"
                                         [time]="time"
                                         [getBookDisplayName]="getBookDisplayName"
-                                        (tryToBook)="tryToBook($event)"
+                                        (tryToBook)="tryToPlanBook($event)"
                                         class="h-16 max-h-16 overflow-hidden align-middle text-center relative p-4 whitespace-nowrap"
                                     ></td>
                                 </tr>
@@ -67,7 +67,7 @@
                                         {{ "BOOKING.ORDER_DISCLAIM" | translate }}
                                     </p>
                                     <div class="mt-4 w-full max-w-lg">
-                                        <app-button class="w-full py-4 text-lg font-semibold" (click)="sendBooks()" [disabled]="isBookButtonDisabled()">
+                                        <app-button class="w-full py-4 text-lg font-semibold" (click)="tryToSendBooks()" [disabled]="isBookButtonDisabled()">
                                             {{ "BOOKING.SUBMIT" | translate }}
                                         </app-button>
                                     </div>

@@ -135,7 +135,11 @@
       "FAIL": "Sikertelen foglalás :( Kérjük próbálja meg később",
       "LOGIN": "Kérjük jelentkezzen be a foglaláshoz!"
     },
-    "SUBMIT": "Foglalás"
+    "SUBMIT": "Foglalás",
+    "CONFIRM_MODAL": {
+      "TITLE": "Foglalás megerősítése",
+      "CONTENT": "Biztosan véglegesíteni szeretnéd a foglalásaidat? A megerősítés után a foglalást csak az időpont előtt legfeljebb 72 órával lehet lemondani. "
+    }
   },
   "INFO": {
     "CLOSE": "Bezárás"

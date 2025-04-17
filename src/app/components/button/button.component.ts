@@ -6,6 +6,7 @@ import {NgClass} from "@angular/common";
   selector: 'app-button',
   standalone: true,
   imports: [
+    NgClass
   ],
   templateUrl: './button.component.html',
 })
@@ -14,4 +15,5 @@ export class ButtonComponent {
   @Input() fullWidth: boolean = true;
   @Input() customClasses: string = '';
   @Input() disabled: boolean = false;
+  @Input() colors: string = "bg-primary hover:bg-primary/80"
 }
