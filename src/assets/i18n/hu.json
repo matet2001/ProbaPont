@@ -139,7 +139,8 @@
     "CONFIRM_MODAL": {
       "TITLE": "Foglalás megerősítése",
       "CONTENT": "Biztosan véglegesíteni szeretnéd a foglalásaidat? A megerősítés után a foglalást csak az időpont előtt legfeljebb 72 órával lehet lemondani. "
-    }
+    },
+    "ASD": "asd"
   },
   "INFO": {
     "CLOSE": "Bezárás"
