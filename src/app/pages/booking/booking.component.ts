@@ -66,7 +66,7 @@ export class BookingComponent {
     }
 
     isBookButtonDisabled(): boolean {
-        for (const outerMap of this.bookingService.bookings.values()) {
+        for (const outerMap of this.bookingService.fetchedBookings.values()) {
             for (const booking of outerMap.values()) {
                 if (booking.status === BookingStatus.PLANNED) {
                     return false;
@@ -99,6 +99,10 @@ export class BookingComponent {
         }
     }
 
+    tryToDeletePlannedBook($event: BookingIntent) {
+        this.bookingService.deletePlannedBooking($event.roomId, $event.time);
+    }
+
     async tryToSendBooks() {
         if (this.isBookButtonDisabled()) return;
 
@@ -115,7 +119,7 @@ export class BookingComponent {
         if (!user) return;
 
         try {
-            const result = await this.bookingService.confirmPlannedBookings(this.bookingService.bookings, this.selectedDate, user);
+            const result = await this.bookingService.confirmPlannedBookings(this.bookingService.fetchedBookings, this.selectedDate, user);
             this.emailService.sendVerificationEmail(user.email, 'Verify Your Booking', result.verificationLink);
             this.alertService.success("A verification email has been sent!");
             this.fetchBookings(this.selectedDate);

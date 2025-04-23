@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 })
 export class BookingService {
   private localPlannedBookings: Map<number, Map<number, Booking>> = new Map();
-  bookings: Map<number, Map<number, Booking>> = new Map();
+  fetchedBookings: Map<number, Map<number, Booking>> = new Map();
 
   constructor(private firestore: Firestore, private userService: UserService) {
 
@@ -18,7 +18,7 @@ export class BookingService {
 
   async getBookings(date: Date) {
     const data = await this.fetchBookings(date);
-    this.bookings = await this.mapBookings(data.rooms);
+    this.fetchedBookings = await this.mapBookings(data.rooms);
   }
 
   async fetchBookings(date: Date): Promise<any> {
@@ -63,6 +63,14 @@ export class BookingService {
 
     roomMap.set(time, { status: BookingStatus.PLANNED, userId: user.uid, user: user });
     this.localPlannedBookings.set(roomId, roomMap);
+  }
+
+  deletePlannedBooking(roomId: number, time: number): void {
+    const plannedRoomMap = this.localPlannedBookings.get(roomId) || new Map<number, Booking>();
+    plannedRoomMap.delete(time);
+
+    const roomMap = this.fetchedBookings.get(roomId) || new Map<number, Booking>();
+    roomMap.delete(time);
   }
 
   async confirmPlannedBookings(
@@ -130,6 +138,7 @@ export class BookingService {
     if (this.localPlannedBookings.size === 0) return true;
 
     for (const [roomId, roomMap] of this.localPlannedBookings) {
+      if(roomMap.size === 0) return true;
       if (roomId === cellRoomId) {
         for (const [time, _] of roomMap) {
           if (Math.abs(cellTime - time) === 1) {
@@ -143,7 +152,7 @@ export class BookingService {
   }
 
   public getBooking(roomId: number, time: number): Booking | undefined {
-    return this.bookings?.get(roomId)?.get(time);
+    return this.fetchedBookings?.get(roomId)?.get(time);
   }
 
   private formatDate(date: Date): string {
