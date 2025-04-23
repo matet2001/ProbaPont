@@ -29,29 +29,45 @@
         <app-logo size="0.5" />
 
         <!-- Routes -->
-        <div class="hidden sm:ml-6 sm:block">
+        <div *ngIf="translationReady; else navSkeleton">
           <div class="flex space-x-4">
-            <div *ngFor="let route of routes">
-              <a [routerLink]="route.href"
-                 [ngClass]="route.cta
-                   ? 'text-white bg-primary'
-                   : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'"
-                 class="rounded-md px-3 py-2 text-sm font-medium"
-                 [attr.aria-current]="route.cta ? 'page' : ''">
-                {{ route.name | translate }}
-              </a>
-            </div>
+              <div *ngFor="let route of routes">
+                  <a
+                      [routerLink]="route.href"
+                      [ngClass]="route.cta
+                      ? 'text-white bg-primary'
+                      : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'"
+                      class="rounded-md px-3 py-2 text-sm font-medium"
+                      [attr.aria-current]="route.cta ? 'page' : ''">
+                        {{ route.name | translate }}
+                  </a>
+              </div>
           </div>
         </div>
+
+        <ng-template #navSkeleton>
+          <div class="flex space-x-4">
+              <div *ngFor="let _ of routes">
+                  <div class="h-8 w-24 rounded-md bg-light-border dark:bg-dark-border animate-pulse"></div>
+              </div>
+          </div>
+        </ng-template>
       </div>
         <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
-            <div *ngIf="authService.isAuthenticated(); then thenBlock else elseBlock"></div>
-            <ng-template #thenBlock>
-                <app-profile-dropdown/>
-            </ng-template>
+            <ng-container *ngIf="authReady; else authSkeleton">
+                <ng-container *ngIf="authService.isAuthenticated(); else elseBlock">
+                    <app-profile-dropdown />
+                </ng-container>
+            </ng-container>
+
             <ng-template #elseBlock>
-                <app-auth-button/>
+                <app-auth-button />
             </ng-template>
+
+            <ng-template #authSkeleton>
+                <div class="skeleton w-24 h-10 rounded bg-base-300"></div>
+            </ng-template>
+
         </div>
         <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
             <app-language-toggle />

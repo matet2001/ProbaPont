@@ -22,10 +22,10 @@ export class EmailService {
   sendVerificationEmail(to: string, subject: string, verificationLink: string) {
     const emailHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
-            <!-- Logo -->
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img ngSrc="cid:logo" alt="Company Logo" style="max-width: 150px;">
-            </div>
+<!--            &lt;!&ndash; Logo &ndash;&gt;-->
+<!--            <div style="text-align: center; margin-bottom: 20px;">-->
+<!--                <img ngSrc="cid:logo" alt="Company Logo" style="max-width: 150px;">-->
+<!--            </div>-->
 
             <!-- Title -->
             <h2 style="color: #008080; text-align: center;">Confirm Your Booking</h2>

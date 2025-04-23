@@ -5,7 +5,7 @@ import {ThemeToggleComponent} from "../theme-toggle/theme-toggle.component";
 import {ThemeService} from "../../services/theme/theme.service";
 import {MatIcon} from "@angular/material/icon";
 import {LanguageService} from "../../services/language/language.service";
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {LogoComponent} from "../logo/logo.component";
 import {AuthButtonComponent} from "../auth/auth-button/auth-button.component";
 import {ProfileDropdownComponent} from "../profile-dropdown/profile-dropdown.component";
@@ -17,7 +17,6 @@ import {LanguageToggleComponent} from "../language-toggle/language-toggle.compon
   standalone: true,
   imports: [
     RouterLink,
-    ThemeToggleComponent,
     CommonModule,
     TranslatePipe,
     LogoComponent,
@@ -29,19 +28,12 @@ import {LanguageToggleComponent} from "../language-toggle/language-toggle.compon
 })
 export class NavbarComponent {
   isDarkMode = false;
-  authService = inject(AuthService);
-
-  constructor(private themeService: ThemeService, private languageService: LanguageService) {
-    this.themeService.isDarkMode$.subscribe((darkMode) => {
-      this.isDarkMode = darkMode;
-    });
-  }
-
+  translationReady = false;
+  authReady = false;
   isMobileMenuOpen = false;
 
-  toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-  }
+  authService = inject(AuthService);
+  translateService = inject(TranslateService);
 
   routes = [
     { cta: false, name: 'NAV.HOME', href: '/' },
@@ -50,4 +42,28 @@ export class NavbarComponent {
     { cta: false, name: 'NAV.PRICES', href: '/prices' },
     { cta: false, name: 'NAV.CONTACT', href: '/contact' }
   ];
+
+  constructor(private themeService: ThemeService, private languageService: LanguageService) {
+    this.themeService.isDarkMode$.subscribe((darkMode) => {
+      this.isDarkMode = darkMode;
+    });
+  }
+
+  ngOnInit() {
+    this.translateService.use('en').subscribe(() => {
+      this.translationReady = true;
+    });
+
+    // this.authService.authReady$.subscribe(ready => {
+    //   this.authReady = ready;
+    // });
+
+    this.authService.authReady.subscribe(authReady => {
+      this.authReady = true;
+    });
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
 }

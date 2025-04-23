@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {EventEmitter, inject, Injectable, Output} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword, onAuthStateChanged,
@@ -12,6 +12,8 @@ import {AlertService} from "../alert/alert.service";
 import {doc, Firestore, getDoc, setDoc} from '@angular/fire/firestore';
 import {TranslateService} from "@ngx-translate/core";
 import {LocalStorageService} from "../locale-storage/local-storage.service";
+import {BehaviorSubject, Observable, timer} from "rxjs";
+import {BookingIntent} from "../../models/booking.model";
 
 export interface UserDetails {
   uid: string;
@@ -26,7 +28,12 @@ export interface UserDetails {
 })
 
 export class AuthService {
-  localUser: UserDetails | null = null; // Store logged-in user data
+  private authReadySubject = new BehaviorSubject<boolean>(false);
+  authReady$ = this.authReadySubject.asObservable();
+  authReady = new EventEmitter<void>();
+
+
+  localUser: UserDetails | null = null;
 
   alertService: AlertService = inject(AlertService);
   translate: TranslateService = inject(TranslateService);
@@ -36,7 +43,11 @@ export class AuthService {
     this.loadUserOnStart();
   }
 
-  private loadUserOnStart() {
+  isAuthenticatedAsync(): Observable<boolean> {
+    return this.authReady$;
+  }
+
+  private async loadUserOnStart() {
     onAuthStateChanged(this.auth, async (user: User | null) => {
       if (user) {
         const userRef = doc(this.firestore, 'users', user.uid);
@@ -44,12 +55,19 @@ export class AuthService {
 
         if (userSnapshot.exists()) {
           this.localUser = userSnapshot.data() as UserDetails;
-          this.localStorageService.set('user', JSON.stringify(this.localUser)); // Store user in localStorage
+          this.localStorageService.set('user', JSON.stringify(this.localUser));
+        } else {
+          this.localUser = null;
+          this.localStorageService.remove('user');
         }
       } else {
         this.localUser = null;
-        this.localStorageService.remove('user'); // Clear localStorage on logout
+        this.localStorageService.remove('user');
       }
+
+      // ✅ Set auth ready AFTER everything is done
+      this.authReadySubject.next(true);
+      this.authReady.emit();
     });
   }
 

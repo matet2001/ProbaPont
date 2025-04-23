@@ -7,7 +7,6 @@ import {NgClass, NgOptimizedImage} from "@angular/common";
   standalone: true,
   imports: [
     NgOptimizedImage,
-    NgClass
   ],
   templateUrl: './language-toggle.component.html',
 })
