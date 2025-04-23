@@ -14,9 +14,7 @@ import { AlertService } from '../../services/alert/alert.service';
 import { RouterLink } from '@angular/router';
 import {BookingStatus, Booking, OpeningHours, BookingIntent} from '../../models/booking.model';
 import {BookingCellComponent} from "../../components/booking/booking-cell/booking-cell.component";
-import {of} from "rxjs";
 import {ConfirmModalService} from "../../services/modal/confirm-modal.service";
-import {user} from "@angular/fire/auth";
 
 @Component({
     selector: 'app-booking',
@@ -63,7 +61,7 @@ export class BookingComponent {
     }
 
     async fetchBookings(date: Date) {
-        await this.bookingService.fetchBookings(date);
+        await this.bookingService.getBookings(date);
         this.cdr.detectChanges();
     }
 
@@ -94,7 +92,7 @@ export class BookingComponent {
 
         try {
             this.bookingService.planBooking($event.roomId, $event.time, user);
-            await this.bookingService.fetchBookings(this.selectedDate);
+            await this.bookingService.getBookings(this.selectedDate);
             this.cdr.detectChanges();
         } catch (error: any) {
             this.alertService.error(error.message);

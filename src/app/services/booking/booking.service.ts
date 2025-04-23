@@ -16,24 +16,12 @@ export class BookingService {
 
   }
 
-  private formatDate(date: Date): string {
-    return format(date, 'yyyy-MM-dd');
-  }
-
-  public isBookingPresent(roomId: number, time: number): boolean {
-    return !!this.getBooking(roomId, time);
-  }
-
-  public getBooking(roomId: number, time: number): Booking | undefined {
-    return this.bookings?.get(roomId)?.get(time);
-  }
-
-  async fetchBookings(date: Date) {
-    const data = await this.getBookings(date);
+  async getBookings(date: Date) {
+    const data = await this.fetchBookings(date);
     this.bookings = await this.mapBookings(data.rooms);
   }
 
-  async getBookings(date: Date): Promise<any> {
+  async fetchBookings(date: Date): Promise<any> {
     const ref = doc(this.firestore, 'bookings', this.formatDate(date));
     const snap = await getDoc(ref);
     return snap.exists() ? snap.data() : { rooms: {} };
@@ -126,15 +114,43 @@ export class BookingService {
     return { verificationLink: `http://localhost:4200/verify-booking?token=${verificationToken}` };
   }
 
-  private generateVerificationToken(): string {
-    return Math.random().toString(36).substring(2) + Date.now().toString(36);
-  }
-
   private convertMapToObject(map: Map<any, any>): any {
     const obj: any = {};
     map.forEach((value, key) => {
       obj[key] = value instanceof Map ? this.convertMapToObject(value) : value;
     });
     return obj;
+  }
+
+  public isBookingPresent(roomId: number, time: number): boolean {
+    return !!this.getBooking(roomId, time);
+  }
+
+  public isCellActive(cellRoomId: number, cellTime: number): boolean {
+    if (this.localPlannedBookings.size === 0) return true;
+
+    for (const [roomId, roomMap] of this.localPlannedBookings) {
+      if (roomId === cellRoomId) {
+        for (const [time, _] of roomMap) {
+          if (Math.abs(cellTime - time) === 1) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public getBooking(roomId: number, time: number): Booking | undefined {
+    return this.bookings?.get(roomId)?.get(time);
+  }
+
+  private formatDate(date: Date): string {
+    return format(date, 'yyyy-MM-dd');
+  }
+
+  private generateVerificationToken(): string {
+    return Math.random().toString(36).substring(2) + Date.now().toString(36);
   }
 }
