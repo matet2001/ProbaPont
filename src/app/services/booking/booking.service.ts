@@ -13,16 +13,12 @@ export class BookingService {
   private localPlannedBookings: Map<number, Map<number, Booking>> = new Map();
   fetchedBookings: Map<number, Map<number, Booking>> = new Map();
 
-  private bookingsSubject = new BehaviorSubject<Map<number, Map<number, Booking>>>(new Map());
-  bookings$ = this.bookingsSubject.asObservable();
-
   constructor(private firestore: Firestore, private userService: UserService) {
 
   }
 
   async getBookings(date: Date) {
     this.fetchedBookings = await this.fetchBookings(date);
-    this.bookingsSubject.next(this.fetchedBookings);
   }
 
   async fetchBookings(date: Date): Promise<Map<number, Map<number, Booking>>> {
@@ -100,8 +96,6 @@ export class BookingService {
     }
   }
 
-
-
   async confirmPlannedBookings(
       date: Date,
       user: UserDetails
@@ -134,6 +128,7 @@ export class BookingService {
       }
 
       tx.update(ref, updates);
+      this.localPlannedBookings.clear();
     });
 
     const verificationToken = this.generateVerificationToken();
@@ -159,10 +154,6 @@ export class BookingService {
     return obj;
   }
 
-  public isBookingPresent(roomId: number, time: number): boolean {
-    return !!this.getBooking(roomId, time);
-  }
-
   public isCellActive(cellRoomId: number, cellTime: number): boolean {
     if (this.localPlannedBookings.size === 0) return true;
 
@@ -180,6 +171,19 @@ export class BookingService {
     return false;
   }
 
+  public isCellCancelable(cellRoomId: number, cellTime: number): boolean {
+    for (const [roomId, roomMap] of this.localPlannedBookings) {
+      if (roomId === cellRoomId) {
+        const array = Array.from(roomMap.keys());
+        array.sort((a, b) => a - b);
+        if (array[0] === cellTime || array.at(-1) === cellTime) {
+            return true;
+        }
+      }
+    }
+    return false;
+  }
+
   public isTherePlannedBooking(): boolean {
     for (const [_, roomMap] of this.localPlannedBookings) {
       for (const [time, _] of roomMap) {
@@ -194,15 +198,6 @@ export class BookingService {
 
   public getBooking(roomId: number, time: number): Booking | undefined {
     return this.fetchedBookings?.get(roomId)?.get(time) || this.localPlannedBookings?.get(roomId)?.get(time);
-
-    // if (this.fetchedBookings?.has(roomId)) {
-    //   const roomMap = this.fetchedBookings?.get(roomId);
-    //
-    //   if (roomMap?.has(time)) {
-    //     return roomMap?.get(time);
-    //   }
-    // }
-
   }
 
   private formatDate(date: Date): string {

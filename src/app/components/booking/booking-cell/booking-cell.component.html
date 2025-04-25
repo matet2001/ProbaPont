@@ -13,11 +13,11 @@
     <div *ngSwitchCase="CellState.CLOSED">
     </div>
 
-    <!-- PLANNED -->
+    <!-- PLANNED_CANCELABLE -->
     <button
-        class="absolute inset-0 w-full h-full p-4 text-center bg-yellow-500/80 hover:bg-red-500/80 transition-colors"
-        (click)="tryToDeletePlannedBook.emit({ roomId, time })"
-        *ngSwitchCase="CellState.PLANNED">
+        *ngSwitchCase="CellState.PLANNED_CANCELABLE"
+        class="absolute inset-0 w-full h-full"
+        (click)="tryToDeletePlannedBook.emit({ roomId, time })">
         {{ displayName }}
     </button>
 

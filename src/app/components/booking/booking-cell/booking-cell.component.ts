@@ -3,13 +3,12 @@ import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular
 import {Booking, BookingIntent, BookingStatus} from "../../../models/booking.model";
 import {BookingService} from "../../../services/booking/booking.service";
 import {UserService} from "../../../services/user/user.service";
-import {Subscription} from "rxjs";
-import {user} from "@angular/fire/auth";
 
 export enum CellState {
   OPEN,
   CLOSED,
   PLANNED,
+  PLANNED_CANCELABLE,
   UNVERIFIED,
   VERIFIED
 }
@@ -22,7 +21,6 @@ export enum CellState {
     NgSwitchCase,
     NgSwitchDefault,
     NgIf,
-    AsyncPipe,
   ],
   templateUrl: './booking-cell.component.html',
 })
@@ -79,6 +77,9 @@ export class BookingCellComponent {
     if (this.booking) {
       switch (this.booking?.status) {
         case BookingStatus.PLANNED:
+          if (this.bookingService.isCellCancelable(this.roomId, this.time)) {
+            return CellState.PLANNED_CANCELABLE;
+          }
           return CellState.PLANNED;
         case BookingStatus.UNVERIFIED:
           return CellState.UNVERIFIED;
@@ -96,17 +97,20 @@ export class BookingCellComponent {
 
   @HostBinding('class')
   get classList(): string {
-    const baseClasses = 'p-4 text-center relative';
+    const baseClasses = 'p-4 text-center relative transition-colors';
     let additionalClasses = '';
 
     switch (this.getCellStatus()) {
       case CellState.OPEN:
-        additionalClasses = 'bg-light-secondary/30 hover:bg-yellow-400/30 relative transition-colors';
+        additionalClasses = 'bg-light-secondary/30 hover:bg-yellow-400/30 relative';
         break;
       case CellState.CLOSED:
         additionalClasses = 'bg-light-secondary/30';
         break;
       case CellState.PLANNED:
+        additionalClasses = 'bg-yellow-500/80';
+        break;
+      case CellState.PLANNED_CANCELABLE:
         additionalClasses = 'bg-yellow-500/80 hover:bg-red-500/80';
         break;
       case CellState.UNVERIFIED:
