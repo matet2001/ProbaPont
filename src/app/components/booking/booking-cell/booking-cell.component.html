@@ -15,14 +15,19 @@
 
     <!-- PLANNED -->
     <button
-            class="absolute inset-0 w-full h-full p-4 text-center bg-yellow-500/80 hover:bg-red-500/80 transition-colors"
-            (click)="tryToDeletePlannedBook.emit({ roomId, time })"
-            *ngSwitchCase="CellState.PLANNED">
-        {{ getBookDisplayName(bookingService.getBooking(roomId, time)) }}
+        class="absolute inset-0 w-full h-full p-4 text-center bg-yellow-500/80 hover:bg-red-500/80 transition-colors"
+        (click)="tryToDeletePlannedBook.emit({ roomId, time })"
+        *ngSwitchCase="CellState.PLANNED">
+        {{ displayName }}
     </button>
 
     <!-- UNVERIFIED/VERIFIED -->
     <div *ngSwitchDefault>
-        {{ getBookDisplayName(bookingService.getBooking(roomId, time)) }}
+        <span *ngIf="displayName; else loading">
+          {{ displayName }}
+        </span>
+        <ng-template #loading>
+            <span class="loading loading-spinner loading-md"></span>
+        </ng-template>
     </div>
 </ng-container>

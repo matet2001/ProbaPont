@@ -1,7 +1,10 @@
-import {Component, EventEmitter, HostBinding, inject, Input, Output} from '@angular/core';
-import {NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {BookingIntent, BookingStatus} from "../../../models/booking.model";
+import {Component, EventEmitter, HostBinding, inject, Input, Output, SimpleChanges} from '@angular/core';
+import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {Booking, BookingIntent, BookingStatus} from "../../../models/booking.model";
 import {BookingService} from "../../../services/booking/booking.service";
+import {UserService} from "../../../services/user/user.service";
+import {Subscription} from "rxjs";
+import {user} from "@angular/fire/auth";
 
 export enum CellState {
   OPEN,
@@ -18,24 +21,63 @@ export enum CellState {
     NgSwitch,
     NgSwitchCase,
     NgSwitchDefault,
+    NgIf,
+    AsyncPipe,
   ],
   templateUrl: './booking-cell.component.html',
 })
 export class BookingCellComponent {
-  bookingService: BookingService = inject(BookingService);
-
+  @Input() booking?: Booking;
   @Input() roomId!: number;
   @Input() time!: number;
 
-  @Output() tryToBook: EventEmitter<BookingIntent> = new EventEmitter();
-  @Output() tryToDeletePlannedBook: EventEmitter<BookingIntent> = new EventEmitter();
-  @Input() getBookDisplayName!: (booking: any) => string;
+  @Output() tryToBook = new EventEmitter<BookingIntent>();
+  @Output() tryToDeletePlannedBook = new EventEmitter<BookingIntent>();
+
+  userService = inject(UserService);
+  bookingService = inject(BookingService);
+
+  displayName: string = "";
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['booking']) {
+      this.getBookDisplayName();
+    }
+  }
+
+  getBookDisplayName() {
+    const booking = this.booking;
+
+    if (!booking) {
+      this.displayName = '';
+      return;
+    }
+
+    if (booking.user) {
+      this.displayName =
+          booking.user.bandName ||
+          `${booking.user.fullName.split(' ')[0]} ${booking.user.fullName.charAt(0)}.`;
+      return;
+    }
+
+    if (!booking.userId) {
+      this.displayName = '';
+      return;
+    }
+
+    this.userService.getCachedUser(booking.userId).then((user) => {
+      if (user) {
+        this.displayName =
+            user.bandName || `${user.fullName.split(' ')[0]} ${user.fullName.charAt(0)}.`;
+      } else {
+        this.displayName = '';
+      }
+    });
+  }
 
   getCellStatus() : CellState {
-    const booking = this.bookingService.getBooking(this.roomId, this.time);
-
-    if (this.bookingService.isBookingPresent(this.roomId, this.time)) {
-      switch (booking?.status) {
+    if (this.booking) {
+      switch (this.booking?.status) {
         case BookingStatus.PLANNED:
           return CellState.PLANNED;
         case BookingStatus.UNVERIFIED:

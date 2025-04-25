@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserDetails} from "../auth/auth.service";
 import {doc, Firestore, getDoc} from "@angular/fire/firestore";
 
@@ -24,8 +24,7 @@ export class UserService {
     return undefined;
   }
 
-  getCachedUser(userId: string): UserDetails | undefined {
-    const user: UserDetails | undefined = this.userCache.get(userId);
-    return user;
+  getCachedUser(userId: string): Promise<UserDetails | undefined> {
+    return this.fetchUser(userId);
   }
 }

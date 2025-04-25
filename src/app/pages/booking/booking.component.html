@@ -44,14 +44,14 @@
                                         {{ time }} - {{ time + 1 }}
                                     </td>
                                     <td
-                                        booking-cell
-                                        *ngFor="let room of global.rooms"
-                                        [roomId]="room.id"
-                                        [time]="time"
-                                        [getBookDisplayName]="getBookDisplayName"
-                                        (tryToBook)="tryToPlanBook($event)"
-                                        (tryToDeletePlannedBook)="tryToDeletePlannedBook($event)"
-                                        class="h-16 max-h-16 overflow-hidden align-middle text-center relative p-4 whitespace-nowrap"
+                                            booking-cell
+                                            *ngFor="let room of global.rooms"
+                                            [roomId]="room.id"
+                                            [time]="time"
+                                            [booking]="bookingService.getBooking(room.id, time)"
+                                            (tryToBook)="tryToPlanBook($event)"
+                                            (tryToDeletePlannedBook)="tryToDeletePlannedBook($event)"
+                                            class="h-16 max-h-16 overflow-hidden align-middle text-center relative p-4 whitespace-nowrap"
                                     ></td>
                                 </tr>
 
@@ -67,7 +67,7 @@
                                         {{ "BOOKING.ORDER_DISCLAIM" | translate }}
                                     </p>
                                     <div class="mt-4 w-full max-w-lg">
-                                        <app-button class="w-full py-4 text-lg font-semibold" (click)="tryToSendBooks()" [disabled]="isBookButtonDisabled()">
+                                        <app-button class="w-full py-4 text-lg font-semibold" (click)="tryToSendBooks()" [disabled]="!this.bookingService.isTherePlannedBooking()">
                                             {{ "BOOKING.SUBMIT" | translate }}
                                         </app-button>
                                     </div>

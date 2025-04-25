@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { AuthModalService } from '../../services/auth/auth-modal.service';
 import { AlertService } from '../../services/alert/alert.service';
 import { RouterLink } from '@angular/router';
-import {BookingStatus, Booking, OpeningHours, BookingIntent} from '../../models/booking.model';
+import { Booking, OpeningHours, BookingIntent} from '../../models/booking.model';
 import {BookingCellComponent} from "../../components/booking/booking-cell/booking-cell.component";
 import {ConfirmModalService} from "../../services/modal/confirm-modal.service";
 
@@ -44,7 +44,6 @@ export class BookingComponent {
         private authModalService: AuthModalService,
         public authService: AuthService,
         public bookingService: BookingService,
-        private userService: UserService,
         private emailService: EmailService,
         private confirmModalService: ConfirmModalService
     ) {
@@ -63,17 +62,6 @@ export class BookingComponent {
     async fetchBookings(date: Date) {
         await this.bookingService.getBookings(date);
         this.cdr.detectChanges();
-    }
-
-    isBookButtonDisabled(): boolean {
-        for (const outerMap of this.bookingService.fetchedBookings.values()) {
-            for (const booking of outerMap.values()) {
-                if (booking.status === BookingStatus.PLANNED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     tryToPlanBook($event: BookingIntent) {
@@ -104,7 +92,7 @@ export class BookingComponent {
     }
 
     async tryToSendBooks() {
-        if (this.isBookButtonDisabled()) return;
+        if (!this.bookingService.isTherePlannedBooking()) return;
 
         this.confirmModalService.openModal(
             'BOOKING.CONFIRM_MODAL.TITLE',
@@ -119,27 +107,13 @@ export class BookingComponent {
         if (!user) return;
 
         try {
-            const result = await this.bookingService.confirmPlannedBookings(this.bookingService.fetchedBookings, this.selectedDate, user);
+            const result = await this.bookingService.confirmPlannedBookings(this.selectedDate, user);
             this.emailService.sendVerificationEmail(user.email, 'Verify Your Booking', result.verificationLink);
             this.alertService.success("A verification email has been sent!");
             this.fetchBookings(this.selectedDate);
         } catch (error: any) {
             this.alertService.error(error.message);
         }
-    }
-
-    getBookDisplayName(booking: Booking | undefined): string {
-        if (booking?.user) {
-            return booking.user.bandName || `${booking.user.fullName.split(" ")[0]} ${booking.user.fullName.charAt(0)}.`;
-        }
-
-        if (!booking?.userId) return 'Unknown User';
-
-        const user = this.userService.getCachedUser(booking.userId);
-        if (user) {
-            return user?.bandName || `${user.fullName.split(" ")[0]} ${user.fullName.charAt(0)}.`;
-        }
-        return 'Unknown User';
     }
 
     getBackgroundImage(): string {

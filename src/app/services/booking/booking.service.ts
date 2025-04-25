@@ -4,6 +4,7 @@ import {UserDetails} from "../auth/auth.service";
 import {Booking, BookingStatus} from "../../models/booking.model";
 import {UserService} from "../user/user.service";
 import { format } from 'date-fns';
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +13,46 @@ export class BookingService {
   private localPlannedBookings: Map<number, Map<number, Booking>> = new Map();
   fetchedBookings: Map<number, Map<number, Booking>> = new Map();
 
+  private bookingsSubject = new BehaviorSubject<Map<number, Map<number, Booking>>>(new Map());
+  bookings$ = this.bookingsSubject.asObservable();
+
   constructor(private firestore: Firestore, private userService: UserService) {
 
   }
 
   async getBookings(date: Date) {
-    const data = await this.fetchBookings(date);
-    this.fetchedBookings = await this.mapBookings(data.rooms);
+    this.fetchedBookings = await this.fetchBookings(date);
+    this.bookingsSubject.next(this.fetchedBookings);
   }
 
-  async fetchBookings(date: Date): Promise<any> {
+  async fetchBookings(date: Date): Promise<Map<number, Map<number, Booking>>> {
     const ref = doc(this.firestore, 'bookings', this.formatDate(date));
     const snap = await getDoc(ref);
-    return snap.exists() ? snap.data() : { rooms: {} };
+
+    const bookingMap = new Map<number, Map<number, Booking>>();
+
+    if (snap.exists()) {
+      const data = snap.data() as { rooms: Record<number | string, Record<number | string, Booking>> };
+
+      for (const roomId in data.rooms) {
+        const timeMap = new Map<number, Booking>();
+        const bookings = data.rooms[roomId];
+
+        for (const time in bookings) {
+          timeMap.set(Number(time), bookings[time]);
+        }
+
+        bookingMap.set(Number(roomId), timeMap);
+      }
+    }
+
+    return bookingMap;
   }
 
-  async mapBookings(data: any): Promise<Map<number, Map<number, Booking>>> {
+
+  async mapBookings(): Promise<Map<number, Map<number, Booking>>> {
     const result = new Map<number, Map<number, Booking>>();
+    const data: any = this.fetchedBookings;
 
     for (const roomId of Object.keys(data)) {
       const roomMap = new Map<number, Booking>();
@@ -66,15 +90,19 @@ export class BookingService {
   }
 
   deletePlannedBooking(roomId: number, time: number): void {
-    const plannedRoomMap = this.localPlannedBookings.get(roomId) || new Map<number, Booking>();
-    plannedRoomMap.delete(time);
+    if (!this.localPlannedBookings.has(roomId)) return;
 
-    const roomMap = this.fetchedBookings.get(roomId) || new Map<number, Booking>();
+    const roomMap = this.localPlannedBookings.get(roomId)!;
     roomMap.delete(time);
+
+    if (roomMap.size === 0) {
+      this.localPlannedBookings.delete(roomId);
+    }
   }
 
+
+
   async confirmPlannedBookings(
-      bookings: Map<number, Map<number, Booking>>,
       date: Date,
       user: UserDetails
   ): Promise<{ verificationLink: string }> {
@@ -92,8 +120,8 @@ export class BookingService {
       }
 
       const updates: any = {};
-      bookings.forEach((room, roomId) => {
-        room.forEach((booking, time) => {
+      this.localPlannedBookings.forEach((roomMap, roomId) => {
+        roomMap.forEach((booking, time) => {
           if (booking.userId === user.uid && booking.status === BookingStatus.PLANNED) {
             updates[`rooms.${roomId}.${time}.status`] = BookingStatus.UNVERIFIED;
             updates[`rooms.${roomId}.${time}.userId`] = user.uid;
@@ -110,7 +138,8 @@ export class BookingService {
 
     const verificationToken = this.generateVerificationToken();
     const verificationRef = doc(this.firestore, 'booking_verifications', verificationToken);
-    const serialized = this.convertMapToObject(bookings);
+    const combinedMaps = await this.mapBookings();
+    const serialized = this.convertMapToObject(combinedMaps);
     await setDoc(verificationRef, {
       userId: user.uid,
       date: formattedDate,
@@ -151,8 +180,29 @@ export class BookingService {
     return false;
   }
 
+  public isTherePlannedBooking(): boolean {
+    for (const [_, roomMap] of this.localPlannedBookings) {
+      for (const [time, _] of roomMap) {
+        if (roomMap?.get(time)?.status === BookingStatus.PLANNED) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   public getBooking(roomId: number, time: number): Booking | undefined {
-    return this.fetchedBookings?.get(roomId)?.get(time);
+    return this.fetchedBookings?.get(roomId)?.get(time) || this.localPlannedBookings?.get(roomId)?.get(time);
+
+    // if (this.fetchedBookings?.has(roomId)) {
+    //   const roomMap = this.fetchedBookings?.get(roomId);
+    //
+    //   if (roomMap?.has(time)) {
+    //     return roomMap?.get(time);
+    //   }
+    // }
+
   }
 
   private formatDate(date: Date): string {
