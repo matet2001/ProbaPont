@@ -37,7 +37,7 @@ export class GlobalService {
     {
       id: 1,
       name: "Aquarium",
-      image: ["assets/images/rooms/Aquarium.webp", "assets/images/rooms/Aquarium2.webp"],
+      image: ["Aquarium.webp", "Aquarium2.webp"],
       size: "25 m²",
       price: "3000",
       type: "standard",
@@ -49,7 +49,7 @@ export class GlobalService {
     {
       id: 2,
       name: "Terrarium",
-      image: ["assets/images/rooms/Terrarium.webp", "assets/images/rooms/Terrarium2.webp"],
+      image: ["Terrarium.webp", "Terrarium2.webp"],
       size: "30 m²",
       price: "3500",
       type: "standard",
@@ -61,7 +61,7 @@ export class GlobalService {
     {
       id: 3,
       name: "Inferno",
-      image: ["assets/images/rooms/Inferno.webp", "assets/images/rooms/Inferno2.webp"],
+      image: ["Inferno.webp", "Inferno2.webp"],
       size: "35 m²",
       price: "4000",
       type: "premium",
@@ -73,7 +73,7 @@ export class GlobalService {
     {
       id: 4,
       name: "Cosmos",
-      image: ["assets/images/rooms/Cosmos.webp", "assets/images/rooms/Cosmos2.webp"],
+      image: ["Cosmos.webp", "Cosmos2.webp"],
       size: "40 m²",
       price: "4500",
       type: "premium",
@@ -85,7 +85,7 @@ export class GlobalService {
     {
       id: 5,
       name: "Ember",
-      image: ["assets/images/rooms/Ember.webp", "assets/images/rooms/Ember2.webp"],
+      image: ["Ember.webp", "Ember2.webp"],
       size: "28 m²",
       price: "4000",
       type: "standard",
@@ -97,7 +97,7 @@ export class GlobalService {
     {
       id: 6,
       name: "Phantom",
-      image: ["assets/images/rooms/Phantom.webp", "assets/images/rooms/Phantom2.webp"],
+      image: ["Phantom.webp", "Phantom2.webp"],
       size: "22 m²",
       price: "4000",
       type: "premium",

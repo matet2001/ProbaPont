@@ -4,7 +4,6 @@ import {UserDetails} from "../auth/auth.service";
 import {Booking, BookingStatus} from "../../models/booking.model";
 import {UserService} from "../user/user.service";
 import { format } from 'date-fns';
-import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -50,14 +49,13 @@ export class BookingService {
     const result = new Map<number, Map<number, Booking>>();
     const data: any = this.fetchedBookings;
 
-    for (const roomId of Object.keys(data)) {
+    for (const [roomId, timeMap] of data.entries()) {
       const roomMap = new Map<number, Booking>();
-      for (const time of Object.keys(data[roomId])) {
-        const booking: Booking = data[roomId][time];
+      for (const [time, booking] of timeMap.entries()) {
         booking.user = await this.userService.fetchUser(booking.userId);
-        roomMap.set(Number(time), booking);
+        roomMap.set(time, booking);
       }
-      result.set(Number(roomId), roomMap);
+      result.set(roomId, roomMap);
     }
 
     // Merge local planned bookings
@@ -108,9 +106,8 @@ export class BookingService {
       let existing = snap.data();
 
       if (!snap.exists()) {
-        // Document doesn't exist yet → create base structure
         existing = { rooms: {} };
-        tx.set(ref, existing); // initialize doc in the same transaction
+        tx.set(ref, existing);
       }
 
       const updates: any = {};
@@ -128,7 +125,6 @@ export class BookingService {
       }
 
       tx.update(ref, updates);
-      this.localPlannedBookings.clear();
     });
 
     const verificationToken = this.generateVerificationToken();
@@ -143,6 +139,7 @@ export class BookingService {
       createdAt: new Date().toISOString(),
     });
 
+    this.localPlannedBookings.clear();
     return { verificationLink: `http://localhost:4200/verify-booking?token=${verificationToken}` };
   }
 

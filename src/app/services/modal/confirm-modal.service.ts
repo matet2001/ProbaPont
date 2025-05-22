@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
-import {ConfirmationModalComponent} from "../../components/confirmation-modal/confirmation-modal.component";
+import {ConfirmationModalComponent} from "../../layout/confirmation-modal/confirmation-modal.component";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ConfirmModalService {
 
   register(modalComponent: ConfirmationModalComponent) {
     this.modalComponent = modalComponent;
-    this.initModal(); // optional, if you want to also find the native <dialog> element
+    this.initModal();
   }
 
   initModal() {

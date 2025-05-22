@@ -25,14 +25,6 @@ export class LocalStorageService {
     this.localStorage?.removeItem(key);
   }
 
-  removeKeys(keys: string[]): void {
-    keys.forEach(key => this.localStorage?.removeItem(key));
-  }
-
-  clear(): void {
-    this.localStorage?.clear();
-  }
-
   private isJSONValid(value: string): boolean {
     try {
       JSON.parse(value);

@@ -28,10 +28,7 @@ export interface UserDetails {
 })
 
 export class AuthService {
-  private authReadySubject = new BehaviorSubject<boolean>(false);
-  authReady$ = this.authReadySubject.asObservable();
   authReady = new EventEmitter<void>();
-
 
   localUser: UserDetails | null = null;
 
@@ -41,10 +38,6 @@ export class AuthService {
 
   constructor(private auth: Auth, private firestore: Firestore) {
     this.loadUserOnStart();
-  }
-
-  isAuthenticatedAsync(): Observable<boolean> {
-    return this.authReady$;
   }
 
   private async loadUserOnStart() {
@@ -65,12 +58,9 @@ export class AuthService {
         this.localStorageService.remove('user');
       }
 
-      // ✅ Set auth ready AFTER everything is done
-      this.authReadySubject.next(true);
       this.authReady.emit();
     });
   }
-
 
   async register(email: string, password: string, fullName: string, bandName: string, phone: string) {
     try {
@@ -117,21 +107,6 @@ export class AuthService {
     } catch (error: any) {
       console.error('Error logging in:', error);
       throw new Error(error.code); // Return only error code
-    }
-  }
-
-  async forgotPassword(email: string) {
-    if (!email) {
-      this.alertService.error("Please enter your email address first.");
-      return;
-    }
-
-    try {
-      await sendPasswordResetEmail(this.auth, email);
-      this.alertService.success("Password reset email sent!");
-    } catch (error: any) {
-      console.error("Error resetting password:", error.message);
-      this.alertService.error(error.message);
     }
   }
 

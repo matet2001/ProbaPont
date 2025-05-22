@@ -54,7 +54,6 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     provideAnalytics(() => getAnalytics()),
-
     provideNativeDateAdapter()
   ]
 };
