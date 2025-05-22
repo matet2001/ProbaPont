@@ -2,7 +2,6 @@ import {EventEmitter, inject, Injectable, Output} from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword, onAuthStateChanged,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -12,8 +11,7 @@ import {AlertService} from "../alert/alert.service";
 import {doc, Firestore, getDoc, setDoc} from '@angular/fire/firestore';
 import {TranslateService} from "@ngx-translate/core";
 import {LocalStorageService} from "../locale-storage/local-storage.service";
-import {BehaviorSubject, Observable, timer} from "rxjs";
-import {BookingIntent} from "../../models/booking.model";
+import { getIdTokenResult } from 'firebase/auth';
 
 export interface UserDetails {
   uid: string;
@@ -21,6 +19,7 @@ export interface UserDetails {
   bandName: string;
   fullName: string;
   phone: string;
+  admin?: boolean;
 }
 
 @Injectable({
@@ -43,11 +42,16 @@ export class AuthService {
   private async loadUserOnStart() {
     onAuthStateChanged(this.auth, async (user: User | null) => {
       if (user) {
+        const tokenResult = await getIdTokenResult(user);
+        const isAdmin = tokenResult.claims?.['admin'] === true;
+
         const userRef = doc(this.firestore, 'users', user.uid);
         const userSnapshot = await getDoc(userRef);
 
         if (userSnapshot.exists()) {
-          this.localUser = userSnapshot.data() as UserDetails;
+          const data = userSnapshot.data() as UserDetails;
+          data.admin = isAdmin; // 👈 Attach admin flag
+          this.localUser = data;
           this.localStorageService.set('user', JSON.stringify(this.localUser));
         } else {
           this.localUser = null;
@@ -97,9 +101,14 @@ export class AuthService {
         const userRef = doc(this.firestore, 'users', user.uid);
         const userSnapshot = await getDoc(userRef);
 
+        const tokenResult = await getIdTokenResult(user);
+        const isAdmin = tokenResult.claims?.['admin'] === true;
+
         if (userSnapshot.exists()) {
-          this.localUser = userSnapshot.data() as UserDetails;
-          this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!" );
+          const data = userSnapshot.data() as UserDetails;
+          data.admin = isAdmin;
+          this.localUser = data;
+          this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!");
         } else {
           this.alertService.success("AUTH.WELCOME_BACK", "default", (user.displayName || 'User') + "!" );
         }
@@ -126,5 +135,9 @@ export class AuthService {
 
   public isAuthenticated()  {
     return this.localUser;
+  }
+
+  public isAdmin(): boolean {
+    return !!this.localUser?.admin;
   }
 }

@@ -43,7 +43,7 @@ export class NavbarComponent {
     { cta: false, name: 'NAV.CONTACT', href: '/contact' }
   ];
 
-  constructor(private themeService: ThemeService, private languageService: LanguageService) {
+  constructor(private themeService: ThemeService) {
     this.themeService.isDarkMode$.subscribe((darkMode) => {
       this.isDarkMode = darkMode;
     });
@@ -53,10 +53,6 @@ export class NavbarComponent {
     this.translateService.use('en').subscribe(() => {
       this.translationReady = true;
     });
-
-    // this.authService.authReady$.subscribe(ready => {
-    //   this.authReady = ready;
-    // });
 
     this.authService.authReady.subscribe(authReady => {
       this.authReady = true;

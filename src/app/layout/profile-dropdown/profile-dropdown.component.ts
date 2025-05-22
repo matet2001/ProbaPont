@@ -14,7 +14,6 @@ import {AuthService} from "../../services/auth/auth.service";
     TranslatePipe,
     NgClass,
     RouterLink,
-    AsyncPipe,
     NgIf
   ],
   templateUrl: './profile-dropdown.component.html',
@@ -37,6 +36,5 @@ export class ProfileDropdownComponent {
 
   userRoutes = [
     { name: 'USER.PROFILE', href: '/account' },
-    { name: 'USER.SETTINGS', href: '/settings' },
   ];
 }

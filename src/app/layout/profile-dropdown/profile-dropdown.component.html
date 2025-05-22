@@ -18,6 +18,12 @@
                 {{ route.name | translate }}
             </a>
         </div>
+        <div *ngIf="authService.isAdmin()">
+            <a routerLink="/admin"
+               class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground bg-yellow-500/10 hover:bg-red-500 dark:hover:bg-red-500/40">
+                Admin
+            </a>
+        </div>
         <div>
             <button *ngIf="authService.isAuthenticated()" (click)="authService.logout()" class="block px-4 py-2 text-sm text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border w-full text-left">
               Logout

@@ -41,3 +41,6 @@ dist
 # System files
 .DS_Store
 Thumbs.db
+
+admin-tools
+admin-tools/tsconfig.json

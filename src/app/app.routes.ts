@@ -6,6 +6,8 @@ import {PricesComponent} from "./features/prices/prices.component";
 import {RoomsSectionComponent} from "./features/room/rooms-section/rooms-section.component";
 import {RoomDetailComponent} from "./features/room-detail/room-detail.component";
 import {VerifyBookingComponent} from "./features/booking/verify-booking/verify-booking.component";
+import {AccountComponent} from "./features/account/account.component";
+import {AdminComponent} from "./features/admin/admin.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,5 +17,7 @@ export const routes: Routes = [
   { path: 'room/:id', component: RoomDetailComponent },
   { path: 'contact', component: ContactComponent },
   { path: "verify-booking", component: VerifyBookingComponent },
+  { path: "account", component: AccountComponent },
+  { path: "admin", component: AdminComponent },
   { path: '**', redirectTo: '' } // Redirect unknown routes to home
 ];
