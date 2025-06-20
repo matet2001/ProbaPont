@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { RoomDetailComponent } from './room-detail.component';
+import { RoomDetailComponent } from "./room-detail.component";
 
-describe('RoomDetailComponent', () => {
+describe("RoomDetailComponent", () => {
   let component: RoomDetailComponent;
   let fixture: ComponentFixture<RoomDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RoomDetailComponent]
-    })
-    .compileComponents();
-    
+      imports: [RoomDetailComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(RoomDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,16 +1,14 @@
-import {Component, Input} from '@angular/core';
-import {TranslatePipe} from "@ngx-translate/core";
+import { Component, Input } from "@angular/core";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-info-modal',
+  selector: "app-info-modal",
   standalone: true,
-  imports: [
-    TranslatePipe
-  ],
-  templateUrl: './info-modal.component.html',
-  styles: ``
+  imports: [TranslatePipe],
+  templateUrl: "./info-modal.component.html",
+  styles: ``,
 })
 export class InfoModalComponent {
-  @Input() title : string = '';
-  @Input() content : string = '';
+  @Input() title: string = "";
+  @Input() content: string = "";
 }

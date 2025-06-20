@@ -1,21 +1,29 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
+import { ApplicationConfig } from "@angular/core";
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+} from "@angular/router";
+import { routes } from "./app.routes";
+import { provideClientHydration } from "@angular/platform-browser";
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
 import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
 import { provideAuth, getAuth } from "@angular/fire/auth";
 import { provideStorage, getStorage } from "@angular/fire/storage";
 import { provideAnalytics, getAnalytics } from "@angular/fire/analytics";
 import { provideTranslateService } from "@ngx-translate/core";
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { importProvidersFrom } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {environment} from "../enviroments/enviroment";
+import { importProvidersFrom } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../enviroments/enviroment";
 import { provideNativeDateAdapter } from "@angular/material/core";
-import {getFirestore, provideFirestore} from "@angular/fire/firestore";
+import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 
 // ✅ Custom loader function (same as in your old main.ts)
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,12 +33,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
-        routes,
-        withInMemoryScrolling({
-          scrollPositionRestoration: 'top',
-          anchorScrolling: 'enabled',
-        }),
-        withComponentInputBinding()
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: "top",
+        anchorScrolling: "enabled",
+      }),
+      withComponentInputBinding(),
     ),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideClientHydration(),
@@ -39,13 +47,13 @@ export const appConfig: ApplicationConfig = {
 
     // ✅ Correct translation setup
     importProvidersFrom(
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient],
-          },
-        })
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
+        },
+      }),
     ),
 
     // ✅ Firebase setup
@@ -54,6 +62,6 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     provideAnalytics(() => getAnalytics()),
-    provideNativeDateAdapter()
-  ]
+    provideNativeDateAdapter(),
+  ],
 };

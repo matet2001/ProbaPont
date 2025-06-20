@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ConfirmModalService } from './confirm-modal.service';
+import { ConfirmModalService } from "./confirm-modal.service";
 
-describe('ConfirmModalService', () => {
+describe("ConfirmModalService", () => {
   let service: ConfirmModalService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('ConfirmModalService', () => {
     service = TestBed.inject(ConfirmModalService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

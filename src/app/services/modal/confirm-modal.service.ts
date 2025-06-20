@@ -1,9 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
-import {DOCUMENT} from "@angular/common";
-import {ConfirmationModalComponent} from "../../layout/confirmation-modal/confirmation-modal.component";
+import { Inject, Injectable } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { ConfirmationModalComponent } from "../../layout/confirmation-modal/confirmation-modal.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ConfirmModalService {
   private modal: HTMLDialogElement | null = null;
@@ -20,10 +20,17 @@ export class ConfirmModalService {
   }
 
   initModal() {
-    this.modal = this.document.getElementById("confirmationModal") as HTMLDialogElement;
+    this.modal = this.document.getElementById(
+      "confirmationModal",
+    ) as HTMLDialogElement;
   }
 
-  openModal(title: string, content: string, onConfirm?: () => void, onCancel?: () => void) {
+  openModal(
+    title: string,
+    content: string,
+    onConfirm?: () => void,
+    onCancel?: () => void,
+  ) {
     if (!this.modalComponent) return;
 
     this.modalComponent.title = title;

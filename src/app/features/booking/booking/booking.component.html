@@ -1,86 +1,111 @@
-<div class="relative mt-10 rounded-3xl p-6 px-4 lg:px-8 min-h-[60vh] sm:min-h-screen h-auto bg-cover bg-center text-white"
-     [ngStyle]="{'background-image': this.getBackgroundImage()}">
+<div
+  class="relative mt-10 rounded-3xl p-6 px-4 lg:px-8 min-h-[60vh] sm:min-h-screen h-auto bg-cover bg-center text-white"
+  [ngStyle]="{ 'background-image': this.getBackgroundImage() }"
+>
+  <!-- Main Container -->
+  <div
+    class="flex flex-col items-center w-full mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-6 sm:p-8"
+  >
+    <div class="flex justify-center w-full mt-6 mx-8">
+      <div
+        class="w-full overflow-hidden border border-light-border rounded-lg shadow-lg"
+      >
+        <!-- Section Title -->
+        <h1 class="my-4 text-3xl sm:text-4xl font-bold text-center text-white">
+          {{ "BOOKING.TITLE" | translate }}
+        </h1>
 
-    <!-- Main Container -->
-    <div class="flex flex-col items-center w-full mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-6 sm:p-8">
-        <div class="flex justify-center w-full mt-6 mx-8">
-            <div class="w-full overflow-hidden border border-light-border rounded-lg shadow-lg">
+        <div class="overflow-x-auto">
+          <table
+            class="min-w-full table-fixed divide-y divide-x-2 divide-light-border border border-gray-700 font-poppins"
+          >
+            <!-- Table Header -->
+            <thead class="text-primary">
+              <tr>
+                <th class="text-center text-sm sm:text-lg font-semibold">
+                  <app-date-picker
+                    (dateSelected)="onDatePicked($event)"
+                  ></app-date-picker>
+                </th>
+                <th
+                  *ngFor="let room of global.rooms"
+                  class="px-4 py-3 text-center min-w-[200px] align-top"
+                >
+                  <div class="flex flex-col justify-start items-center">
+                    <a [routerLink]="['/room', room.id]">
+                      <h3
+                        class="text-xl sm:text-2xl font-extrabold whitespace-nowrap"
+                      >
+                        {{ room.name }}
+                      </h3>
+                    </a>
+                    <p>{{ room.size }}</p>
+                    <p class="text-xs sm:text-sm text-gray-300 mt-2">
+                      {{ room.price }} {{ "PRICES.PRICE_UNIT" | translate }}
+                    </p>
+                  </div>
+                </th>
+              </tr>
+            </thead>
 
-                <!-- Section Title -->
-                <h1 class="my-4 text-3xl sm:text-4xl font-bold text-center text-white">
-                    {{ "BOOKING.TITLE" | translate }}
-                </h1>
+            <!-- Table Body -->
+            <tbody
+              class="divide-y divide-gray-700 text-white text-sm sm:text-base"
+            >
+              @for (time of getOpeningHours(); track time) {
+                <tr>
+                  <td
+                    class="px-2 py-3 text-center font-semibold whitespace-nowrap"
+                  >
+                    {{ time }} - {{ time + 1 }}
+                  </td>
+                  <td
+                    booking-cell
+                    *ngFor="let room of global.rooms"
+                    [roomId]="room.id"
+                    [time]="time"
+                    [booking]="bookingService.getBooking(room.id, time)"
+                    (tryToBook)="tryToPlanBook($event)"
+                    (tryToDeletePlannedBook)="tryToDeletePlannedBook($event)"
+                    class="h-16 max-h-16 overflow-hidden align-middle text-center relative p-4 whitespace-nowrap"
+                  ></td>
+                </tr>
+              }
 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full table-fixed divide-y divide-x-2 divide-light-border border border-gray-700 font-poppins">
-
-                        <!-- Table Header -->
-                        <thead class="text-primary">
-                        <tr>
-                            <th class="text-center text-sm sm:text-lg font-semibold">
-                                <app-date-picker (dateSelected)="onDatePicked($event)"></app-date-picker>
-                            </th>
-                            <th *ngFor="let room of global.rooms" class="px-4 py-3 text-center min-w-[200px] align-top">
-                                <div class="flex flex-col justify-start items-center">
-                                    <a [routerLink]="['/room', room.id]">
-                                        <h3 class="text-xl sm:text-2xl font-extrabold whitespace-nowrap">
-                                            {{ room.name }}
-                                        </h3>
-                                    </a>
-                                    <p>{{ room.size }}</p>
-                                    <p class="text-xs sm:text-sm text-gray-300 mt-2">
-                                        {{ room.price }} {{ "PRICES.PRICE_UNIT" | translate }}
-                                    </p>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-
-                        <!-- Table Body -->
-                        <tbody class="divide-y divide-gray-700 text-white text-sm sm:text-base">
-                            @for (time of getOpeningHours(); track time) {
-                                <tr>
-                                    <td class="px-2 py-3 text-center font-semibold whitespace-nowrap">
-                                        {{ time }} - {{ time + 1 }}
-                                    </td>
-                                    <td
-                                            booking-cell
-                                            *ngFor="let room of global.rooms"
-                                            [roomId]="room.id"
-                                            [time]="time"
-                                            [booking]="bookingService.getBooking(room.id, time)"
-                                            (tryToBook)="tryToPlanBook($event)"
-                                            (tryToDeletePlannedBook)="tryToDeletePlannedBook($event)"
-                                            class="h-16 max-h-16 overflow-hidden align-middle text-center relative p-4 whitespace-nowrap"
-                                    ></td>
-                                </tr>
-
-                            }
-
-                        <tr>
-                            <td [colSpan]="global.rooms.length + 1" class="px-6 py-8">
-                                <div class="max-w-3xl mx-auto space-y-4 flex flex-col items-center">
-                                    <h2 class="text-2xl sm:text-3xl font-bold text-center text-white">
-                                        {{ "BOOKING.FINALIZE_ORDER" | translate }}
-                                    </h2>
-                                    <p class="text-center text-light-secondary">
-                                        {{ "BOOKING.ORDER_DISCLAIM" | translate }}
-                                    </p>
-                                    <div class="mt-4 w-full max-w-lg">
-                                        <app-button class="w-full py-4 text-lg font-semibold" (click)="tryToSendBooks()" [disabled]="!this.bookingService.isTherePlannedBooking()">
-                                            {{ "BOOKING.SUBMIT" | translate }}
-                                        </app-button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+              <tr>
+                <td [colSpan]="global.rooms.length + 1" class="px-6 py-8">
+                  <div
+                    class="max-w-3xl mx-auto space-y-4 flex flex-col items-center"
+                  >
+                    <h2
+                      class="text-2xl sm:text-3xl font-bold text-center text-white"
+                    >
+                      {{ "BOOKING.FINALIZE_ORDER" | translate }}
+                    </h2>
+                    <p class="text-center text-light-secondary">
+                      {{ "BOOKING.ORDER_DISCLAIM" | translate }}
+                    </p>
+                    <div class="mt-4 w-full max-w-lg">
+                      <app-button
+                        class="w-full py-4 text-lg font-semibold"
+                        (click)="tryToSendBooks()"
+                        [disabled]="
+                          !this.bookingService.isTherePlannedBooking()
+                        "
+                      >
+                        {{ "BOOKING.SUBMIT" | translate }}
+                      </app-button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <!-- Sales Section Still Separate -->
-        <app-sales-section />
+      </div>
     </div>
+
+    <!-- Sales Section Still Separate -->
+    <app-sales-section />
+  </div>
 </div>

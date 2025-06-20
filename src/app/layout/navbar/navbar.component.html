@@ -1,96 +1,135 @@
 <nav class="font-montserrat font-bold text-4xl">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
-      <!-- Mobile menu button -->
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <button
-          type="button"
-          (click)="toggleMobileMenu()"
-          class="relative inline-flex items-center justify-center rounded-md p-2 text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
-          aria-controls="mobile-menu"
-          aria-expanded="false">
-          <span class="absolute -inset-0.5"></span>
-          <span class="sr-only">Open main menu</span>
+      <div class="flex space-x-4">
+        <!-- Mobile menu button -->
+        <div class="flex items-center md:hidden">
+          <button
+            type="button"
+            (click)="toggleMobileMenu()"
+            class="relative inline-flex items-center justify-center rounded-md p-2 text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <span class="absolute -inset-0.5"></span>
+            <span class="sr-only">Open main menu</span>
 
-          <!-- Icon when menu is closed -->
-          <svg [ngClass]="{ 'block': !isMobileMenuOpen, 'hidden': isMobileMenuOpen }" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
+            <!-- Icon when menu is closed -->
+            <svg
+              [ngClass]="{ block: !isMobileMenuOpen, hidden: isMobileMenuOpen }"
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
 
-          <!-- Icon when menu is open -->
-          <svg [ngClass]="{ 'block': isMobileMenuOpen, 'hidden': !isMobileMenuOpen }" class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
+            <!-- Icon when menu is open -->
+            <svg
+              [ngClass]="{ block: isMobileMenuOpen, hidden: !isMobileMenuOpen }"
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
 
-      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <!-- Logo -->
         <app-logo size="0.5" />
+      </div>
 
-        <!-- Routes -->
-        <div *ngIf="translationReady; else navSkeleton">
-          <div class="flex space-x-4">
-              <div *ngFor="let route of routes">
-                  <a
-                      [routerLink]="route.href"
-                      [ngClass]="route.cta
-                      ? 'text-white bg-primary'
-                      : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'"
-                      class="rounded-md px-3 py-2 text-sm font-medium"
-                      [attr.aria-current]="route.cta ? 'page' : ''">
-                        {{ route.name | translate }}
-                  </a>
-              </div>
-          </div>
+      <!-- Routes -->
+      <div *ngIf="translationReady; else navSkeleton" class="hidden md:block">
+        <div class="flex space-x-4 items-center">
+          <a
+            *ngFor="let route of routes"
+            [routerLink]="route.href"
+            [ngClass]="[
+              route.cta
+                ? 'text-white bg-primary'
+                : router.url === route.href
+                  ? 'text-dark-active border-b-2 border-dark-active'
+                  : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border',
+              'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+            ]"
+            [attr.aria-current]="router.url === route.href ? 'page' : ''"
+          >
+            {{ route.name | translate }}
+          </a>
         </div>
+      </div>
 
+      <div class="flex space-x-4">
         <ng-template #navSkeleton>
           <div class="flex space-x-4">
-              <div *ngFor="let _ of routes">
-                  <div class="h-8 w-24 rounded-md bg-light-border dark:bg-dark-border animate-pulse"></div>
-              </div>
+            <div *ngFor="let _ of routes">
+              <div
+                class="h-8 w-24 rounded-md bg-light-border dark:bg-dark-border animate-pulse"
+              ></div>
+            </div>
           </div>
         </ng-template>
-      </div>
-        <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
-            <ng-container *ngIf="authReady; else authSkeleton">
-                <ng-container *ngIf="authService.isAuthenticated(); else elseBlock">
-                    <app-profile-dropdown />
-                </ng-container>
+        <div
+          class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7"
+        >
+          <ng-container *ngIf="authReady; else authSkeleton">
+            <ng-container *ngIf="authService.isAuthenticated(); else elseBlock">
+              <app-profile-dropdown />
             </ng-container>
+          </ng-container>
 
-            <ng-template #elseBlock>
-                <app-auth-button />
-            </ng-template>
+          <ng-template #elseBlock>
+            <app-auth-button />
+          </ng-template>
 
-            <ng-template #authSkeleton>
-                <div class="skeleton w-24 h-10 rounded bg-base-300"></div>
-            </ng-template>
-
+          <ng-template #authSkeleton>
+            <div class="skeleton w-24 h-10 rounded bg-base-300"></div>
+          </ng-template>
         </div>
-        <div class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7">
-            <app-language-toggle />
-<!--            <app-theme-toggle/> &lt;!&ndash; Dark Mode Toggle &ndash;&gt;-->
+        <div
+          class="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-center space-x-7"
+        >
+          <app-language-toggle />
         </div>
+      </div>
     </div>
   </div>
 
   <!-- Mobile menu -->
   <div
-    [ngClass]="{ 'max-h-0 opacity-0 scale-y-95': !isMobileMenuOpen, 'max-h-screen opacity-100 scale-y-100': isMobileMenuOpen }"
+    [ngClass]="{
+      'max-h-0 opacity-0 scale-y-95': !isMobileMenuOpen,
+      'max-h-screen opacity-100 scale-y-100': isMobileMenuOpen,
+    }"
     class="sm:hidden origin-top transform transition-all duration-300 ease-in-out overflow-hidden bg-light-card dark:bg-dark-card"
-    id="mobile-menu">
-
+    id="mobile-menu"
+  >
     <div class="space-y-1 px-2 pt-2 pb-3">
       <div *ngFor="let route of routes">
         <a
           [routerLink]="route.href"
-          [ngClass]="route.cta
-            ? 'text-white bg-primary'
-            : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'"
+          [ngClass]="
+            route.cta
+              ? 'text-white bg-primary'
+              : 'text-light-foreground dark:text-dark-foreground hover:bg-light-border dark:hover:bg-dark-border'
+          "
           class="block rounded-md px-3 py-2 text-base font-medium"
-          [attr.aria-current]="route.cta ? 'page' : ''">
+          [attr.aria-current]="route.cta ? 'page' : ''"
+        >
           {{ route.name | translate }}
         </a>
       </div>

@@ -1,24 +1,20 @@
-import {Component, Inject, Input} from '@angular/core';
-import {DOCUMENT, NgClass, NgForOf} from "@angular/common";
-import {AlertService} from "../../services/alert/alert.service";
-import {TranslatePipe} from "@ngx-translate/core";
+import { Component, Inject, Input } from "@angular/core";
+import { DOCUMENT, NgClass, NgForOf } from "@angular/common";
+import { AlertService } from "../../services/alert/alert.service";
+import { TranslatePipe } from "@ngx-translate/core";
 
 interface Alert {
-  type: 'success' | 'warning' | 'error';
+  type: "success" | "warning" | "error";
   translatedMessage: string;
   additionalMessage: string;
 }
 
 @Component({
-  selector: 'app-alert',
+  selector: "app-alert",
   standalone: true,
-  imports: [
-    NgClass,
-    NgForOf,
-    TranslatePipe
-  ],
-  templateUrl: './alert.component.html',
-  styleUrl: './alert.component.css'
+  imports: [NgClass, NgForOf, TranslatePipe],
+  templateUrl: "./alert.component.html",
+  styleUrl: "./alert.component.css",
 })
 export class AlertComponent {
   alerts: Alert[] = [];
@@ -27,20 +23,31 @@ export class AlertComponent {
 
   private document: Document;
 
-  constructor(private alertService: AlertService,@Inject(DOCUMENT) private injectedDocument: Document) {
+  constructor(
+    private alertService: AlertService,
+    @Inject(DOCUMENT) private injectedDocument: Document,
+  ) {
     this.document = injectedDocument;
   }
 
   ngOnInit(): void {
-    if(this.type === "default") {
+    if (this.type === "default") {
       this.alertService.registerDefaultAlert(this);
     } else if (this.type === "auth") {
       this.alertService.registerAuthAlert(this);
     }
   }
 
-  showAlert(type: 'success' | 'warning' | 'error', translatedMessage: string, additionalMessage: string = '') {
-    const alert: Alert = { type, translatedMessage: translatedMessage, additionalMessage };
+  showAlert(
+    type: "success" | "warning" | "error",
+    translatedMessage: string,
+    additionalMessage: string = "",
+  ) {
+    const alert: Alert = {
+      type,
+      translatedMessage: translatedMessage,
+      additionalMessage,
+    };
     this.alerts.push(alert);
 
     setTimeout(() => {
@@ -51,16 +58,18 @@ export class AlertComponent {
   fadeOutAlert(alert: Alert) {
     const index = this.alerts.indexOf(alert);
     if (index !== -1) {
-      this.document.querySelectorAll('.alert')[index]?.classList.add('fade-out');
+      this.document
+        .querySelectorAll(".alert")
+        [index]?.classList.add("fade-out");
     }
   }
 
   removeAlert(alert: Alert) {
-    this.alerts = this.alerts.filter(a => a !== alert);
+    this.alerts = this.alerts.filter((a) => a !== alert);
   }
 
   closeAlert(alert: Alert) {
-    if(this.alerts.includes(alert)) {
+    if (this.alerts.includes(alert)) {
       this.fadeOutAlert(alert);
       setTimeout(() => {
         this.removeAlert(alert);
@@ -69,7 +78,7 @@ export class AlertComponent {
   }
 
   closeAllAlerts() {
-    for(let alert of this.alerts) {
+    for (let alert of this.alerts) {
       this.closeAlert(alert);
     }
   }

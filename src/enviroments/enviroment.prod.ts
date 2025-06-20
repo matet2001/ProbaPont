@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://probapont.com',
-  googleMapsApiKey: 'AIzaSyApJybOR12b3mq7Fy00OsnVkpHoP0u0gjQ',
+  apiUrl: "https://probapont.com",
+  googleMapsApiKey: "AIzaSyApJybOR12b3mq7Fy00OsnVkpHoP0u0gjQ",
   firebaseConfig: {
     apiKey: "AIzaSyCIIzcJlQGrke4rF6HGeTICHJXvJ3laAZY",
     authDomain: "probapont.firebaseapp.com",
@@ -12,4 +12,3 @@ export const environment = {
     measurementId: "G-RVXS09T0JG",
   },
 };
-
