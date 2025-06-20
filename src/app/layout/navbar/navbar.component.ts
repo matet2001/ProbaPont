@@ -1,6 +1,6 @@
 import { Component, HostListener, inject } from "@angular/core";
 import { CommonModule, NgOptimizedImage } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { ThemeToggleComponent } from "../../shared/atoms/theme-toggle/theme-toggle.component";
 import { ThemeService } from "../../services/theme/theme.service";
 import { MatIcon } from "@angular/material/icon";
@@ -34,6 +34,8 @@ export class NavbarComponent {
 
   authService = inject(AuthService);
   translateService = inject(TranslateService);
+
+  router = inject(Router);
 
   routes = [
     { cta: false, name: "NAV.HOME", href: "/" },

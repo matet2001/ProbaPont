@@ -19,6 +19,7 @@ module.exports = {
           secondary: "#757575",
           card: "#1e1e1e",
           border: "#333333",
+          active: "#00b3b3",
         },
       },
       fontFamily: {
