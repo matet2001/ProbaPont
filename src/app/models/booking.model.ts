@@ -1,23 +1,23 @@
-import {UserDetails} from "../services/auth/auth.service";
+import { UserDetails } from "../services/auth/auth.service";
 
 export interface Booking {
-    userId: string;
-    status: BookingStatus;
-    user?: UserDetails;
+  userId: string;
+  status: BookingStatus;
+  user?: UserDetails;
 }
 
 export interface BookingIntent {
-    roomId: number;
-    time: number
+  roomId: number;
+  time: number;
 }
 
 export enum BookingStatus {
-    PLANNED,
-    UNVERIFIED,
-    VERIFIED
+  PLANNED,
+  UNVERIFIED,
+  VERIFIED,
 }
 
 export interface OpeningHours {
-    opening: number;
-    closing: number;
+  opening: number;
+  closing: number;
 }

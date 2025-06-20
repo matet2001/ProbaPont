@@ -68,7 +68,7 @@
     "LAST_MINUTE_DESC": "Rugalmas vagy? Foglalj próbatermet legfeljebb 3 órával előre, és élvezd a kedvezményes óradíjat! Töltsd meg a naptárunk üres helyeit, és próbálj olcsóbban!",
     "INDIVIDUAL_PRACTICE": "Egyéni Próba",
     "INDIVIDUAL_DESC": "Egyedül gyakorolnál? Nálunk kedvezményes áron bérelhetsz próbatermet, hogy zavartalanul fejleszthesd a tudásod!",
-    "CTA":"Most hogy megjött a kedved"
+    "CTA": "Most hogy megjött a kedved"
   },
   "CONTACT": {
     "PRE_TITLE": "Hogyan Találsz Meg Minket?",
@@ -144,6 +144,14 @@
   },
   "INFO": {
     "CLOSE": "Bezárás"
+  },
+  "PROFILE": {
+    "PRE_TITLE": "Felhasználói beállítások",
+    "TITLE": "Profilod kezelése",
+    "SAVE_CHANGES": "Változtatások mentése",
+    "ALERT": {
+      "UPDATE_SUCCESS": "Profilod sikeresen frissítve.",
+      "UPDATE_FAIL": "Nem sikerült frissíteni a profilt."
+    }
   }
 }
-

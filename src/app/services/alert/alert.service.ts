@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import {AlertComponent} from "../../layout/alert/alert.component";
+import { Injectable } from "@angular/core";
+import { AlertComponent } from "../../layout/alert/alert.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AlertService {
   private alertComponentDefault!: AlertComponent;
@@ -16,19 +16,28 @@ export class AlertService {
     this.alertComponentAuth = alertComponent;
   }
 
-  success(message: string, type: "default" | "auth" = "default", additionalMessage: string = '') {
-    const targetAlertComponent: AlertComponent = (type === "default") ? this.alertComponentDefault : this.alertComponentAuth;
-    targetAlertComponent.showAlert('success', message, additionalMessage);
+  success(
+    message: string,
+    type: "default" | "auth" = "default",
+    additionalMessage: string = "",
+  ) {
+    const targetAlertComponent: AlertComponent =
+      type === "default" ? this.alertComponentDefault : this.alertComponentAuth;
+    targetAlertComponent.showAlert("success", message, additionalMessage);
   }
 
   warning(message: string, type: "default" | "auth" = "default") {
-    const targetAlertComponent: AlertComponent = (type === "default") ? this.alertComponentDefault : this.alertComponentAuth;
-    targetAlertComponent.showAlert('warning', message);
+    const targetAlertComponent: AlertComponent =
+      type === "default" ? this.alertComponentDefault : this.alertComponentAuth;
+    targetAlertComponent.showAlert("warning", message);
   }
 
   error(message: string, type: "default" | "auth" = "default") {
-    const targetAlertComponent: AlertComponent = (type === "default") ? this.alertComponentDefault : this.alertComponentDefault;
-    targetAlertComponent.showAlert('error', message);
+    const targetAlertComponent: AlertComponent =
+      type === "default"
+        ? this.alertComponentDefault
+        : this.alertComponentDefault;
+    targetAlertComponent.showAlert("error", message);
   }
 
   closeAllAuthAlerts(): void {

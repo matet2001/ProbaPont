@@ -9,12 +9,12 @@
   "USER": {
     "PROFILE": "Your Profile",
     "SETTINGS": "Settings",
-    "LOGOUT": "Sign out"
+    "LOGOUT": "Logout"
   },
   "FOOTER": {
     "PARTNERS": "Partners",
     "EQUIPMENTS": "Equipments",
-      "ARTISTS": "Famous customers",
+    "ARTISTS": "Famous customers",
     "RIGHTS": "All Rights Reserved",
     "DEVELOPMENT": "Development",
     "CONTACT": "Contact"
@@ -146,5 +146,14 @@
   },
   "INFO": {
     "CLOSE": "Close"
+  },
+  "PROFILE": {
+    "PRE_TITLE": "User Settings",
+    "TITLE": "Manage Your Profile",
+    "SAVE_CHANGES": "Save Changes",
+    "ALERT": {
+      "UPDATE_SUCCESS": "Your profile has been updated successfully.",
+      "UPDATE_FAIL": "Failed to update your profile."
+    }
   }
 }

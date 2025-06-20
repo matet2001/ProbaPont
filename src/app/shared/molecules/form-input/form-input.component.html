@@ -1,24 +1,27 @@
 <div class="mt-4">
-    <label [for]="name" class="block text-sm font-medium">{{ label }}</label>
+  <label [for]="name" class="block text-sm font-medium">{{ label }}</label>
 
-    <div class="mt-1">
-        <input
-            [(ngModel)]="model"
-            [id]="name"
-            [name]="name"
-            [type]="type"
-            [placeholder]="placeholder"
-            [required]="required"
-            [attr.minlength]="minlength ? minlength : null"
-            [attr.maxlength]="maxlength ? maxlength : null"
-            [attr.pattern]="pattern ? pattern : null"
-            class="input w-full mt-2 bg-light-card dark:bg-dark-card border"
-            #inputRef="ngModel"
-        />
-    </div>
-<!--                ngDefaultControl-->
+  <div class="mt-1">
+    <input
+      [(ngModel)]="model"
+      [id]="name"
+      [name]="name"
+      [type]="type"
+      [placeholder]="placeholder"
+      [required]="required"
+      [attr.minlength]="minlength ? minlength : null"
+      [attr.maxlength]="maxlength ? maxlength : null"
+      [attr.pattern]="pattern ? pattern : null"
+      class="input w-full mt-2 bg-light-card dark:bg-dark-card border"
+      #inputRef="ngModel"
+    />
+  </div>
+  <!--                ngDefaultControl-->
 
-    <p *ngIf="inputRef.invalid && inputRef.touched" class="text-red-500 text-sm mt-3">
-        {{ errorMessage }}
-    </p>
+  <p
+    *ngIf="inputRef.invalid && inputRef.touched"
+    class="text-red-500 text-sm mt-3"
+  >
+    {{ errorMessage }}
+  </p>
 </div>

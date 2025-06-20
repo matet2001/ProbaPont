@@ -1,15 +1,15 @@
 <div class="flex items-center justify-center min-h-screen">
-    <div *ngIf="isLoading" class="flex flex-col items-center">
-        <!-- Spinner Animation -->
-        <span class="loading loading-spinner loading-lg text-primary"></span>
-        <p class="text-lg font-semibold mt-4">Verifying your booking...</p>
-    </div>
+  <div *ngIf="isLoading" class="flex flex-col items-center">
+    <!-- Spinner Animation -->
+    <span class="loading loading-spinner loading-lg text-primary"></span>
+    <p class="text-lg font-semibold mt-4">Verifying your booking...</p>
+  </div>
 
-    <div *ngIf="!isLoading" class="text-center">
-        <h2 class="text-2xl font-bold text-green-600">✅ Booking Verified!</h2>
-        <p class="text-lg mt-2">You can now check your bookings.</p>
-        <app-button customClasses="mt-10 font-normal">
-            <a routerLink="/">Go to Homepage</a>
-        </app-button>
-    </div>
+  <div *ngIf="!isLoading" class="text-center">
+    <h2 class="text-2xl font-bold text-green-600">✅ Booking Verified!</h2>
+    <p class="text-lg mt-2">You can now check your bookings.</p>
+    <app-button customClasses="mt-10 font-normal">
+      <a routerLink="/">Go to Homepage</a>
+    </app-button>
+  </div>
 </div>

@@ -48,16 +48,18 @@ This project is designed as a business site for music rehearsal rooms. Venues ca
 
 ## Future Plans
 
-  - [x] Dockerize project
-  - [x] README
-  - [ ] **Stripe Integration:** Enable card payments for room bookings.
-  - [ ] **Enhanced Booking Features:** Improve the scheduling interface and add calendar integrations.
-  - [ ] **User Reviews & Ratings:** Allow users to rate rooms and provide feedback.
-  - [ ] **Admin Dashboard:** Build a dedicated area for venue owners to manage bookings and content more efficiently.
-  - [ ] **Performance Enhancements:** Further optimize the application for speed and scalability.
+- [x] Dockerize project
+- [x] README
+- [ ] **Stripe Integration:** Enable card payments for room bookings.
+- [ ] **Enhanced Booking Features:** Improve the scheduling interface and add calendar integrations.
+- [ ] **User Reviews & Ratings:** Allow users to rate rooms and provide feedback.
+- [ ] **Admin Dashboard:** Build a dedicated area for venue owners to manage bookings and content more efficiently.
+- [ ] **Performance Enhancements:** Further optimize the application for speed and scalability.
+
 ---
 
 ### Usage
+
 You can reach the site on: https://probapont.web.app/
 
 Static Pages: Browse room details, pricing, and equipment information.
@@ -84,7 +86,6 @@ Below are some screenshots of the application in action:
 **Note:**  
 This project is still in the development phase.
 
-
 ### Troubleshooting
 
 - Angular Errors: If you encounter issues during development, ensure your Angular version is compatible with your Firebase and Tailwind CSS setups.
@@ -94,6 +95,7 @@ This project is still in the development phase.
 - Port Conflicts: Make sure no other applications are running on port 4200 when starting the Angular server or Docker container.
 
 ### Contributors:
+
 - **Pojbics Máté**  
   GitHub: https://github.com/matet2001  
   Email: matet2001@gmail.com  
@@ -106,24 +108,17 @@ This project is still in the development phase.
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Stripe API](https://stripe.com/docs) – (Future integration)
 
-
 [Angular]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
-
 [TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
 [TypeScript-url]: https://www.typescriptlang.org/
-
 [Firebase]: https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black
 [Firebase-url]: https://firebase.google.com/
-
 [TailwindCSS]: https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
 [TailwindCSS-url]: https://tailwindcss.com/
-
 [Docker]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
 [Docker-url]: https://www.docker.com/
-
 [NGINX]: https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=nginx&logoColor=white
 [NGINX-url]: https://nginx.org/
-
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/m%C3%A1t%C3%A9-pojbics/

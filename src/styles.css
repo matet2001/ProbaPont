@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /*.mat-datepicker-content {*/
 /*    background-color: rgb(30, 30, 30) !important;*/
 /*    color: rgb(255, 255, 255) !important;*/
 /*    border: #333333*/
 /*}*/
-

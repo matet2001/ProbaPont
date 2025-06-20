@@ -1,33 +1,43 @@
 <ng-container [ngSwitch]="getCellStatus()">
-    <!-- OPEN -->
-    <div *ngSwitchCase="CellState.OPEN">
-        <button class="absolute inset-0" (click)="tryToBook.emit({ roomId, time })">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5" stroke="currentColor" class="size-6 inline-block">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-        </button>
-    </div>
-
-    <!-- CLOSED -->
-    <div *ngSwitchCase="CellState.CLOSED">
-    </div>
-
-    <!-- PLANNED_CANCELABLE -->
-    <button
-        *ngSwitchCase="CellState.PLANNED_CANCELABLE"
-        class="absolute inset-0 w-full h-full"
-        (click)="tryToDeletePlannedBook.emit({ roomId, time })">
-        {{ displayName }}
+  <!-- OPEN -->
+  <div *ngSwitchCase="CellState.OPEN">
+    <button class="absolute inset-0" (click)="tryToBook.emit({ roomId, time })">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6 inline-block"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 4.5v15m7.5-7.5h-15"
+        />
+      </svg>
     </button>
+  </div>
 
-    <!-- UNVERIFIED/VERIFIED -->
-    <div *ngSwitchDefault>
-        <span *ngIf="displayName; else loading">
-          {{ displayName }}
-        </span>
-        <ng-template #loading>
-            <span class="loading loading-spinner loading-md"></span>
-        </ng-template>
-    </div>
+  <!-- CLOSED -->
+  <div *ngSwitchCase="CellState.CLOSED"></div>
+
+  <!-- PLANNED_CANCELABLE -->
+  <button
+    *ngSwitchCase="CellState.PLANNED_CANCELABLE"
+    class="absolute inset-0 w-full h-full"
+    (click)="tryToDeletePlannedBook.emit({ roomId, time })"
+  >
+    {{ displayName }}
+  </button>
+
+  <!-- UNVERIFIED/VERIFIED -->
+  <div *ngSwitchDefault>
+    <span *ngIf="displayName; else loading">
+      {{ displayName }}
+    </span>
+    <ng-template #loading>
+      <span class="loading loading-spinner loading-md"></span>
+    </ng-template>
+  </div>
 </ng-container>

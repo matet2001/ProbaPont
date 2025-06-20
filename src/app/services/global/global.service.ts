@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
 export class GlobalService {
-  readonly businessPhone = '+36 30 123 4567';
-  readonly businessEmail = 'info@probapont.hu';
+  readonly businessPhone = "+36 30 123 4567";
+  readonly businessEmail = "info@probapont.hu";
 
   // Equipment list (shared)
   readonly equipmentList = [
@@ -17,10 +16,10 @@ export class GlobalService {
     { name: "Shure SM58", icon: "mic" },
     { name: "Sennheiser E835", icon: "mic" },
     { name: "Marshall JCM800", icon: "amp" },
-    { name: "Fender Twin Reverb", icon: "amp" }
+    { name: "Fender Twin Reverb", icon: "amp" },
   ];
 
-// Rentable equipment list (with prices)
+  // Rentable equipment list (with prices)
   readonly rentableEquipmentList = [
     { name: "Behringer Mixer", icon: "mixer", price: 350 },
     { name: "Line 6 Helix", icon: "pedal", price: 450 },
@@ -29,10 +28,10 @@ export class GlobalService {
     { name: "Bose PA System", icon: "speaker", price: 500 },
     { name: "Roland Keyboard", icon: "synt", price: 400 },
     { name: "Nord Stage 3", icon: "synt", price: 500 },
-    { name: "Yamaha HS 5 MP", icon: "speaker", price: 400 }
+    { name: "Yamaha HS 5 MP", icon: "speaker", price: 400 },
   ];
 
-// Room list
+  // Room list
   readonly rooms = [
     {
       id: 1,
@@ -44,7 +43,7 @@ export class GlobalService {
       ac: true,
       feature: { description: "ROOM_1", icon: "waves" },
       equipmentIds: [0, 2, 4, 6],
-      rentableEquipmentIds: [0, 2, 4, 6]
+      rentableEquipmentIds: [0, 2, 4, 6],
     },
     {
       id: 2,
@@ -56,7 +55,7 @@ export class GlobalService {
       ac: false,
       feature: { description: "ROOM_2", icon: "nature" },
       equipmentIds: [1, 3, 5, 7],
-      rentableEquipmentIds: [1, 3, 5, 7]
+      rentableEquipmentIds: [1, 3, 5, 7],
     },
     {
       id: 3,
@@ -68,7 +67,7 @@ export class GlobalService {
       ac: false,
       feature: { description: "ROOM_3", icon: "whatshot" },
       equipmentIds: [0, 3, 4, 7],
-      rentableEquipmentIds: [0, 1, 4, 6]
+      rentableEquipmentIds: [0, 1, 4, 6],
     },
     {
       id: 4,
@@ -80,7 +79,7 @@ export class GlobalService {
       ac: true,
       feature: { description: "ROOM_4", icon: "science" },
       equipmentIds: [1, 2, 5, 6],
-      rentableEquipmentIds: [1, 2, 5, 7]
+      rentableEquipmentIds: [1, 2, 5, 7],
     },
     {
       id: 5,
@@ -92,7 +91,7 @@ export class GlobalService {
       ac: true,
       feature: { description: "ROOM_5", icon: "chair" },
       equipmentIds: [0, 2, 4, 6],
-      rentableEquipmentIds: [0, 3, 4, 7]
+      rentableEquipmentIds: [0, 3, 4, 7],
     },
     {
       id: 6,
@@ -104,17 +103,17 @@ export class GlobalService {
       ac: false,
       feature: { description: "ROOM_6", icon: "visibility" },
       equipmentIds: [1, 3, 5, 7],
-      rentableEquipmentIds: [1, 2, 5, 6]
-    }
+      rentableEquipmentIds: [1, 2, 5, 6],
+    },
   ];
 
-  public getRandomRooms(roomAmount: number, roomId: number)  {
-    const returnArray : any[] = [];
-    const fromArray = [...this.rooms.filter(room => room.id !== roomId)];
+  public getRandomRooms(roomAmount: number, roomId: number) {
+    const returnArray: any[] = [];
+    const fromArray = [...this.rooms.filter((room) => room.id !== roomId)];
 
     for (let i = 0; i < roomAmount; i++) {
-      const chosenIndex : number = Math.floor(Math.random() * fromArray.length);
-      returnArray.push(...fromArray.splice(chosenIndex, 1))
+      const chosenIndex: number = Math.floor(Math.random() * fromArray.length);
+      returnArray.push(...fromArray.splice(chosenIndex, 1));
     }
 
     return returnArray;
@@ -136,4 +135,3 @@ export class GlobalService {
     return this.calculateIndividualPracticePrice(lastMinutePrice);
   }
 }
-

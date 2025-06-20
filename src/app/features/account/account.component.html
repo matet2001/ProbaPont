@@ -1,1 +1,90 @@
-<p>account works!</p>
+<div
+  class="relative rounded-3xl p-2 px-6 lg:px-8 min-h-[80vh] sm:min-h-screen bg-cover bg-center text-white"
+>
+  <div
+    class="flex flex-col items-center justify-center w-full max-w-lg mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-5"
+  >
+    <h2
+      class="text-base/7 uppercase text-dark-secondary font-poppins tracking-[0.25em]"
+    >
+      {{ "PROFILE.PRE_TITLE" | translate }}
+    </h2>
+
+    <h1
+      class="mt-2 text-3xl font-semibold tracking-tight text-pretty sm:text-5xl lg:text-balance mb-7"
+    >
+      {{ "PROFILE.TITLE" | translate }}
+    </h1>
+
+    <form
+      #profileForm="ngForm"
+      (ngSubmit)="onSubmit(profileForm)"
+      class="w-full space-y-6"
+    >
+      <!-- Full Name -->
+      <div>
+        <label class="block text-sm font-medium text-white">
+          {{ "AUTH.FULL_NAME" | translate }}
+        </label>
+        <input
+          [(ngModel)]="user.fullName"
+          class="mt-2 input w-full bg-dark-card border border-dark-border text-dark-foreground"
+          name="fullName"
+          required
+          type="text"
+        />
+      </div>
+
+      <!-- Email (readonly) -->
+      <div>
+        <label class="block text-sm font-medium text-white">
+          {{ "AUTH.EMAIL" | translate }}
+        </label>
+        <input
+          [(ngModel)]="user.email"
+          class="mt-2 input w-full bg-dark-card border border-dark-border text-dark-foreground opacity-70 cursor-not-allowed"
+          name="email"
+          readonly
+          type="email"
+        />
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="block text-sm font-medium text-white">
+          {{ "AUTH.PHONE" | translate }}
+        </label>
+        <input
+          [(ngModel)]="user.phone"
+          class="mt-2 input w-full bg-dark-card border border-dark-border text-dark-foreground"
+          inputmode="tel"
+          name="phone"
+          pattern="^[0-9\\-]+$"
+          type="tel"
+        />
+      </div>
+
+      <!-- Band Name (optional) -->
+      <div>
+        <label class="block text-sm font-medium text-white">
+          {{ "AUTH.BAND_NAME" | translate }} ({{ "AUTH.OPTIONAL" | translate }})
+        </label>
+        <input
+          [(ngModel)]="user.bandName"
+          class="mt-2 input w-full bg-dark-card border border-dark-border text-dark-foreground"
+          name="bandName"
+          type="text"
+        />
+      </div>
+
+      <div class="my-3"></div>
+      <!-- Submit -->
+      <button
+        class="btn bg-primary text-white hover:bg-primary/80 shadow-lg w-full rounded-md mt-5"
+        type="submit"
+      >
+        {{ "PROFILE.SAVE_CHANGES" | translate }}
+      </button>
+    </form>
+  </div>
+</div>
