@@ -162,7 +162,7 @@ export class BookingService {
 
     this.localPlannedBookings.clear();
     return {
-      verificationLink: `http://localhost:4200/verify-booking?token=${verificationToken}`,
+      verificationLink: `https://probapont.web.app/verify-booking?token=${verificationToken}`,
     };
   }
 
